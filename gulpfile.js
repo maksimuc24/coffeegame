@@ -16,6 +16,8 @@ var dirs = pkg['h5bp-configs'].directories;
 var watch = require('gulp-watch');
 
 var concat = require('gulp-concat');
+
+var livereload = require('gulp-livereload');
 // -----------------------------------------------------------------------------
 // | Helper tasks                                                              |
 // -----------------------------------------------------------------------------
@@ -152,16 +154,44 @@ gulp.task('scripts', function(){
               'src/app/**/*.js'
             ])
             .pipe(concat('main-src.js'))
-            .pipe(gulp.dest(template('<%= dist %>/js', dirs)));
+            .pipe(gulp.dest(template('<%= dist %>/js', dirs)))
+            .pipe(livereload());
 });
 
 gulp.task('scripts-watch', function(){
   gulp.watch([
               'src/js/*.js',
-              'src/app/**/*.js'
-            ], ['scripts']);
+              'src/app/**/*.js',
+              'src/**/**/**/*.html',
+              'src/css/*.css',
+            ], ['scripts',
+                'copy:index.html',
+                'copy:main.css',
+                'copy:misc']);
 });
 
+/**
+* Watch task with livereload
+*/
+gulp.task('watch',['watch:js',
+                   'watch:css',
+                   'watch:html']  
+);
+
+gulp.task('watch:js', function() {
+  livereload.listen();
+  gulp.watch('src/**/**/*.js', ['scripts']);
+});
+
+gulp.task('watch:css', function() {
+  livereload.listen();
+  gulp.watch('src/css/*.css', ['copy:main.css']);
+});
+
+gulp.task('watch:html', function() {
+  livereload.listen();
+  gulp.watch('src/**/**/**/*.html', ['copy:misc']);
+});
 // -----------------------------------------------------------------------------
 // | Main tasks                                                                |
 // -----------------------------------------------------------------------------
@@ -183,7 +213,7 @@ gulp.task('build', function (done) {
 
 gulp.task('server', function (done) {
     runSequence(
-        'clean', ['copy', 'scripts', 'express', 'scripts-watch', 'livereload'],
+        'clean', ['copy', 'scripts', 'express','watch'],
     done);
 });
 
