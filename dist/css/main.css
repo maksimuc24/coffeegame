@@ -1,0 +1,61 @@
+/*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
+
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+#choice-carousel{
+	width: 700px;
+}
+
+#choice-carousel .carousel-indicators{
+	margin-top: 30px;
+	position: relative;
+	bottom: 0;
+}
+
+	#choice-carousel .carousel-indicators li{
+		background-color: darkcyan;
+	}
+
+.inline-block-list{
+
+}
+
+	.inline-block-list li{
+		display: inline-block;
+		width: 300px;
+		height: 80px;
+		vertical-align: top;
+		padding: 20px;
+	}
+
+		.inline-block-list li a {
+			cursor: pointer;
+			color: #333;
+			display: block;
+			text-decoration: none;
+		}
+
+			.inline-block-list li a span {
+				font-weight: bold;
+			}
+
+			.inline-block-list li a span.price {
+				font-weight: normal;
+			}
+
+#login-form{
+	width: 450px;
+}
+
+
+
+
+
+
+
+
+

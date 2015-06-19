@@ -1,0 +1,30 @@
+app.factory('gameSettingsService', ['$http', 'serverUrl', function($http, serverUrl){
+	var urlBase = serverUrl + '/game/api/settings';
+	var dataFactory = {};
+
+	dataFactory.getCoffeeGrinders = function(){
+		return $http.get(urlBase + '/grinders');
+	};
+
+	dataFactory.getCoffeeMachines = function(){
+		return $http.get(urlBase + '/machines');
+	};
+
+	dataFactory.getCoffeePlaces = function(){
+		return $http.get(urlBase + '/places');
+	};
+
+	dataFactory.getCoffeeEmployees = function(){
+		return $http.get(urlBase + '/employees');
+	};
+
+	dataFactory.getCoffeeTypes = function(){
+		return $http.get(urlBase + '/coffeeTypes');
+	};
+
+	dataFactory.getCoffeePrices = function(){
+		return $http.get(urlBase + '/coffeePrices');
+	};
+
+	return dataFactory;
+}]);

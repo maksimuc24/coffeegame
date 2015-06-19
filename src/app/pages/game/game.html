@@ -1,0 +1,12 @@
+<div class="alert alert-success" role="alert">
+  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  <strong>Welcome!</strong> We hope you will like the simulation. The game was created using the extensive knowledge of the inner workings of a coffee shop. Also, it mimics real-life prices and crowd mechanics, in a way. <i class="fa fa-smile-o fa-fw"></i> So, let the challenge begin…
+</div>
+
+<div ng-if="game.equipmentChooseFinished">
+	<div ng-controller="GameProcessCtrl" ng-include src="'app/pages/game/game-process/gameProcess.html'"></div>
+</div>
+
+<div>
+	<div ng-controller="StartEquipmentChooseCtrl" ng-include src="'app/pages/game/start-equipment-choose/startEquipmentChoose.html'"></div>
+</div>

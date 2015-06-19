@@ -1,0 +1,9 @@
+<div ng-controller="UserAuthCtrl">
+	<div ng-if="user.authorized == true">
+		Signed in as {{user.login}} <a ng-href="#" ng-click="logout()"><span class="glyphicon glyphicon-circle-arrow-right"></span></a>
+	</div>
+
+	<div ng-if="user.authorized != true">
+		<a href="#/login">Sign in</a>
+	</div>
+</div>

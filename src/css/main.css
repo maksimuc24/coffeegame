@@ -1,0 +1,65 @@
+body, html {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+.body {
+	margin-top: 50px;
+}
+
+.inline-block-list{
+
+}
+
+	.inline-block-list li{
+		display: inline-block;
+		width: 500px;
+		height: 80px;
+		vertical-align: top;
+	}
+
+		.inline-block-list li a {
+			cursor: pointer;
+			color: #333;
+			display: block;
+			text-decoration: none;
+			height: 100%;
+			padding: 20px;
+		}
+
+		.inline-block-list li a:hover {
+			background-color: #ccc;
+		}
+
+		.inline-block-list li a.choosen {
+			background-color: #ccc;
+		}
+
+			.inline-block-list li a span {
+				font-weight: bold;
+			}
+
+			.inline-block-list li a span.price {
+				font-weight: normal;
+			}
+
+#login-form{
+	width: 450px;
+}
+
+.growl{
+	top: 75px;
+}
+
+/* BOOTSTRAP */
+.nav, .pagination, .carousel, .panel-title a {
+    cursor: pointer;
+}
+
+
+
+
+
+
+

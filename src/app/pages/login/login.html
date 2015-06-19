@@ -1,0 +1,16 @@
+	<div class="panel panel-primary">
+	  <div class="panel-heading"><i class="fa fa-sign-in fa-lg fa-fw"></i> Sign in to continue playing</div>
+	  <div class="panel-body">
+	<div id="login-form">
+		<form role="form" ng-controller="LoginCtrl">
+		  <div class="form-group">
+		    <input type="text" class="form-control" id="cafeName" name="cafeName" placeholder="Enter your coffee shop's name" ng-model="model.cafeName">
+		  </div>
+		  <div class="form-group responsive">
+		    <input type="password" class="form-control" id="password" name="password" placeholder="Enter the password" ng-model="model.password">
+		  </div>
+		  <button type="button" name="submit" value="login" class="btn btn-success btn-lg" ng-click="login()">Login</button>&nbsp;&nbsp;or <a  href="#/register"><u>register a new coffee shop</u></a>.
+		</form>
+	</div>
+	  </div>
+	</div>

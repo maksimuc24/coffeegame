@@ -1,0 +1,704 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"se",
+				"sessionId"
+			],
+			[
+				"user",
+				"userId"
+			],
+			[
+				"equi",
+				"equipmentType"
+			],
+			[
+				"upda",
+				"updatedUserBalance"
+			],
+			[
+				"tim",
+				"timePeriodCurrent"
+			],
+			[
+				"last",
+				"lastBalanceUpdatedTime"
+			],
+			[
+				"coffee",
+				"coffeeGrinder"
+			],
+			[
+				"eq",
+				"equipment_type_id"
+			],
+			[
+				"equipment",
+				"equipmentTypes"
+			],
+			[
+				"pro",
+				"proto	Prototype"
+			],
+			[
+				"ind",
+				"IndexOf"
+			],
+			[
+				"User",
+				"User"
+			],
+			[
+				"for",
+				"for	for (…) {…}"
+			],
+			[
+				"coff",
+				"coffeePrice"
+			],
+			[
+				"my_",
+				"mysql_error"
+			],
+			[
+				"var",
+				"var_dump"
+			],
+			[
+				"set",
+				"setUserEquipment"
+			],
+			[
+				"timePerio",
+				"timePeriod_name"
+			],
+			[
+				"margi",
+				"margin-top"
+			],
+			[
+				"curre",
+				"currency_name"
+			],
+			[
+				"curren",
+				"currency_id"
+			],
+			[
+				"e",
+				"empty_row"
+			],
+			[
+				"session_s",
+				"session_start"
+			],
+			[
+				"not",
+				"not_attach_ip"
+			],
+			[
+				"log",
+				"loginFactory"
+			],
+			[
+				"_SE",
+				"_SESSION"
+			],
+			[
+				"DB",
+				"DB_PASSWORD"
+			],
+			[
+				"DB_",
+				"DB_NAME"
+			],
+			[
+				"Db",
+				"DB_ADDRESS"
+			],
+			[
+				"print",
+				"printf"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "src/app/models/user.js",
+			"settings":
+			{
+				"buffer_size": 2377,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "src/app/models/userEquipment.js",
+			"settings":
+			{
+				"buffer_size": 1592,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/game/api/classes/controllers/UserController.php",
+			"settings":
+			{
+				"buffer_size": 1407,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/game/GameUserManager.php",
+			"settings":
+			{
+				"buffer_size": 5004,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/authentication/check.php",
+			"settings":
+			{
+				"buffer_size": 960,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/authentication/SessionCustomHandler.php",
+			"settings":
+			{
+				"buffer_size": 359,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/socketManager.php",
+			"settings":
+			{
+				"buffer_size": 2448,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "server/authentication/UserManager.php",
+			"settings":
+			{
+				"buffer_size": 3589,
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 81.0,
+		"selected_items":
+		[
+			[
+				"inde",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"indent",
+				"Indentation: Reindent Lines"
+			],
+			[
+				"css",
+				"Set Syntax: CSS"
+			],
+			[
+				"js",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"",
+				"About"
+			],
+			[
+				"sql",
+				"Set Syntax: SQL"
+			]
+		],
+		"width": 392.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/D/Projects/GitHub/coffeeGame",
+		"/D/Projects/GitHub/coffeeGame/db",
+		"/D/Projects/GitHub/coffeeGame/server",
+		"/D/Projects/GitHub/coffeeGame/src",
+		"/D/Projects/GitHub/coffeeGame/src/app",
+		"/D/Projects/GitHub/coffeeGame/src/app/models",
+		"/D/Projects/GitHub/coffeeGame/src/app/services",
+		"/D/Projects/GitHub/coffeeGame/src/js"
+	],
+	"file_history":
+	[
+		"/D/Projects/GitHub/coffeeGame/db/update.sql",
+		"/D/Projects/GitHub/coffeeGame/db/create.sql",
+		"/D/Projects/GitHub/coffeeGame/src/app/services/gameSettingsService.js",
+		"/D/Projects/GitHub/coffeeGame/src/js/config.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/services/userService.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/services/authenticationService.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/models/userEquipment.js",
+		"/D/Projects/GitHub/coffeeGame/server/game/api/classes/controllers/SettingsController.php",
+		"/D/Projects/GitHub/coffeeGame/backups/11_13_2014/js/main-src.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/game/start-equipment-choose/startEquipmentChooseCtrl.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/controls/user-balance/userBalance.html",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/game/gameCtrl.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/models/user.js",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/SettingsController.php",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/register.html",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/main-src.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/controls/user-auth/userAuthCtrl.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/controls/user-auth/userAuth.html",
+		"/D/Projects/GitHub/coffeeGame/src/app/models/employee.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/models/coffeePrice.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/models/coffeeType.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/game/start-equipment-choose/startEquipmentChoose.html",
+		"/D/Projects/GitHub/coffeeGame/src/index.html",
+		"/D/Projects/GitHub/coffeeGame/src/app/controls/user-balance/userBalanceCtrl.js",
+		"/D/Projects/GitHub/coffeeGame/server/authentication/auth.php",
+		"/D/Projects/GitHub/coffeeGame/server/authentication/logout.php",
+		"/D/Projects/GitHub/coffeeGame/server/authentication/check.php",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/check.php",
+		"/D/Projects/GitHub/coffeeGame/server/game/GameUserManager.php",
+		"/D/Projects/GitHub/coffeeGame/server/game/api/index.php",
+		"/D/Projects/GitHub/coffeeGame/server/game/api/.htaccess",
+		"/D/Projects/GitHub/coffeeGame/server/authentication/UserManager.php",
+		"/D/Projects/GitHub/coffeeGame/server/authentication/register.php",
+		"/D/Projects/GitHub/coffeeGame/server/database/databaseManager.php",
+		"/D/Projects/GitHub/coffeeGame/server/game/api/classes/controllers/UserController.php",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/userAuth.html",
+		"/D/Projects/GitHub/coffeeGame/server/index.html",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/GameManager.php",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/databaseManager.php",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/databaseConfig.php",
+		"/D/Projects/GitHub/coffeeGame/server/register.html",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/register/register.html",
+		"/D/Projects/GitHub/coffeeGame/server/login.html",
+		"/D/Projects/GitHub/coffeeGame/server/main-src.js",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/index 2.php",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/game/game-process/gameProcess.html",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/game/game.html",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/.htaccess",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/file.php",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/index.php",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/.htaccess 2",
+		"/D/Projects/GitHub/coffeeGame/server/web.config",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/GameUserManager.php",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/NewsController.php",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/.htaccess 3",
+		"/D/Projects/GitHub/main-src.js",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/register.php",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/php_info.php",
+		"/C/Users/danielostapenko/AppData/Local/Temp/fz3temp-1/web.config",
+		"/D/Projects/GitHub/coffeeGame/src/css/main.css",
+		"/D/Projects/GitHub/coffeeGame/src/js/app.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/game/game-process/gameProcessCtrl.js",
+		"/D/Projects/GitHub/coffeeGame/src/js/route.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/start-equipment-choose/startEquipmentChooseCtrl.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/start-equipment-choose/startEquipmentChoose.html",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/game-process/gameProcessCtrl.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/game-process/gameProcess.html",
+		"/D/Projects/GitHub/coffeeGame/server/game/GameManager.php",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/login/loginCtrl.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/controls/user-auth/userAuthFactory.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/login/loginFactory.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/start-equipment-choose/startEquipmentChooseCtrl.html",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/login/index.html",
+		"/D/Projects/GitHub/coffeeGame/server/authentication/User.php",
+		"/D/Projects/GitHub/coffeeGame/gulpfile.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/register/index.html",
+		"/D/Projects/GitHub/coffeeGame/src/app/controls/user-auth/index.html",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/game-start/factory.js",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/game-start/index.html",
+		"/D/Projects/GitHub/coffeeGame/src/app/pages/game-start/controller.js",
+		"/C/Users/danielostapenko/Desktop/carousel.js",
+		"/D/Projects/GitHub/coffeeGame/server/database/databaseConfig.php",
+		"/D/Projects/GitHub/coffeeGame/server/php_info.php"
+	],
+	"find":
+	{
+		"height": 31.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"GetUserPlayingTimeSession",
+			"coffeegrinders",
+			"choosenEquipment",
+			"balance",
+			"ng-app",
+			"register",
+			"localhost",
+			"grinderId",
+			"isUserAuthenticated",
+			"mysql_error",
+			"equipment_type",
+			"generateCode",
+			"login"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"equipment_type_id"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 6,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "src/app/models/user.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2377,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2195,
+								2195
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 928.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "src/app/models/userEquipment.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1592,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								371,
+								371
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "server/game/api/classes/controllers/UserController.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1407,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1407,
+								1407
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 767.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "server/game/GameUserManager.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5004,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4062,
+								4415
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 2446.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "server/authentication/check.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 960,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								120,
+								120
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "server/authentication/SessionCustomHandler.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 359,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								170,
+								170
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "server/socketManager.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2448,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1331,
+								1331
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2139.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "server/authentication/UserManager.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3589,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								288,
+								288
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 31.0
+	},
+	"input":
+	{
+		"height": 38.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "sublimeTextProject.sublime-project",
+	"replace":
+	{
+		"height": 58.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 230.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
