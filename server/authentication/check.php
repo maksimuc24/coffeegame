@@ -6,8 +6,8 @@ require_once(dirname(__FILE__).'/UserManager.php');
 
 $userManager = new UserManager();
 
-$userId = $_SESSION['user_id'];
-$hash = $_SESSION['user_hash'];
+$userId = isset($_SESSION['user_id'])  ?   $_SESSION['user_id'] : null;
+$hash   = isset($_SESSION['user_hash'])? $_SESSION['user_hash'] : null;
 
 if (isset($userId) and isset($hash))
 {   

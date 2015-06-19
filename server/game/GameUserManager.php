@@ -7,21 +7,26 @@ require_once(dirname(__FILE__).'/../database/databaseManager.php');
 class GameUserManager{
 	
 	private function GetCurrentUserId () {
-		return intval($_SESSION['user_id']);
+		$user_id = isset($_SESSION['user_id'])?intval($_SESSION['user_id']) : null; 
+		return $user_id;
 	}
 
 	public function GetUserBalance (){
 		$userId = $this->GetCurrentUserId();
-
+		if(is_null($userId)){
+			 return 0;
+		}
 		$dbManager = new DatabaseManager();
         $db = $dbManager->Connect();
 
-        $result = mysql_query("SELECT balance FROM users WHERE user_id='".$userId."' LIMIT 1", $db);
+        $result = mysql_query("SELECT balance FROM users WHERE user_id='".$userId."' LIMIT 1", $db); 
+
         return floatval(mysql_result($result, 0));
 	}
 
 	public function SetUserEquipment ($equipmentId, $equipmentTypeId){
 		$userId = $this->GetCurrentUserId();
+
 
 		$dbManager = new DatabaseManager();
         $db = $dbManager->Connect();
