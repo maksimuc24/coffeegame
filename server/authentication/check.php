@@ -1,8 +1,8 @@
 <?php
 
-require_once(dirname(__FILE__).'/UserManager.php');
-
 session_start();
+
+require_once(dirname(__FILE__).'/UserManager.php');
 
 $userManager = new UserManager();
 
@@ -27,10 +27,6 @@ if (isset($userId) and isset($hash))
     else
     {
         $response = array("user_id" => $user->userId, "cafeName" => $user->cafeName);
-
-        //update user game time
-        $userManager->UpdateUserGameTime($userId, session_id());
-
         echo json_encode($response);
     }
 }

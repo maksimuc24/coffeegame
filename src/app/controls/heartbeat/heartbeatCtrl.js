@@ -8,10 +8,10 @@ app.controller('HeartbeatCtrl', function($scope, $rootScope, $timeout, userServi
     
     $rootScope.$on('userLogout', function() { 
 		stopHeartbeat();
- 	});	
+ 	});	 
 
 	function startHeartbeat(){
-        if(!timer){
+        if(!timer){ 
             timer = $timeout(
                 function(){
                     userService.heartbeat();

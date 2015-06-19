@@ -3,3 +3,4 @@ var app = angular.module('coffeeGame', ['ngRoute', 'ngCookies', 'ui.bootstrap', 
 angular.element(document).ready(function() {
       angular.bootstrap(document, ['coffeeGame']);
 });	
+  

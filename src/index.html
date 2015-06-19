@@ -43,16 +43,21 @@
 					<li><a href="#" data-toggle="modal" data-target="#myModalLanguage"><i class="fa fa-language fa-lg fa-fw"></i> Language</a></li>
 					<li><a href="#" data-toggle="modal" data-target="#myModalReset"><i class="fa fa-refresh fa-lg fa-fw"></i> Reset</a></li>
 					<li><a href="#" data-toggle="modal" data-target="#myModalStats"><i class="fa fa-bar-chart fa-lg fa-fw"></i> Stats</a></li>
-			    </ul>
-        	</div>
-		</div>
+			    </ul>   
+        	</div>    
+		</div>    
 	</div>
 	<!-- /menu-->
 
 	<div class="container">
 		<div class="row">
-		  <div class="col-md-6">Here <strong>after registration and login</strong> will be stats, cup animation, buttons for drink preparation and coffee buying, alerts.<br><br></div>
-		  <div class="col-md-6" ng-controller="GameCtrl" ng-view></div>
+		  <div class="col-lg-7">Here <strong>after registration and login</strong> will be stats, cup animation, buttons for drink preparation and coffee buying, alerts.<br><br>
+			<div style="position: relative; left: 0; top: 0;">
+				<img src="x-1back.gif" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
+				<img src="x-0people.gif" class="img-responsive img-rounded" style="position: absolute; top: 0px; left: 0px; ">
+			</div>
+		  </div>
+		  <div class="col-md-5" ng-controller="GameCtrl" ng-view></div>
 		</div>
 	</div>
         

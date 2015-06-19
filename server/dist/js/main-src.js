@@ -3,7 +3,7 @@ var app = angular.module('coffeeGame', ['ngRoute', 'ngCookies', 'ui.bootstrap', 
 angular.element(document).ready(function() {
       angular.bootstrap(document, ['coffeeGame']);
 });	
-
+  
 app.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
@@ -128,10 +128,10 @@ app.controller('HeartbeatCtrl', function($scope, $rootScope, $timeout, userServi
     
     $rootScope.$on('userLogout', function() { 
 		stopHeartbeat();
- 	});	
+ 	});	 
 
 	function startHeartbeat(){
-        if(!timer){
+        if(!timer){ 
             timer = $timeout(
                 function(){
                     userService.heartbeat();
@@ -147,22 +147,6 @@ app.controller('HeartbeatCtrl', function($scope, $rootScope, $timeout, userServi
         }
     };
 });
-app.controller('UserBalanceCtrl', function($scope){
-	
-});
-app.controller('GameCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User){
-	$scope.game = { };
-
-	$rootScope.$on('gameStartEvent', function(){
-		console.log('GameCtrl gameStartEvent');
-		$scope.game.equipmentChooseFinished = true;
-	});
-
-	$rootScope.$on('userLogin', function(e, authUser){
-		$scope.user = new User(authUser);
-		$scope.user.getBalance();
-	});
-}]);
 app.controller('UserAuthCtrl', function($scope, $rootScope, authenticationService){
 
 	$scope.user = {
@@ -200,6 +184,22 @@ app.controller('UserAuthCtrl', function($scope, $rootScope, authenticationServic
 		});
 	};
 });
+app.controller('UserBalanceCtrl', function($scope){
+	
+});
+app.controller('GameCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User){
+	$scope.game = { };
+
+	$rootScope.$on('gameStartEvent', function(){
+		console.log('GameCtrl gameStartEvent');
+		$scope.game.equipmentChooseFinished = true;
+	});
+
+	$rootScope.$on('userLogin', function(e, authUser){
+		$scope.user = new User(authUser);
+		$scope.user.getBalance();
+	});
+}]);
 app.controller('LoginCtrl', function($scope, authenticationService, $location){
 	$scope.model = {
 		cafeName: '',

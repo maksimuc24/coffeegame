@@ -54,6 +54,8 @@ class UserManager {
 	}
 
 	public function GetUserByName($cafeName){
+		var_dump($cafeName);
+
 		$query = mysql_query("SELECT user_id, cafeName, user_password FROM users WHERE cafeName='".
 	    	mysql_real_escape_string($cafeName)."' LIMIT 1", $this->db);
     	$data = mysql_fetch_assoc($query);
@@ -82,7 +84,11 @@ class UserManager {
 	public function CheckPassword($cafeName, $password) {
 	    $user = $this->GetUserByName($cafeName);
 
+	    var_dump($user->password);
+
     	$password_md5 = $this->DecodePassword($password);
+
+    	var_dump($password_md5);
 
     	return $user->password === $password_md5;
 	}
@@ -92,28 +98,13 @@ class UserManager {
 				$userId."'", $this->db);
 	}
 
-	public function UpdateUserGameTime($userId, $sessionId){
-		$userGameSessionResult = mysql_query("SELECT userGameTime_id 
-        			FROM userGameTime	 
-        			WHERE user_id='".$userId."'
-        			AND sessionId = '".$sessionId."'", $this->db);
-
-		if(mysql_num_rows($userGameSessionResult) == 0)
-		{
-			mysql_query("INSERT INTO userGameTime	 
-        			(user_id, created, startTime, endTime, sessionId)
-        			VALUES
-        			('".$userId."', utc_timestamp(), utc_timestamp(), NULL, '".$sessionId."')", $this->db);
-		}
-	}
-
 	private function GenerateHash ($length=6) {
 	    $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHI JKLMNOPRQSTUVWXYZ0123456789";
 
 	    $code = "";
 	    $clen = strlen($chars) - 1;  
 	    while (strlen($code) < $length) {
-            $code .= $chars[mt_rand(0,$clen)];  
+	            $code .= $chars[mt_rand(0,$clen)];  
 	    }
     	return $code;
 	}
