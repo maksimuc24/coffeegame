@@ -4,19 +4,23 @@
 
         angular
                 .module('coffeeGame')
-                .controller('GameProcessCtrl', function($scope, $interval) {
-                        $scope.model = {
-                                openedTime: 0
-                        };
+                .controller('GameProcessCtrl', GameProcessCtrl);
 
-                        var refreshTime = 1000;
+        GameProcessCtrl.$inject = ['$scope', '$interval'];
 
-                        $scope.model.openedTimeDisplay = function() {
-                                return $scope.model.openedTime / (30 * 24 * 60 * 60 / 1000);
-                        };
+        function GameProcessCtrl($scope, $interval) {
+                $scope.model = {
+                        openedTime: 0
+                };
 
-                        $interval(function() {
-                                $scope.model.openedTime = $scope.model.openedTime + 1;
-                        }, refreshTime);
-                });
+                var refreshTime = 1000;
+
+                $scope.model.openedTimeDisplay = function() {
+                        return $scope.model.openedTime / (30 * 24 * 60 * 60 / 1000);
+                };
+
+                $interval(function() {
+                        $scope.model.openedTime = $scope.model.openedTime + 1;
+                }, refreshTime);
+        };
 })();

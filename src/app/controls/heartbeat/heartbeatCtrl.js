@@ -1,36 +1,40 @@
 (function() {
-                'use strict'
+        'use strict'
 
 
-                angular
-                        .module('coffeeGame')
-                        .controller('HeartbeatCtrl', function($scope, $rootScope, $timeout, userService) {
+        angular
+                .module('coffeeGame')
+                .controller('HeartbeatCtrl', HeartbeatCtrl);
 
-                        var timer;
+        HeartbeatCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'userService'];
 
-                        $rootScope.$on('userLogin', function() {
-                                startHeartbeat();
-                        });
+        function HeartbeatCtrl($scope, $rootScope, $timeout, userService) {
 
-                        $rootScope.$on('userLogout', function() {
-                                stopHeartbeat();
-                        });
+                var timer;
 
-                        function startHeartbeat() {
-                                if (!timer) {
-                                        timer = $timeout(
-                                                function() {
-                                                        userService.heartbeat();
-                                                },
-                                                5000);
-                                }
-                        };
-
-                        function stopHeartbeat() {
-                                if (timer) {
-                                        $timeout.cancel(timer);
-                                        timer = undefined;
-                                }
-                        };
+                $rootScope.$on('userLogin', function() {
+                        startHeartbeat();
                 });
+
+                $rootScope.$on('userLogout', function() {
+                        stopHeartbeat();
+                });
+
+                function startHeartbeat() {
+                        if (!timer) {
+                                timer = $timeout(
+                                        function() {
+                                                userService.heartbeat();
+                                        },
+                                        5000);
+                        }
+                };
+
+                function stopHeartbeat() {
+                        if (timer) {
+                                $timeout.cancel(timer);
+                                timer = undefined;
+                        }
+                };
+        };
 })();

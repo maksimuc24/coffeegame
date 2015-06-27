@@ -1,20 +1,24 @@
 (function() {
-                'use strict'
+        'use strict'
 
 
-                angular
-                        .module('coffeeGame')
-                        .controller('GameCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User) {
-                                $scope.game = {};
+        angular
+                .module('coffeeGame')
+                .controller('GameCtrl', GameCtrl);
 
-                                $rootScope.$on('gameStartEvent', function() {
-                                        console.log('GameCtrl gameStartEvent');
-                                        $scope.game.equipmentChooseFinished = true;
-                                });
+        GameCtrl.$inject = ['$scope', '$rootScope', 'User'];
 
-                                $rootScope.$on('userLogin', function(e, authUser) {
-                                        $scope.user = new User(authUser);
-                                        $scope.user.getBalance();
-                                });
-                        }]);
+        function GameCtrl($scope, $rootScope, User) {
+                $scope.game = {};
+
+                $rootScope.$on('gameStartEvent', function() {
+                        console.log('GameCtrl gameStartEvent');
+                        $scope.game.equipmentChooseFinished = true;
+                });
+
+                $rootScope.$on('userLogin', function(e, authUser) {
+                        $scope.user = new User(authUser);
+                        $scope.user.getBalance();
+                });
+        };
 })();

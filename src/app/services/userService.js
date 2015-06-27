@@ -4,18 +4,22 @@
 
         angular
                 .module('coffeeGame')
-                .factory('userService', ['$http', 'serverUrl', function($http, serverUrl) {
-                        var urlBase = serverUrl + '/game/api/user';
-                        var dataFactory = {};
+                .factory('userService', userService);
+        userService.$inject = ['$http', 'serverUrl'];
 
-                        dataFactory.getBalance = function() {
-                                return $http.get(urlBase + '/balance');
-                        };
 
-                        dataFactory.heartbeat = function() {
-                                return $http.get(urlBase + '/heartbeat');
-                        };
+        function userService($http, serverUrl) {
+                var urlBase = serverUrl + '/game/api/user';
+                var dataFactory = {};
 
-                        return dataFactory;
-                }]);
+                dataFactory.getBalance = function() {
+                        return $http.get(urlBase + '/balance');
+                };
+
+                dataFactory.heartbeat = function() {
+                        return $http.get(urlBase + '/heartbeat');
+                };
+
+                return dataFactory;
+        };
 })();

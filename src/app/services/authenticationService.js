@@ -4,33 +4,37 @@
 
         angular
                 .module('coffeeGame')
-                .factory('authenticationService', ['$http', 'serverUrl', function($http, serverUrl) {
-                        var urlBase = serverUrl + '/authentication';
-                        var dataFactory = {};
+                .factory('authenticationService', authenticationService)
 
-                        dataFactory.validate = function() {
-                                return $http.get(urlBase + '/check.php');
-                        };
+        authenticationService.$inject = ['$http', 'serverUrl'];
 
-                        dataFactory.logout = function() {
-                                return $http.get(urlBase + '/logout.php');
-                        };
+        function authenticationService($http, serverUrl) {
+                var urlBase = serverUrl + '/authentication';
+                var dataFactory = {};
 
-                        dataFactory.login = function(data) {
-                                return $http({
-                                        'url': urlBase + '/auth.php',
-                                        'method': 'POST',
-                                        'headers': {
-                                                'Content-Type': 'application/x-www-form-urlencoded'
-                                        },
-                                        'data': $.param({
-                                                'cafeName': data.cafeName,
-                                                'password': data.password,
-                                                'submit': data.submit
-                                        })
-                                });
-                        };
+                dataFactory.validate = function() {
+                        return $http.get(urlBase + '/check.php');
+                };
 
-                        return dataFactory;
-                }]);
+                dataFactory.logout = function() {
+                        return $http.get(urlBase + '/logout.php');
+                };
+
+                dataFactory.login = function(data) {
+                        return $http({
+                                'url': urlBase + '/auth.php',
+                                'method': 'POST',
+                                'headers': {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                'data': $.param({
+                                        'cafeName': data.cafeName,
+                                        'password': data.password,
+                                        'submit': data.submit
+                                })
+                        });
+                };
+
+                return dataFactory;
+        };
 })();

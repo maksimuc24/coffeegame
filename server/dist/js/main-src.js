@@ -1,109 +1,45 @@
 (function() {
         'use strict'
 
-   
-        angular.module('coffeeGame', ['ngRoute', 'ngCookies', 'ui.bootstrap', 'angular-growl']);
-          
 
-        angular.element(document).ready(function() {
-                angular.bootstrap(document, ['coffeeGame']);
-        });
+        angular
+                .module('coffeeGame', ['ngRoute',
+                        'ngCookies',
+                        'ui.bootstrap',
+                        'angular-growl'
+                ]);
+
+
+        angular
+                .element(document)
+                .ready(function() {
+                        angular.bootstrap(document, ['coffeeGame']);
+                });
 })();
 
 (function() {
         'use strict'
 
-   
-        angular.module('coffeeGame').config(['$routeProvider',
-  function($routeProvider) {
-    $routeProvider.
-      when('/index', {
-        templateUrl: 'app/pages/game/game.html'
-      }).
-      when('/login', {
-        templateUrl: 'app/pages/login/login.html'
-      }).
-      when('/register', {
-        templateUrl: 'app/pages/register/register.html'
-      }).
-      otherwise({
-        redirectTo: '/index'
-      });
-  }]);
-})();
-(function() {
-        'use strict'
 
-   
-        angular.module('coffeeGame').constant('serverUrl', 'http://coffeegame/server');
-})();
-(function() {
-                'use strict'
-
-
-                angular
-                        .module('coffeeGame')
-                        .factory('User', ['UserEquipment', 'Employee', 'CoffeeType', 'CoffeePrice', 'userService',
-                                function(UserEquipment, Employee, CoffeeType, CoffeePrice, userService) {
-                                        var User = function(authUser) {
-                                                this.id = authUser.id;
-                                                this.cafeName = authUser.cafeName;
-
-                                                this.balance = -1;
-
-                                                this.displayBalance = function() {
-                                                        return this.balance - this.equipment.TotalAmount();
-                                                };
-
-                                                this.equipment = new UserEquipment();
-                                                this.employee = new Employee();
-                                                this.coffee = {
-                                                        type: new CoffeeType(),
-                                                        price: new CoffeePrice()
-                                                };
-                                        };
-
-                                        User.prototype.getBalance = function() {
-                                                var self = this;
-
-                                                return userService.getBalance()
-                                                        .success(function(data) {
-                                                                self.balance = data;
-                                                        });
-                                        };
-
-                                        User.prototype.isAuthenticated = function() {
-                                                return this.id != '' && this.id != undefined;
-                                        };
-
-                                        User.prototype.canBuyEquipment = function(name, item) {
-                                                var existingItemPrice = this.equipment.getItemPrice(name);
-                                                var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
-                                                var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
-                                                return (this.balance - this.equipment.TotalAmount() + existingItemPrice - existingEmployeePrice - existingCoffeeTypePrice) > item.price;
-                                        };
-
-                                        User.prototype.canBuyEmployee = function(price) {
-                                                var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
-                                                var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
-                                                return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
-                                        };
-
-                                        User.prototype.canBuyCoffeeType = function(price) {
-                                                var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
-                                                var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
-                                                return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
-                                        };
-
-                                        User.prototype.update = function(callback) {
-                                                if (this.equipment.items.length == 3 && this.employee.id != 0 && this.coffee.type.id != 0 && this.coffee.price.id != 0) {
-                                                        callback();
-                                                }
-                                        };
-
-                                        return User;
-                                }
-                        ]);
+        angular
+            .module('coffeeGame')
+            .config(['$routeProvider',
+                function($routeProvider) {
+                        $routeProvider.
+                        when('/index', {
+                                templateUrl: 'app/pages/game/game.html'
+                        }).
+                        when('/login', {
+                                templateUrl: 'app/pages/login/login.html'
+                        }).
+                        when('/register', {
+                                templateUrl: 'app/pages/register/register.html'
+                        }).
+                        otherwise({
+                                redirectTo: '/index'
+                        });
+                }
+        ]);
 })();
 
 (function() {
@@ -112,35 +48,119 @@
 
         angular
                 .module('coffeeGame')
-                .factory('authenticationService', ['$http', 'serverUrl', function($http, serverUrl) {
-                        var urlBase = serverUrl + '/authentication';
-                        var dataFactory = {};
+                .constant('serverUrl', 'http://coffeegame/server');
+})();
 
-                        dataFactory.validate = function() {
-                                return $http.get(urlBase + '/check.php');
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .factory('User', User);
+
+        User.$inject = ['UserEquipment', 'Employee', 'CoffeeType', 'CoffeePrice', 'userService'];
+
+        function User(UserEquipment, Employee, CoffeeType, CoffeePrice, userService) {
+                var User = function(authUser) {
+                        this.id = authUser.id;
+                        this.cafeName = authUser.cafeName;
+
+                        this.balance = -1;
+
+                        this.displayBalance = function() {
+                                return this.balance - this.equipment.TotalAmount();
                         };
 
-                        dataFactory.logout = function() {
-                                return $http.get(urlBase + '/logout.php');
+                        this.equipment = new UserEquipment();
+                        this.employee = new Employee();
+                        this.coffee = {
+                                type: new CoffeeType(),
+                                price: new CoffeePrice()
                         };
+                };
 
-                        dataFactory.login = function(data) {
-                                return $http({
-                                        'url': urlBase + '/auth.php',
-                                        'method': 'POST',
-                                        'headers': {
-                                                'Content-Type': 'application/x-www-form-urlencoded'
-                                        },
-                                        'data': $.param({
-                                                'cafeName': data.cafeName,
-                                                'password': data.password,
-                                                'submit': data.submit
-                                        })
+                User.prototype.getBalance = function() {
+                        var self = this;
+
+                        return userService.getBalance()
+                                .success(function(data) {
+                                        self.balance = data;
                                 });
-                        };
+                };
 
-                        return dataFactory;
-                }]);
+                User.prototype.isAuthenticated = function() {
+                        return this.id != '' && this.id != undefined;
+                };
+
+                User.prototype.canBuyEquipment = function(name, item) {
+                        var existingItemPrice = this.equipment.getItemPrice(name);
+                        var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+                        var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+                        return (this.balance - this.equipment.TotalAmount() + existingItemPrice - existingEmployeePrice - existingCoffeeTypePrice) > item.price;
+                };
+
+                User.prototype.canBuyEmployee = function(price) {
+                        var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+                        var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+                        return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
+                };
+
+                User.prototype.canBuyCoffeeType = function(price) {
+                        var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+                        var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+                        return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
+                };
+
+                User.prototype.update = function(callback) {
+                        if (this.equipment.items.length == 3 && this.employee.id != 0 && this.coffee.type.id != 0 && this.coffee.price.id != 0) {
+                                callback();
+                        }
+                };
+
+                return User;
+        }
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .factory('authenticationService', authenticationService)
+
+        authenticationService.$inject = ['$http', 'serverUrl'];
+
+        function authenticationService($http, serverUrl) {
+                var urlBase = serverUrl + '/authentication';
+                var dataFactory = {};
+
+                dataFactory.validate = function() {
+                        return $http.get(urlBase + '/check.php');
+                };
+
+                dataFactory.logout = function() {
+                        return $http.get(urlBase + '/logout.php');
+                };
+
+                dataFactory.login = function(data) {
+                        return $http({
+                                'url': urlBase + '/auth.php',
+                                'method': 'POST',
+                                'headers': {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                'data': $.param({
+                                        'cafeName': data.cafeName,
+                                        'password': data.password,
+                                        'submit': data.submit
+                                })
+                        });
+                };
+
+                return dataFactory;
+        };
 })();
 
 (function() {
@@ -178,25 +198,29 @@
 
         angular
                 .module('coffeeGame')
-                .factory('CoffeeType', function() {
-                        var CoffeeType = function() {
-                                this.id = 0;
-                                this.name = '';
-                                this.pricePerKg = 0;
-                        };
+                .factory('CoffeeType', CoffeeType);
 
-                        CoffeeType.prototype.Set = function(coffeeType) {
-                                this.id = coffeeType.id;
-                                this.name = coffeeType.name;
-                                this.pricePerKg = coffeeType.price;
-                        };
+        CoffeeType.$inject = [];
 
-                        CoffeeType.prototype.update = function(callback) {
-                                callback();
-                        };
+        function CoffeeType() {
+                var CoffeeType = function() {
+                        this.id = 0;
+                        this.name = '';
+                        this.pricePerKg = 0;
+                };
 
-                        return CoffeeType;
-                });
+                CoffeeType.prototype.Set = function(coffeeType) {
+                        this.id = coffeeType.id;
+                        this.name = coffeeType.name;
+                        this.pricePerKg = coffeeType.price;
+                };
+
+                CoffeeType.prototype.update = function(callback) {
+                        callback();
+                };
+
+                return CoffeeType;
+        };
 })();
 
 (function() {
@@ -205,25 +229,29 @@
 
         angular
                 .module('coffeeGame')
-                .factory('Employee', function() {
-                        var Employee = function() {
-                                this.id = 0;
-                                this.pricePerMonth = 0;
-                                this.name = '';
-                        };
+                .factory('Employee', Employee);
 
-                        Employee.prototype.Set = function(employee) {
-                                this.id = employee.id;
-                                this.pricePerMonth = employee.price;
-                                this.name = employee.name;
-                        };
+        Employee.$inject = [];
 
-                        Employee.prototype.update = function(callback) {
-                                callback();
-                        };
+        function Employee() {
+                var Employee = function() {
+                        this.id = 0;
+                        this.pricePerMonth = 0;
+                        this.name = '';
+                };
 
-                        return Employee;
-                });
+                Employee.prototype.Set = function(employee) {
+                        this.id = employee.id;
+                        this.pricePerMonth = employee.price;
+                        this.name = employee.name;
+                };
+
+                Employee.prototype.update = function(callback) {
+                        callback();
+                };
+
+                return Employee;
+        };
 })();
 
 (function() {
@@ -232,444 +260,486 @@
 
         angular
                 .module('coffeeGame')
-                .factory('gameSettingsService', ['$http','serverUrl', function($http,serverUrl){
- 
-	var urlBase = serverUrl+'/game/api/settings';
-	var dataFactory = {};
+                .factory('gameSettingsService', gameSettingsService);
+        gameSettingsService = ['$http', 'serverUrl'];
 
-	dataFactory.getCoffeeGrinders = function(){
-		return $http.get(urlBase + '/grinders');
-	};
+        function gameSettingsService($http, serverUrl) {
 
-	dataFactory.getCoffeeMachines = function(){
-		return $http.get(urlBase + '/machines');
-	};
+                var urlBase = serverUrl + '/game/api/settings';
+                var dataFactory = {};
 
-	dataFactory.getCoffeePlaces = function(){
-		return $http.get(urlBase + '/places');
-	};
+                dataFactory.getCoffeeGrinders = function() {
+                        return $http.get(urlBase + '/grinders');
+                };
 
-	dataFactory.getCoffeeEmployees = function(){
-		return $http.get(urlBase + '/employees');
-	};
+                dataFactory.getCoffeeMachines = function() {
+                        return $http.get(urlBase + '/machines');
+                };
 
-	dataFactory.getCoffeeTypes = function(){
-		return $http.get(urlBase + '/coffeeTypes');
-	};
+                dataFactory.getCoffeePlaces = function() {
+                        return $http.get(urlBase + '/places');
+                };
 
-	dataFactory.getCoffeePrices = function(){
-		return $http.get(urlBase + '/coffeePrices');
-	};
+                dataFactory.getCoffeeEmployees = function() {
+                        return $http.get(urlBase + '/employees');
+                };
 
-	dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId){
-		return $http({
-			'url': urlBase + '/setUserEquipment', 
-			'method': 'POST',
-			'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
-			'data': $.param({
-				'equipmentId': equipmentId,
-				'equipmentTypeId': equipmentTypeId
-			})
-		});
-	};
+                dataFactory.getCoffeeTypes = function() {
+                        return $http.get(urlBase + '/coffeeTypes');
+                };
 
-	return dataFactory;
-}]);
-})();
-(function() {
-        'use strict'
+                dataFactory.getCoffeePrices = function() {
+                        return $http.get(urlBase + '/coffeePrices');
+                };
 
-
-        angular
-                .module('coffeeGame')
-                .factory('UserEquipment', function(){
-	var UserEquipment = function (){
-		this.items = [];	
-	};
-
-	UserEquipment.prototype.Add = function(name, item) {
-		if(this.Exists(name))
-		{
-			var index = this.IndexOf(name);
-			this.items[index].name = name;
-			this.items[index].id = item.id;
-			this.items[index].price = parseFloat(item.price);
-			this.items[index].item = item.item;
-		}else{
-			this.items.push({
-				'name': name,
-				'id': item.id,
-				'price': parseFloat(item.price),
-				'item': item
-			});
-		}
-	};
-
-	UserEquipment.prototype.Exists = function(name, id) {
-		for (var i = 0; i < this.items.length; i++) {
-			if(this.items[i].name == name && (!id || this.items[i].id == id))
-			{
-				return true;
-			}
-		};
-	};
-
-	UserEquipment.prototype.IndexOf = function(name, id) {
-		for (var i = 0; i < this.items.length; i++) {
-			if(this.items[i].name == name && (!id || this.items[i].id == id))
-			{
-				return i;
-			}
-		};
-	};
-
-	UserEquipment.prototype.getItemPrice = function(name) {
-		if(this.Exists(name))
-		{
-			var index = this.IndexOf(name);
-			return parseFloat(this.items[index].price);
-		}else {
-			return 0;
-		}
-	};
-
-	UserEquipment.prototype.TotalAmount = function() {
-		var total = 0;
-		for (var i = 0; i < this.items.length; i++) {
-			total += parseFloat(this.items[i].price);
-		};
-		return total;
-	};
-
-	UserEquipment.prototype.update = function(callback) {
-		callback();
-	};
-
-	return UserEquipment;
-});
-})();
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .factory('userService', ['$http', 'serverUrl', function($http, serverUrl) {
-                        var urlBase = serverUrl + '/game/api/user';
-                        var dataFactory = {};
-
-                        dataFactory.getBalance = function() {
-                                return $http.get(urlBase + '/balance');
-                        };
-
-                        dataFactory.heartbeat = function() {
-                                return $http.get(urlBase + '/heartbeat');
-                        };
-
-                        return dataFactory;
-                }]);
-})();
-
-(function() {
-                'use strict'
-
-
-                angular
-                        .module('coffeeGame')
-                        .controller('HeartbeatCtrl', function($scope, $rootScope, $timeout, userService) {
-
-                        var timer;
-
-                        $rootScope.$on('userLogin', function() {
-                                startHeartbeat();
+                dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId) {
+                        return $http({
+                                'url': urlBase + '/setUserEquipment',
+                                'method': 'POST',
+                                'headers': {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                'data': $.param({
+                                        'equipmentId': equipmentId,
+                                        'equipmentTypeId': equipmentTypeId
+                                })
                         });
+                };
 
-                        $rootScope.$on('userLogout', function() {
-                                stopHeartbeat();
-                        });
+                return dataFactory;
+        };
+})();
 
-                        function startHeartbeat() {
-                                if (!timer) {
-                                        timer = $timeout(
-                                                function() {
-                                                        userService.heartbeat();
-                                                },
-                                                5000);
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .factory('UserEquipment', UserEquipment);
+
+        UserEquipment.$inject = [];
+
+        function UserEquipment() {
+                var UserEquipment = function() {
+                        this.items = [];
+                };
+
+                UserEquipment.prototype.Add = function(name, item) {
+                        if (this.Exists(name)) {
+                                var index = this.IndexOf(name);
+                                this.items[index].name = name;
+                                this.items[index].id = item.id;
+                                this.items[index].price = parseFloat(item.price);
+                                this.items[index].item = item.item;
+                        } else {
+                                this.items.push({
+                                        'name': name,
+                                        'id': item.id,
+                                        'price': parseFloat(item.price),
+                                        'item': item
+                                });
+                        }
+                };
+
+                UserEquipment.prototype.Exists = function(name, id) {
+                        for (var i = 0; i < this.items.length; i++) {
+                                if (this.items[i].name == name && (!id || this.items[i].id == id)) {
+                                        return true;
                                 }
                         };
+                };
 
-                        function stopHeartbeat() {
-                                if (timer) {
-                                        $timeout.cancel(timer);
-                                        timer = undefined;
+                UserEquipment.prototype.IndexOf = function(name, id) {
+                        for (var i = 0; i < this.items.length; i++) {
+                                if (this.items[i].name == name && (!id || this.items[i].id == id)) {
+                                        return i;
                                 }
                         };
-                });
+                };
+
+                UserEquipment.prototype.getItemPrice = function(name) {
+                        if (this.Exists(name)) {
+                                var index = this.IndexOf(name);
+                                return parseFloat(this.items[index].price);
+                        } else {
+                                return 0;
+                        }
+                };
+
+                UserEquipment.prototype.TotalAmount = function() {
+                        var total = 0;
+                        for (var i = 0; i < this.items.length; i++) {
+                                total += parseFloat(this.items[i].price);
+                        };
+                        return total;
+                };
+
+                UserEquipment.prototype.update = function(callback) {
+                        callback();
+                };
+
+                return UserEquipment;
+        };
 })();
 
-(function() {
-        'use strict'
-
-   
-        angular
-        		.module('coffeeGame')
-        		.controller('UserAuthCtrl', function($scope, $rootScope, authenticationService){
-
-	$scope.user = {
-		authorized: false
-	};
-
-	validateUser();
-
-	$scope.$on('$routeChangeStart', function(next, current) { 
-		validateUser();
- 	});	
-
-	$scope.logout = function(){
-		authenticationService.logout();
-		$rootScope.$broadcast('userLogout');
-	};
-
-	function validateUser (){
-		authenticationService.validate()
-		.success(function(data){
-			var user = {
-				'id': data.user_id,
-				'cafeName': data.cafeName 
-			};
-
-			if(user.id != '' && user.id != undefined)
-			{
-				$scope.user.authorized = true;
-				$scope.user.cafeName = user.cafeName;
-				$rootScope.$broadcast('userLogin', user);
-			}else{
-				$scope.user.authorized = false;
-			}
-		});
-	};
-});
-})();
-(function() {
-                'use strict'
-
-
-                angular
-                		.module('coffeeGame')
-                		.controller('UserBalanceCtrl', function($scope) {
-
-                });
-})();
-
-(function() {
-                'use strict'
-
-
-                angular
-                        .module('coffeeGame')
-                        .controller('GameCtrl', ['$scope', '$rootScope', 'User', function($scope, $rootScope, User) {
-                                $scope.game = {};
-
-                                $rootScope.$on('gameStartEvent', function() {
-                                        console.log('GameCtrl gameStartEvent');
-                                        $scope.game.equipmentChooseFinished = true;
-                                });
-
-                                $rootScope.$on('userLogin', function(e, authUser) {
-                                        $scope.user = new User(authUser);
-                                        $scope.user.getBalance();
-                                });
-                        }]);
-})();
-(function() {
-        'use strict'
-
-   
-        angular
-        .module('coffeeGame')
-        .controller('LoginCtrl', function($scope, authenticationService, $location){
-	$scope.model = {
-		cafeName: '',
-		password: ''
-	};
-
-	$scope.login = function(){
-		authenticationService.login({
-			'cafeName': $scope.model.cafeName,
-			'password': $scope.model.password,
-			'submit': 'submit'
-		}).success(function(result){
-			$location.path('/');
-		});
-	}
-});
-})();
 (function() {
         'use strict'
 
 
         angular
                 .module('coffeeGame')
-                .controller('GameProcessCtrl', function($scope, $interval) {
-                        $scope.model = {
-                                openedTime: 0
-                        };
+                .factory('userService', userService);
+        userService.$inject = ['$http', 'serverUrl'];
 
-                        var refreshTime = 1000;
 
-                        $scope.model.openedTimeDisplay = function() {
-                                return $scope.model.openedTime / (30 * 24 * 60 * 60 / 1000);
-                        };
+        function userService($http, serverUrl) {
+                var urlBase = serverUrl + '/game/api/user';
+                var dataFactory = {};
 
-                        $interval(function() {
-                                $scope.model.openedTime = $scope.model.openedTime + 1;
-                        }, refreshTime);
-                });
+                dataFactory.getBalance = function() {
+                        return $http.get(urlBase + '/balance');
+                };
+
+                dataFactory.heartbeat = function() {
+                        return $http.get(urlBase + '/heartbeat');
+                };
+
+                return dataFactory;
+        };
 })();
 
 (function() {
         'use strict'
 
-   
+
         angular
                 .module('coffeeGame')
-                .controller('StartEquipmentChooseCtrl', function($scope, $rootScope, gameSettingsService, growl) {
+                .controller('UserAuthCtrl', UserAuthCtrl);
 
-    $scope.tabs = [
-        {name: 'Grinder', active: true},
-        {name: 'Machine', active: false},
-        {name: 'Place', active: false},
-        {name: 'Employees', active: false},
-        {name: 'Coffee', active: false},
-        {name: 'Drink price', active: false}
-    ];
+        UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService'];
 
-    $scope.model = {};
+        function UserAuthCtrl($scope, $rootScope, authenticationService) {
 
-    getCoffeeGrinders();
-    getCoffeeMachines();
-    getCoffeePlaces();
-    getCoffeeEmployees();
-    getCoffeeTypes();
-    getCoffeePrices();
+                $scope.user = {
+                        authorized: false
+                };
 
-    function getCoffeeGrinders(){
-        gameSettingsService.getCoffeeGrinders()
-        .success(function(data){
-            $scope.model.coffeeGrinders = data;
-        });
-    };
-    function getCoffeeMachines(){
-        gameSettingsService.getCoffeeMachines()
-        .success(function(data){
-            $scope.model.coffeeMachines = data;
-        });
-    };
-    function getCoffeePlaces(){
-        gameSettingsService.getCoffeePlaces()
-        .success(function(data){
-            $scope.model.coffeePlaces = data;
-        });
-    };
-    function getCoffeeEmployees(){
-        gameSettingsService.getCoffeeEmployees()
-        .success(function(data){
-            $scope.model.coffeeEmployees = data;
-        });
-    };
-    function getCoffeeTypes(){
-        gameSettingsService.getCoffeeTypes()
-        .success(function(data){
-            $scope.model.coffeeTypes = data;
-        });
-    };
-    function getCoffeePrices(){
-        gameSettingsService.getCoffeePrices()
-        .success(function(data){
-            $scope.model.coffeePrices = data;
-        });
-    };
+                validateUser();
 
-    $scope.chooseCoffeeGinder = function(coffeeGrinder){
-        if(!$scope.user.canBuyEquipment('grinder', coffeeGrinder))
-        {
-            growl.addWarnMessage("It is not enought your balance to choose this grinder.");
-        }
-        else
-        {
-            $scope.user.equipment.Add('grinder', coffeeGrinder);
-            $scope.tabs[1].active = true;
+                $scope.$on('$routeChangeStart', function(next, current) {
+                        validateUser();
+                });
 
-            $scope.user.update(checkEquipmentFinish);
-        }
-    };
+                $scope.logout = function() {
+                        authenticationService.logout();
+                        $rootScope.$broadcast('userLogout');
+                };
 
-    $scope.chooseCoffeeMachine = function(coffeeMachine){
-        if(!$scope.user.canBuyEquipment('machine', coffeeMachine))
-        {
-            growl.addWarnMessage("It is not enought your balance to choose this machine.");
-        }
-        else
-        {
-            $scope.user.equipment.Add('machine', coffeeMachine);
-            $scope.tabs[2].active = true;
+                function validateUser() {
+                        authenticationService.validate()
+                                .success(function(data) {
+                                        var user = {
+                                                'id': data.user_id,
+                                                'cafeName': data.cafeName
+                                        };
 
-            $scope.user.update(checkEquipmentFinish);
-        }
-    };
+                                        if (user.id != '' && user.id != undefined) {
+                                                $scope.user.authorized = true;
+                                                $scope.user.cafeName = user.cafeName;
+                                                $rootScope.$broadcast('userLogin', user);
+                                        } else {
+                                                $scope.user.authorized = false;
+                                        }
+                                });
+                };
+        };
+})();
 
-    $scope.chooseCoffeePlace = function(coffeePlace){
-        if(!$scope.user.canBuyEquipment('place', coffeePlace))
-        {
-            growl.addWarnMessage("It is not enought your balance to choose this place.");
-        }
-        else
-        {
-            $scope.user.equipment.Add('place', coffeePlace);
-            $scope.tabs[3].active = true;
-            
-            $scope.user.update(checkEquipmentFinish);
-        }
-    };
+(function() {
+        'use strict'
 
-    $scope.chooseCoffeeEmployee = function(coffeeEmployee){
-        if(!$scope.user.canBuyEmployee(coffeeEmployee.price))
-        {
-            growl.addWarnMessage("It is not enought your balance to choose this employee.");
-        }
-        else
-        {
-            $scope.user.employee.Set(coffeeEmployee);
-            $scope.tabs[4].active = true;
-            
-            $scope.user.update(checkEquipmentFinish);
-        }
-    };
 
-    $scope.chooseCoffeeType = function(coffeeType){
-        if(!$scope.user.canBuyCoffeeType(coffeeType.price))
-        {
-            growl.addWarnMessage("It is not enought your balance to choose this coffee type.");
-        }
-        else
-        {
-            $scope.user.coffee.type.Set(coffeeType);
-            $scope.tabs[5].active = true;
-            
-            $scope.user.update(checkEquipmentFinish);
-        }
-    };
+        angular
+                .module('coffeeGame')
+                .controller('HeartbeatCtrl', HeartbeatCtrl);
 
-    $scope.chooseCoffeePrice = function(coffeePrice){
-        $scope.user.coffee.price.Set(coffeePrice);
-        
-        $scope.user.update(checkEquipmentFinish);
-    };
+        HeartbeatCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'userService'];
 
-    function checkEquipmentFinish (){
-        growl.addSuccessMessage("Thank you! You've finished choosing equipment!");
+        function HeartbeatCtrl($scope, $rootScope, $timeout, userService) {
 
-        $rootScope.$emit('gameStartEvent');
-    };
-});
+                var timer;
+
+                $rootScope.$on('userLogin', function() {
+                        startHeartbeat();
+                });
+
+                $rootScope.$on('userLogout', function() {
+                        stopHeartbeat();
+                });
+
+                function startHeartbeat() {
+                        if (!timer) {
+                                timer = $timeout(
+                                        function() {
+                                                userService.heartbeat();
+                                        },
+                                        5000);
+                        }
+                };
+
+                function stopHeartbeat() {
+                        if (timer) {
+                                $timeout.cancel(timer);
+                                timer = undefined;
+                        }
+                };
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('UserBalanceCtrl', UserBalanceCtrl)
+
+        UserBalanceCtrl.$inject = ['$scope'];
+
+        function UserBalanceCtrl($scope) {
+
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('GameCtrl', GameCtrl);
+
+        GameCtrl.$inject = ['$scope', '$rootScope', 'User'];
+
+        function GameCtrl($scope, $rootScope, User) {
+                $scope.game = {};
+
+                $rootScope.$on('gameStartEvent', function() {
+                        console.log('GameCtrl gameStartEvent');
+                        $scope.game.equipmentChooseFinished = true;
+                });
+
+                $rootScope.$on('userLogin', function(e, authUser) {
+                        $scope.user = new User(authUser);
+                        $scope.user.getBalance();
+                });
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('LoginCtrl', LoginCtrl);
+
+        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
+
+        function LoginCtrl($scope, authenticationService, $location) {
+                $scope.model = {
+                        cafeName: '',
+                        password: ''
+                };
+
+                $scope.login = function() {
+                        authenticationService.login({
+                                'cafeName': $scope.model.cafeName,
+                                'password': $scope.model.password,
+                                'submit': 'submit'
+                        }).success(function(result) {
+                                $location.path('/');
+                        });
+                }
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('GameProcessCtrl', GameProcessCtrl);
+
+        GameProcessCtrl.$inject = ['$scope', '$interval'];
+
+        function GameProcessCtrl($scope, $interval) {
+                $scope.model = {
+                        openedTime: 0
+                };
+
+                var refreshTime = 1000;
+
+                $scope.model.openedTimeDisplay = function() {
+                        return $scope.model.openedTime / (30 * 24 * 60 * 60 / 1000);
+                };
+
+                $interval(function() {
+                        $scope.model.openedTime = $scope.model.openedTime + 1;
+                }, refreshTime);
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('StartEquipmentChooseCtrl', StartEquipmentChooseCtrl);
+
+        StartEquipmentChooseCtrl.$inject = ['$scope', '$rootScope', 'gameSettingsService', 'growl'];
+
+        function StartEquipmentChooseCtrl($scope, $rootScope, gameSettingsService, growl) {
+
+                $scope.tabs = [{
+                        name: 'Grinder',
+                        active: true
+                }, {
+                        name: 'Machine',
+                        active: false
+                }, {
+                        name: 'Place',
+                        active: false
+                }, {
+                        name: 'Employees',
+                        active: false
+                }, {
+                        name: 'Coffee',
+                        active: false
+                }, {
+                        name: 'Drink price',
+                        active: false
+                }];
+
+                $scope.model = {};
+
+                getCoffeeGrinders();
+                getCoffeeMachines();
+                getCoffeePlaces();
+                getCoffeeEmployees();
+                getCoffeeTypes();
+                getCoffeePrices();
+
+                function getCoffeeGrinders() {
+                        gameSettingsService.getCoffeeGrinders()
+                                .success(function(data) {
+                                        $scope.model.coffeeGrinders = data;
+                                });
+                };
+
+                function getCoffeeMachines() {
+                        gameSettingsService.getCoffeeMachines()
+                                .success(function(data) {
+                                        $scope.model.coffeeMachines = data;
+                                });
+                };
+
+                function getCoffeePlaces() {
+                        gameSettingsService.getCoffeePlaces()
+                                .success(function(data) {
+                                        $scope.model.coffeePlaces = data;
+                                });
+                };
+
+                function getCoffeeEmployees() {
+                        gameSettingsService.getCoffeeEmployees()
+                                .success(function(data) {
+                                        $scope.model.coffeeEmployees = data;
+                                });
+                };
+
+                function getCoffeeTypes() {
+                        gameSettingsService.getCoffeeTypes()
+                                .success(function(data) {
+                                        $scope.model.coffeeTypes = data;
+                                });
+                };
+
+                function getCoffeePrices() {
+                        gameSettingsService.getCoffeePrices()
+                                .success(function(data) {
+                                        $scope.model.coffeePrices = data;
+                                });
+                };
+
+                $scope.chooseCoffeeGinder = function(coffeeGrinder) {
+                        if (!$scope.user.canBuyEquipment('grinder', coffeeGrinder)) {
+                                growl.addWarnMessage("It is not enought your balance to choose this grinder.");
+                        } else {
+                                $scope.user.equipment.Add('grinder', coffeeGrinder);
+                                $scope.tabs[1].active = true;
+
+                                $scope.user.update(checkEquipmentFinish);
+                        }
+                };
+
+                $scope.chooseCoffeeMachine = function(coffeeMachine) {
+                        if (!$scope.user.canBuyEquipment('machine', coffeeMachine)) {
+                                growl.addWarnMessage("It is not enought your balance to choose this machine.");
+                        } else {
+                                $scope.user.equipment.Add('machine', coffeeMachine);
+                                $scope.tabs[2].active = true;
+
+                                $scope.user.update(checkEquipmentFinish);
+                        }
+                };
+
+                $scope.chooseCoffeePlace = function(coffeePlace) {
+                        if (!$scope.user.canBuyEquipment('place', coffeePlace)) {
+                                growl.addWarnMessage("It is not enought your balance to choose this place.");
+                        } else {
+                                $scope.user.equipment.Add('place', coffeePlace);
+                                $scope.tabs[3].active = true;
+
+                                $scope.user.update(checkEquipmentFinish);
+                        }
+                };
+
+                $scope.chooseCoffeeEmployee = function(coffeeEmployee) {
+                        if (!$scope.user.canBuyEmployee(coffeeEmployee.price)) {
+                                growl.addWarnMessage("It is not enought your balance to choose this employee.");
+                        } else {
+                                $scope.user.employee.Set(coffeeEmployee);
+                                $scope.tabs[4].active = true;
+
+                                $scope.user.update(checkEquipmentFinish);
+                        }
+                };
+
+                $scope.chooseCoffeeType = function(coffeeType) {
+                        if (!$scope.user.canBuyCoffeeType(coffeeType.price)) {
+                                growl.addWarnMessage("It is not enought your balance to choose this coffee type.");
+                        } else {
+                                $scope.user.coffee.type.Set(coffeeType);
+                                $scope.tabs[5].active = true;
+
+                                $scope.user.update(checkEquipmentFinish);
+                        }
+                };
+
+                $scope.chooseCoffeePrice = function(coffeePrice) {
+                        $scope.user.coffee.price.Set(coffeePrice);
+
+                        $scope.user.update(checkEquipmentFinish);
+                };
+
+                function checkEquipmentFinish() {
+                        growl.addSuccessMessage("Thank you! You've finished choosing equipment!");
+
+                        $rootScope.$emit('gameStartEvent');
+                };
+        };
 })();

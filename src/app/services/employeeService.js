@@ -4,23 +4,27 @@
 
         angular
                 .module('coffeeGame')
-                .factory('Employee', function() {
-                        var Employee = function() {
-                                this.id = 0;
-                                this.pricePerMonth = 0;
-                                this.name = '';
-                        };
+                .factory('Employee', Employee);
 
-                        Employee.prototype.Set = function(employee) {
-                                this.id = employee.id;
-                                this.pricePerMonth = employee.price;
-                                this.name = employee.name;
-                        };
+        Employee.$inject = [];
 
-                        Employee.prototype.update = function(callback) {
-                                callback();
-                        };
+        function Employee() {
+                var Employee = function() {
+                        this.id = 0;
+                        this.pricePerMonth = 0;
+                        this.name = '';
+                };
 
-                        return Employee;
-                });
+                Employee.prototype.Set = function(employee) {
+                        this.id = employee.id;
+                        this.pricePerMonth = employee.price;
+                        this.name = employee.name;
+                };
+
+                Employee.prototype.update = function(callback) {
+                        callback();
+                };
+
+                return Employee;
+        };
 })();

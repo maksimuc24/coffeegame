@@ -4,47 +4,52 @@
 
         angular
                 .module('coffeeGame')
-                .factory('gameSettingsService', ['$http','serverUrl', function($http,serverUrl){
- 
-	var urlBase = serverUrl+'/game/api/settings';
-	var dataFactory = {};
+                .factory('gameSettingsService', gameSettingsService);
+        gameSettingsService = ['$http', 'serverUrl'];
 
-	dataFactory.getCoffeeGrinders = function(){
-		return $http.get(urlBase + '/grinders');
-	};
+        function gameSettingsService($http, serverUrl) {
 
-	dataFactory.getCoffeeMachines = function(){
-		return $http.get(urlBase + '/machines');
-	};
+                var urlBase = serverUrl + '/game/api/settings';
+                var dataFactory = {};
 
-	dataFactory.getCoffeePlaces = function(){
-		return $http.get(urlBase + '/places');
-	};
+                dataFactory.getCoffeeGrinders = function() {
+                        return $http.get(urlBase + '/grinders');
+                };
 
-	dataFactory.getCoffeeEmployees = function(){
-		return $http.get(urlBase + '/employees');
-	};
+                dataFactory.getCoffeeMachines = function() {
+                        return $http.get(urlBase + '/machines');
+                };
 
-	dataFactory.getCoffeeTypes = function(){
-		return $http.get(urlBase + '/coffeeTypes');
-	};
+                dataFactory.getCoffeePlaces = function() {
+                        return $http.get(urlBase + '/places');
+                };
 
-	dataFactory.getCoffeePrices = function(){
-		return $http.get(urlBase + '/coffeePrices');
-	};
+                dataFactory.getCoffeeEmployees = function() {
+                        return $http.get(urlBase + '/employees');
+                };
 
-	dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId){
-		return $http({
-			'url': urlBase + '/setUserEquipment', 
-			'method': 'POST',
-			'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
-			'data': $.param({
-				'equipmentId': equipmentId,
-				'equipmentTypeId': equipmentTypeId
-			})
-		});
-	};
+                dataFactory.getCoffeeTypes = function() {
+                        return $http.get(urlBase + '/coffeeTypes');
+                };
 
-	return dataFactory;
-}]);
+                dataFactory.getCoffeePrices = function() {
+                        return $http.get(urlBase + '/coffeePrices');
+                };
+
+                dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId) {
+                        return $http({
+                                'url': urlBase + '/setUserEquipment',
+                                'method': 'POST',
+                                'headers': {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                'data': $.param({
+                                        'equipmentId': equipmentId,
+                                        'equipmentTypeId': equipmentTypeId
+                                })
+                        });
+                };
+
+                return dataFactory;
+        };
 })();

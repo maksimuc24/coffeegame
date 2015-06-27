@@ -4,23 +4,27 @@
 
         angular
                 .module('coffeeGame')
-                .factory('CoffeeType', function() {
-                        var CoffeeType = function() {
-                                this.id = 0;
-                                this.name = '';
-                                this.pricePerKg = 0;
-                        };
+                .factory('CoffeeType', CoffeeType);
 
-                        CoffeeType.prototype.Set = function(coffeeType) {
-                                this.id = coffeeType.id;
-                                this.name = coffeeType.name;
-                                this.pricePerKg = coffeeType.price;
-                        };
+        CoffeeType.$inject = [];
 
-                        CoffeeType.prototype.update = function(callback) {
-                                callback();
-                        };
+        function CoffeeType() {
+                var CoffeeType = function() {
+                        this.id = 0;
+                        this.name = '';
+                        this.pricePerKg = 0;
+                };
 
-                        return CoffeeType;
-                });
+                CoffeeType.prototype.Set = function(coffeeType) {
+                        this.id = coffeeType.id;
+                        this.name = coffeeType.name;
+                        this.pricePerKg = coffeeType.price;
+                };
+
+                CoffeeType.prototype.update = function(callback) {
+                        callback();
+                };
+
+                return CoffeeType;
+        };
 })();
