@@ -21,18 +21,70 @@ app.config(['$routeProvider',
       });
   }]);
 app.constant('serverUrl', 'http://coffeegame/server');
-app.factory('User', ['userService', function(userService){
-	var user = function(authUser){
+app.factory('User', 
+	['UserEquipment', 'Employee', 'CoffeeType', 'CoffeePrice', 'userService',
+	function(UserEquipment, Employee, CoffeeType, CoffeePrice, userService){
+	var User = function (authUser){
 		this.id = authUser.id;
 		this.cafeName = authUser.cafeName;
-		this.authorized = authUser.authorized;
+
+		this.balance = -1;
+
+		this.displayBalance = function () {
+			return this.balance - this.equipment.TotalAmount();
+		};
+
+		this.equipment = new UserEquipment();
+		this.employee = new Employee();
+		this.coffee = {
+			type: new CoffeeType(),
+			price: new CoffeePrice()
+		};
 	};
 
-	user.prototype.getBalance = function(){
-		var balance = userService.getBalance();
+	User.prototype.getBalance = function() {
+		var self = this;
+
+		return userService.getBalance()
+				.success(function(data){
+					self.balance = data;
+				});
 	};
 
-	return user;
+	User.prototype.isAuthenticated = function() {
+		return this.id != '' && this.id != undefined;
+	};
+
+	User.prototype.canBuyEquipment = function(name, item) {
+		var existingItemPrice = this.equipment.getItemPrice(name);
+		var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+		var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+		return (this.balance - this.equipment.TotalAmount() + existingItemPrice - existingEmployeePrice - existingCoffeeTypePrice) > item.price;
+	};
+
+	User.prototype.canBuyEmployee = function(price) {
+		var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+		var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+		return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
+	};
+
+	User.prototype.canBuyCoffeeType = function(price) {
+		var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+		var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+		return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
+	};
+
+	User.prototype.update = function(callback) {
+		if(this.equipment.items.length == 3
+			&& this.employee.id != 0
+			&& this.coffee.type.id != 0
+			&& this.coffee.price.id != 0)
+		{
+			callback();
+		}
+	};
+
+	return User;
 }]);
 app.factory('authenticationService', ['$http', 'serverUrl', function($http, serverUrl){
 	var urlBase = serverUrl + '/authentication';
@@ -54,15 +106,71 @@ app.factory('authenticationService', ['$http', 'serverUrl', function($http, serv
 			'data': $.param({
 				'cafeName': data.cafeName,
 				'password': data.password,
-				'submit': data.submit
+				'submit'  : data.submit
 			})
 		});
 	};
 	
 	return dataFactory;
 }]);
-app.factory('gameSettingsService', ['$http', 'serverUrl', function($http, serverUrl){
-	var urlBase = serverUrl + '/game/api/settings';
+app.factory('CoffeePrice', function(){
+	var CoffeePrice = function (){
+		this.id = 0;
+		this.price = 0;
+	};
+
+	CoffeePrice.prototype.Set = function(coffeePrice) {
+		this.id = coffeePrice.id;
+		this.price = coffeePrice.price;
+	};
+
+	CoffeePrice.prototype.update = function(callback) {
+		callback(); 
+	};
+
+	return CoffeePrice;
+});
+app.factory('CoffeeType', function(){
+	var CoffeeType = function (){
+		this.id = 0;
+		this.name = '';
+		this.pricePerKg = 0;
+	};
+
+	CoffeeType.prototype.Set = function(coffeeType) {
+		this.id = coffeeType.id;
+		this.name = coffeeType.name;
+		this.pricePerKg = coffeeType.price;
+	};
+
+	CoffeeType.prototype.update = function(callback) {
+		callback();
+	};
+
+	return CoffeeType;
+});
+app.factory('Employee', function(){
+	var Employee = function (){
+		this.id = 0;
+		this.pricePerMonth = 0;
+		this.name = '';
+	};
+
+	Employee.prototype.Set = function(employee) {
+		this.id = employee.id;
+		this.pricePerMonth = employee.price;
+		this.name = employee.name;
+	};
+
+	Employee.prototype.update = function(callback) {
+		callback();
+	};
+
+	return Employee;
+});
+app.factory('gameSettingsService', ['$http','serverUrl', function($http,serverUrl){
+ 
+	var urlBase = serverUrl+'/game/api/settings';
 	var dataFactory = {};
 
 	dataFactory.getCoffeeGrinders = function(){
@@ -89,9 +197,85 @@ app.factory('gameSettingsService', ['$http', 'serverUrl', function($http, server
 		return $http.get(urlBase + '/coffeePrices');
 	};
 
+	dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId){
+		return $http({
+			'url': urlBase + '/setUserEquipment', 
+			'method': 'POST',
+			'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
+			'data': $.param({
+				'equipmentId': equipmentId,
+				'equipmentTypeId': equipmentTypeId
+			})
+		});
+	};
+
 	return dataFactory;
 }]);
+app.factory('UserEquipment', function(){
+	var UserEquipment = function (){
+		this.items = [];	
+	};
 
+	UserEquipment.prototype.Add = function(name, item) {
+		if(this.Exists(name))
+		{
+			var index = this.IndexOf(name);
+			this.items[index].name = name;
+			this.items[index].id = item.id;
+			this.items[index].price = parseFloat(item.price);
+			this.items[index].item = item.item;
+		}else{
+			this.items.push({
+				'name': name,
+				'id': item.id,
+				'price': parseFloat(item.price),
+				'item': item
+			});
+		}
+	};
+
+	UserEquipment.prototype.Exists = function(name, id) {
+		for (var i = 0; i < this.items.length; i++) {
+			if(this.items[i].name == name && (!id || this.items[i].id == id))
+			{
+				return true;
+			}
+		};
+	};
+
+	UserEquipment.prototype.IndexOf = function(name, id) {
+		for (var i = 0; i < this.items.length; i++) {
+			if(this.items[i].name == name && (!id || this.items[i].id == id))
+			{
+				return i;
+			}
+		};
+	};
+
+	UserEquipment.prototype.getItemPrice = function(name) {
+		if(this.Exists(name))
+		{
+			var index = this.IndexOf(name);
+			return parseFloat(this.items[index].price);
+		}else {
+			return 0;
+		}
+	};
+
+	UserEquipment.prototype.TotalAmount = function() {
+		var total = 0;
+		for (var i = 0; i < this.items.length; i++) {
+			total += parseFloat(this.items[i].price);
+		};
+		return total;
+	};
+
+	UserEquipment.prototype.update = function(callback) {
+		callback();
+	};
+
+	return UserEquipment;
+});
 app.factory('userService', ['$http', 'serverUrl', function($http, serverUrl){
 	var urlBase = serverUrl + '/game/api/user';
 	var dataFactory = {};
@@ -100,20 +284,9 @@ app.factory('userService', ['$http', 'serverUrl', function($http, serverUrl){
 		return $http.get(urlBase + '/balance');
 	};
 
-	dataFactory.setUserEquipment = function(userEquipmentList){
-		return $http({
-			'url': urlBase + '/setUserEquipment', 
-			'method': 'POST',
-			'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
-			'data': $.param({
-				'userEquipmentList': userEquipmentList
-			})
-		});
-	};
-
 	dataFactory.heartbeat = function(){
 		return $http.get(urlBase + '/heartbeat');
-	};
+	}; 
 
 	return dataFactory;
 }]);
@@ -169,8 +342,7 @@ app.controller('UserAuthCtrl', function($scope, $rootScope, authenticationServic
 		.success(function(data){
 			var user = {
 				'id': data.user_id,
-				'cafeName': data.cafeName,
-				'authorized': false
+				'cafeName': data.cafeName 
 			};
 
 			if(user.id != '' && user.id != undefined)

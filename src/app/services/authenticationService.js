@@ -18,7 +18,7 @@ app.factory('authenticationService', ['$http', 'serverUrl', function($http, serv
 			'data': $.param({
 				'cafeName': data.cafeName,
 				'password': data.password,
-				'submit': data.submit
+				'submit'  : data.submit
 			})
 		});
 	};

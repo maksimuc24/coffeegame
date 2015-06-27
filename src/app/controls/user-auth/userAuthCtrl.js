@@ -20,8 +20,7 @@ app.controller('UserAuthCtrl', function($scope, $rootScope, authenticationServic
 		.success(function(data){
 			var user = {
 				'id': data.user_id,
-				'cafeName': data.cafeName,
-				'authorized': false
+				'cafeName': data.cafeName 
 			};
 
 			if(user.id != '' && user.id != undefined)

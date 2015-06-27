@@ -1,5 +1,6 @@
-app.factory('gameSettingsService', ['$http', 'serverUrl', function($http, serverUrl){
-	var urlBase = serverUrl + '/game/api/settings';
+app.factory('gameSettingsService', ['$http','serverUrl', function($http,serverUrl){
+ 
+	var urlBase = serverUrl+'/game/api/settings';
 	var dataFactory = {};
 
 	dataFactory.getCoffeeGrinders = function(){
@@ -24,6 +25,18 @@ app.factory('gameSettingsService', ['$http', 'serverUrl', function($http, server
 
 	dataFactory.getCoffeePrices = function(){
 		return $http.get(urlBase + '/coffeePrices');
+	};
+
+	dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId){
+		return $http({
+			'url': urlBase + '/setUserEquipment', 
+			'method': 'POST',
+			'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
+			'data': $.param({
+				'equipmentId': equipmentId,
+				'equipmentTypeId': equipmentTypeId
+			})
+		});
 	};
 
 	return dataFactory;
