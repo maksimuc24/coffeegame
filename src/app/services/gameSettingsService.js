@@ -5,7 +5,7 @@
         angular
                 .module('coffeeGame')
                 .factory('gameSettingsService', gameSettingsService);
-        gameSettingsService = ['$http', 'serverUrl'];
+        gameSettingsService.$inject = ['$http', 'serverUrl'];
 
         function gameSettingsService($http, serverUrl) {
 
