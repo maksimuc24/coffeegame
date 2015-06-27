@@ -67,8 +67,11 @@ gulp.task('clean', function (done) {
     require('del')([
         template('<%= archive %>', dirs),
         template('<%= dist %>', dirs)
+         
     ], done);
-});
+}); 
+
+
 
 gulp.task('copy', [
     'copy:.htaccess',
@@ -78,6 +81,13 @@ gulp.task('copy', [
     'copy:misc',
     'copy:normalize'
 ]);
+
+gulp.task('copy:production-index.html', function () {
+    return gulp.src(template('<%= src %>/index.html', dirs))
+               .pipe(plugins.replace(/main-src.js/g, 'production/main-src.js'))
+               .pipe(gulp.dest(template('<%= dist %>', dirs)));
+});
+
 
 gulp.task('copy:.htaccess', function () {
     return gulp.src('node_modules/apache-server-configs/dist/.htaccess')
@@ -179,7 +189,8 @@ gulp.task('scripts-watch', function(){
 gulp.task('compress', function() {
   return gulp.src('server/dist/js/main-src.js')
     .pipe(uglify())
-    .pipe(gulp.dest('server/dist/js/production/'));
+   .pipe(gulp.dest('server/dist/js/production/')); 
+
 });
 
 /**
@@ -218,12 +229,30 @@ gulp.task('archive', function (done) {
     done);
 });
 
+/**
+* Build for dev brach
+*/
 gulp.task('build', function (done) {
     runSequence(
         ['clean'],
         'copy', 'scripts',
     done);
 });
+
+/**
+* Build for production brach
+*/
+gulp.task('build-production', function (done) {
+    runSequence(
+        ['clean'],
+        'copy', 
+        'scripts',
+        'compress',
+        'copy:production-index.html',
+    done);
+});
+
+
 
 gulp.task('server', function (done) {
     runSequence(
