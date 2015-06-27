@@ -45,10 +45,18 @@
 (function() {
         'use strict'
 
+        function getLocation() {
+                var url = window.location.href;
+                var serverUrl = "http://coffeegame/server";
 
-        angular
+                if (url.indexOf("http://cafe.jaknakavu.eu/") >= 0) {
+                        serverUrl = 'http://cafe.jaknakavu.eu/server';
+                }
+                return serverUrl;
+        } 
+        angular 
                 .module('coffeeGame')
-                .constant('serverUrl', 'http://coffeegame/server');
+                .constant('serverUrl', getLocation());
 })();
 
 (function() {
@@ -518,31 +526,6 @@
 
         angular
                 .module('coffeeGame')
-                .controller('GameCtrl', GameCtrl);
-
-        GameCtrl.$inject = ['$scope', '$rootScope', 'User'];
-
-        function GameCtrl($scope, $rootScope, User) {
-                $scope.game = {};
-
-                $rootScope.$on('gameStartEvent', function() {
-                        console.log('GameCtrl gameStartEvent');
-                        $scope.game.equipmentChooseFinished = true;
-                });
-
-                $rootScope.$on('userLogin', function(e, authUser) {
-                        $scope.user = new User(authUser);
-                        $scope.user.getBalance();
-                });
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
                 .controller('LoginCtrl', LoginCtrl);
 
         LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
@@ -562,6 +545,31 @@
                                 $location.path('/');
                         });
                 }
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('GameCtrl', GameCtrl);
+
+        GameCtrl.$inject = ['$scope', '$rootScope', 'User'];
+
+        function GameCtrl($scope, $rootScope, User) {
+                $scope.game = {};
+
+                $rootScope.$on('gameStartEvent', function() {
+                        console.log('GameCtrl gameStartEvent');
+                        $scope.game.equipmentChooseFinished = true;
+                });
+
+                $rootScope.$on('userLogin', function(e, authUser) {
+                        $scope.user = new User(authUser);
+                        $scope.user.getBalance();
+                });
         };
 })();
 
