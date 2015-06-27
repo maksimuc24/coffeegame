@@ -18,6 +18,8 @@ var watch = require('gulp-watch');
 var concat = require('gulp-concat');
 
 var livereload = require('gulp-livereload');
+
+var uglify = require('gulp-uglify');
 // -----------------------------------------------------------------------------
 // | Helper tasks                                                              |
 // -----------------------------------------------------------------------------
@@ -157,7 +159,9 @@ gulp.task('scripts', function(){
             .pipe(gulp.dest(template('<%= dist %>/js', dirs)))
             .pipe(livereload());
 });
-
+/**
+* Working wathc script
+**/
 gulp.task('scripts-watch', function(){
   gulp.watch([
               'src/js/*.js',
@@ -168,6 +172,14 @@ gulp.task('scripts-watch', function(){
                 'copy:index.html',
                 'copy:main.css',
                 'copy:misc']);
+});
+/**
+* Js uglify
+*/
+gulp.task('compress', function() {
+  return gulp.src('server/dist/js/main-src.js')
+    .pipe(uglify())
+    .pipe(gulp.dest('server/dist/js/production/'));
 });
 
 /**
@@ -192,6 +204,8 @@ gulp.task('watch:html', function() {
   livereload.listen();
   gulp.watch('src/**/**/**/*.html', ['copy:misc']);
 });
+
+
 // -----------------------------------------------------------------------------
 // | Main tasks                                                                |
 // -----------------------------------------------------------------------------

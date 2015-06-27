@@ -1,4 +1,10 @@
-app.controller('StartEquipmentChooseCtrl', function($scope, $rootScope, gameSettingsService, growl) {
+(function() {
+        'use strict'
+
+   
+        angular
+                .module('coffeeGame')
+                .controller('StartEquipmentChooseCtrl', function($scope, $rootScope, gameSettingsService, growl) {
 
     $scope.tabs = [
         {name: 'Grinder', active: true},
@@ -137,3 +143,4 @@ app.controller('StartEquipmentChooseCtrl', function($scope, $rootScope, gameSett
         $rootScope.$emit('gameStartEvent');
     };
 });
+})();

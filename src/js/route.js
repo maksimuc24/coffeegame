@@ -1,4 +1,8 @@
-app.config(['$routeProvider',
+(function() {
+        'use strict'
+
+   
+        angular.module('coffeeGame').config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/index', {
@@ -14,3 +18,4 @@ app.config(['$routeProvider',
         redirectTo: '/index'
       });
   }]);
+})();

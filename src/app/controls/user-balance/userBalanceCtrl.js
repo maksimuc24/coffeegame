@@ -1,3 +1,10 @@
-app.controller('UserBalanceCtrl', function($scope){
-	
-});
+(function() {
+                'use strict'
+
+
+                angular
+                		.module('coffeeGame')
+                		.controller('UserBalanceCtrl', function($scope) {
+
+                });
+})();

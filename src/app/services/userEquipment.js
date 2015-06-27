@@ -1,4 +1,10 @@
-app.factory('UserEquipment', function(){
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .factory('UserEquipment', function(){
 	var UserEquipment = function (){
 		this.items = [];	
 	};
@@ -63,3 +69,4 @@ app.factory('UserEquipment', function(){
 
 	return UserEquipment;
 });
+})();

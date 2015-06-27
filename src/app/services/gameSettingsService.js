@@ -1,4 +1,10 @@
-app.factory('gameSettingsService', ['$http','serverUrl', function($http,serverUrl){
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .factory('gameSettingsService', ['$http','serverUrl', function($http,serverUrl){
  
 	var urlBase = serverUrl+'/game/api/settings';
 	var dataFactory = {};
@@ -41,3 +47,4 @@ app.factory('gameSettingsService', ['$http','serverUrl', function($http,serverUr
 
 	return dataFactory;
 }]);
+})();

@@ -1,1 +1,6 @@
-app.constant('serverUrl', 'http://coffeegame/server');
+(function() {
+        'use strict'
+
+   
+        angular.module('coffeeGame').constant('serverUrl', 'http://coffeegame/server');
+})();

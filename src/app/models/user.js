@@ -1,65 +1,68 @@
-app.factory('User', 
-	['UserEquipment', 'Employee', 'CoffeeType', 'CoffeePrice', 'userService',
-	function(UserEquipment, Employee, CoffeeType, CoffeePrice, userService){
-	var User = function (authUser){
-		this.id = authUser.id;
-		this.cafeName = authUser.cafeName;
+(function() {
+                'use strict'
 
-		this.balance = -1;
 
-		this.displayBalance = function () {
-			return this.balance - this.equipment.TotalAmount();
-		};
+                angular
+                        .module('coffeeGame')
+                        .factory('User', ['UserEquipment', 'Employee', 'CoffeeType', 'CoffeePrice', 'userService',
+                                function(UserEquipment, Employee, CoffeeType, CoffeePrice, userService) {
+                                        var User = function(authUser) {
+                                                this.id = authUser.id;
+                                                this.cafeName = authUser.cafeName;
 
-		this.equipment = new UserEquipment();
-		this.employee = new Employee();
-		this.coffee = {
-			type: new CoffeeType(),
-			price: new CoffeePrice()
-		};
-	};
+                                                this.balance = -1;
 
-	User.prototype.getBalance = function() {
-		var self = this;
+                                                this.displayBalance = function() {
+                                                        return this.balance - this.equipment.TotalAmount();
+                                                };
 
-		return userService.getBalance()
-				.success(function(data){
-					self.balance = data;
-				});
-	};
+                                                this.equipment = new UserEquipment();
+                                                this.employee = new Employee();
+                                                this.coffee = {
+                                                        type: new CoffeeType(),
+                                                        price: new CoffeePrice()
+                                                };
+                                        };
 
-	User.prototype.isAuthenticated = function() {
-		return this.id != '' && this.id != undefined;
-	};
+                                        User.prototype.getBalance = function() {
+                                                var self = this;
 
-	User.prototype.canBuyEquipment = function(name, item) {
-		var existingItemPrice = this.equipment.getItemPrice(name);
-		var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
-		var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
-		return (this.balance - this.equipment.TotalAmount() + existingItemPrice - existingEmployeePrice - existingCoffeeTypePrice) > item.price;
-	};
+                                                return userService.getBalance()
+                                                        .success(function(data) {
+                                                                self.balance = data;
+                                                        });
+                                        };
 
-	User.prototype.canBuyEmployee = function(price) {
-		var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
-		var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
-		return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
-	};
+                                        User.prototype.isAuthenticated = function() {
+                                                return this.id != '' && this.id != undefined;
+                                        };
 
-	User.prototype.canBuyCoffeeType = function(price) {
-		var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
-		var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
-		return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
-	};
+                                        User.prototype.canBuyEquipment = function(name, item) {
+                                                var existingItemPrice = this.equipment.getItemPrice(name);
+                                                var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+                                                var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+                                                return (this.balance - this.equipment.TotalAmount() + existingItemPrice - existingEmployeePrice - existingCoffeeTypePrice) > item.price;
+                                        };
 
-	User.prototype.update = function(callback) {
-		if(this.equipment.items.length == 3
-			&& this.employee.id != 0
-			&& this.coffee.type.id != 0
-			&& this.coffee.price.id != 0)
-		{
-			callback();
-		}
-	};
+                                        User.prototype.canBuyEmployee = function(price) {
+                                                var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+                                                var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+                                                return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
+                                        };
 
-	return User;
-}]);
+                                        User.prototype.canBuyCoffeeType = function(price) {
+                                                var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+                                                var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+                                                return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
+                                        };
+
+                                        User.prototype.update = function(callback) {
+                                                if (this.equipment.items.length == 3 && this.employee.id != 0 && this.coffee.type.id != 0 && this.coffee.price.id != 0) {
+                                                        callback();
+                                                }
+                                        };
+
+                                        return User;
+                                }
+                        ]);
+})();

@@ -1,4 +1,10 @@
-app.controller('LoginCtrl', function($scope, authenticationService, $location){
+(function() {
+        'use strict'
+
+   
+        angular
+        .module('coffeeGame')
+        .controller('LoginCtrl', function($scope, authenticationService, $location){
 	$scope.model = {
 		cafeName: '',
 		password: ''
@@ -14,3 +20,4 @@ app.controller('LoginCtrl', function($scope, authenticationService, $location){
 		});
 	}
 });
+})();

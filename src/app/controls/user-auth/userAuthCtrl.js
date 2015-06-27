@@ -1,4 +1,10 @@
-app.controller('UserAuthCtrl', function($scope, $rootScope, authenticationService){
+(function() {
+        'use strict'
+
+   
+        angular
+        		.module('coffeeGame')
+        		.controller('UserAuthCtrl', function($scope, $rootScope, authenticationService){
 
 	$scope.user = {
 		authorized: false
@@ -34,3 +40,4 @@ app.controller('UserAuthCtrl', function($scope, $rootScope, authenticationServic
 		});
 	};
 });
+})();
