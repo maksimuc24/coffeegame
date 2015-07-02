@@ -6,7 +6,8 @@
                 .module('coffeeGame', ['ngRoute',
                         'ngCookies',
                         'ui.bootstrap',
-                        'angular-growl'
+                        'angular-growl',
+                        'pascalprecht.translate'
                 ]);
 
 
@@ -15,6 +16,7 @@
                 .ready(function() {
                         angular.bootstrap(document, ['coffeeGame']);
                 });
+ 
 })();
 
 (function() {
@@ -57,6 +59,20 @@
         angular 
                 .module('coffeeGame')
                 .constant('serverUrl', getLocation());
+
+        angular
+                .module('coffeeGame')
+                .config(['$translateProvider', function($translateProvider) {
+                        // add translation tables
+                        $translateProvider.translations('en', translationsEN);
+                        $translateProvider.translations('cz', translationsCZ);
+                        $translateProvider.translations('ru', translationsRU);
+                        $translateProvider.translations('ua', translationsUA);
+                        $translateProvider.preferredLanguage('en');
+                        $translateProvider.fallbackLanguage('cz');
+                        // remember language
+                        $translateProvider.useLocalStorage();
+                }]);
 })();
 
 (function() {
@@ -464,6 +480,21 @@
 
         angular
                 .module('coffeeGame')
+                .controller('UserBalanceCtrl', UserBalanceCtrl)
+
+        UserBalanceCtrl.$inject = ['$scope'];
+
+        function UserBalanceCtrl($scope) {
+
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('UserAuthCtrl', UserAuthCtrl);
 
         UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService'];
@@ -511,6 +542,31 @@
 
         angular
                 .module('coffeeGame')
+                .controller('GameCtrl', GameCtrl);
+
+        GameCtrl.$inject = ['$scope', '$rootScope', 'User'];
+
+        function GameCtrl($scope, $rootScope, User) {
+                $scope.game = {};
+
+                $rootScope.$on('gameStartEvent', function() {
+                        console.log('GameCtrl gameStartEvent');
+                        $scope.game.equipmentChooseFinished = true;
+                });
+
+                $rootScope.$on('userLogin', function(e, authUser) {
+                        $scope.user = new User(authUser);
+                        $scope.user.getBalance();
+                });
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('LoginCtrl', LoginCtrl);
 
         LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
@@ -536,40 +592,17 @@
 (function() {
         'use strict'
 
-
         angular
                 .module('coffeeGame')
-                .controller('UserBalanceCtrl', UserBalanceCtrl)
+                .controller('TranslateCtrl', TranslateCtrl);
 
-        UserBalanceCtrl.$inject = ['$scope'];
+        TranslateCtrl.$inject = ['$scope', '$translate'];
 
-        function UserBalanceCtrl($scope) {
+        function TranslateCtrl($scope, $translate) {
+                $scope.changeLanguage = function(langKey) { 
+                        $translate.uses(langKey);
+                }
 
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('GameCtrl', GameCtrl);
-
-        GameCtrl.$inject = ['$scope', '$rootScope', 'User'];
-
-        function GameCtrl($scope, $rootScope, User) {
-                $scope.game = {};
-
-                $rootScope.$on('gameStartEvent', function() {
-                        console.log('GameCtrl gameStartEvent');
-                        $scope.game.equipmentChooseFinished = true;
-                });
-
-                $rootScope.$on('userLogin', function(e, authUser) {
-                        $scope.user = new User(authUser);
-                        $scope.user.getBalance();
-                });
         };
 })();
 

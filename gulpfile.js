@@ -203,7 +203,7 @@ gulp.task('watch',['watch:js',
 
 gulp.task('watch:js', function() {
   livereload.listen();
-  gulp.watch('src/**/**/*.js', ['scripts']);
+  gulp.watch('src/**/**/**/**/**/**/**/*.js', ['scripts']);
 });
 
 gulp.task('watch:css', function() {
@@ -213,7 +213,7 @@ gulp.task('watch:css', function() {
 
 gulp.task('watch:html', function() {
   livereload.listen();
-  gulp.watch('src/**/**/**/*.html', ['copy:misc']);
+  gulp.watch('src/**/**/**/*.html', ['copy:misc','copy:index.html']);
 });
 
 

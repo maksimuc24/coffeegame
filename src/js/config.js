@@ -13,4 +13,18 @@
         angular 
                 .module('coffeeGame')
                 .constant('serverUrl', getLocation());
+
+        angular
+                .module('coffeeGame')
+                .config(['$translateProvider', function($translateProvider) {
+                        // add translation tables
+                        $translateProvider.translations('en', translationsEN);
+                        $translateProvider.translations('cz', translationsCZ);
+                        $translateProvider.translations('ru', translationsRU);
+                        $translateProvider.translations('ua', translationsUA);
+                        $translateProvider.preferredLanguage('en');
+                        $translateProvider.fallbackLanguage('cz');
+                        // remember language
+                        $translateProvider.useLocalStorage();
+                }]);
 })();

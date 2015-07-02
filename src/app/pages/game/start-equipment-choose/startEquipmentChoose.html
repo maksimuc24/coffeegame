@@ -208,35 +208,4 @@
 	</div>
 </div>   
 </div>
-
-
-<button ng-click="openAccordion()">test</button>
  
- {{tabs[5].active}}1
-  <accordion close-others="false">
-    <accordion-group>
-        <accordion-heading>
-             <i class="fa fa-money fa-lg fa-fw"></i>
-             <i ng-show="user.equipment.coffeePrice.id"></i> 
-             {{tabs[5].name}}
-        </accordion-heading>
-      This content is straight in the template.
-    </accordion-group>
-
-
-
-    <accordion-group heading="{{group.title}}" ng-repeat="group in groups" is-open="true">
-      {{group.content}} 
-    </accordion-group>
-    <accordion-group heading="Dynamic Body Content">
-      <p>The body of the accordion group grows to fit the contents</p>
-        <button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
-        <div ng-repeat="item in items">{{item}}</div>
-    </accordion-group>
-    <accordion-group is-open="tabs[5].active">
-        <accordion-heading>
-            I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-        </accordion-heading>
-        This is just some content to illustrate fancy headings.
-    </accordion-group>
-  </accordion>

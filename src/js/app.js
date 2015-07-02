@@ -6,7 +6,8 @@
                 .module('coffeeGame', ['ngRoute',
                         'ngCookies',
                         'ui.bootstrap',
-                        'angular-growl'
+                        'angular-growl',
+                        'pascalprecht.translate'
                 ]);
 
 
@@ -15,4 +16,5 @@
                 .ready(function() {
                         angular.bootstrap(document, ['coffeeGame']);
                 });
+ 
 })();
