@@ -12,7 +12,7 @@
         <div class="panel">
           <div class="panel-heading">
 				    <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion1" href="#collapse1">
+              <a data-toggle="collapse" data-parent="#accordion1" href="#collapse1" id='accordion-1'>
                 <i class="fa fa-certificate fa-lg fa-fw"></i><i ng-show="user.equipment.grinder.id"></i> {{tabs[0].name}}
               </a>
 				    </h4>
@@ -54,7 +54,7 @@
         <div class="panel">
           <div class="panel-heading">
             <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion1" href="#collapse2">
+              <a data-toggle="collapse" data-parent="#accordion1" href="#collapse2" id='accordion-2'>
                 <i class="fa fa-tint fa-lg fa-fw"></i><i ng-show="user.equipment.machine.id"></i> {{tabs[1].name}}
               </a>
             </h4>
@@ -85,7 +85,7 @@
         <div class="panel">
           <div class="panel-heading">
             <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion1" href="#collapse3">
+              <a data-toggle="collapse" data-parent="#accordion1" href="#collapse3" id='accordion-3'>
                 <i class="fa fa-home fa-lg fa-fw"></i><i ng-show="user.equipment.place.id"></i> {{tabs[2].name}}
               </a>
             </h4>
@@ -117,7 +117,7 @@
 			  <div class="panel">
                 <div class="panel-heading">
                   <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse4">
+                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse4" id='accordion-4'>
                       <i class="fa fa-users fa-lg fa-fw"></i><i ng-show="user.equipment.employee.id"></i> {{tabs[3].name}}
                     </a>
                   </h4>
@@ -149,7 +149,7 @@
 			  <div class="panel">
                 <div class="panel-heading">
                   <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse5">
+                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse5" id='accordion-5'>
                       <i class="fa fa-cube fa-lg fa-fw"></i><i ng-show="user.equipment.coffeeType.id"></i> {{tabs[4].name}}
                     </a>
                   </h4>
@@ -181,7 +181,7 @@
 			  <div class="panel">
                 <div class="panel-heading">
                   <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse6">
+                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse6" id='accordion-6'>
                       <i class="fa fa-money fa-lg fa-fw"></i><i ng-show="user.equipment.coffeePrice.id"></i> {{tabs[5].name}}
                     </a>
                   </h4>
@@ -208,3 +208,35 @@
 	</div>
 </div>   
 </div>
+
+
+<button ng-click="openAccordion()">test</button>
+ 
+ {{tabs[5].active}}1
+  <accordion close-others="false">
+    <accordion-group>
+        <accordion-heading>
+             <i class="fa fa-money fa-lg fa-fw"></i>
+             <i ng-show="user.equipment.coffeePrice.id"></i> 
+             {{tabs[5].name}}
+        </accordion-heading>
+      This content is straight in the template.
+    </accordion-group>
+
+
+
+    <accordion-group heading="{{group.title}}" ng-repeat="group in groups" is-open="true">
+      {{group.content}} 
+    </accordion-group>
+    <accordion-group heading="Dynamic Body Content">
+      <p>The body of the accordion group grows to fit the contents</p>
+        <button class="btn btn-default btn-sm" ng-click="addItem()">Add Item</button>
+        <div ng-repeat="item in items">{{item}}</div>
+    </accordion-group>
+    <accordion-group is-open="tabs[5].active">
+        <accordion-heading>
+            I can have markup, too! <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+        </accordion-heading>
+        This is just some content to illustrate fancy headings.
+    </accordion-group>
+  </accordion>

@@ -30,6 +30,8 @@
                         active: false
                 }];
 
+
+
                 $scope.model = {};
 
                 getCoffeeGrinders();
@@ -81,13 +83,21 @@
                                 });
                 };
 
+
+                $scope.openAccordion = function(num) {
+                        var id = "#accordion-" + num;
+                        $(id).click();
+                }
+
+
+
                 $scope.chooseCoffeeGinder = function(coffeeGrinder) {
                         if (!$scope.user.canBuyEquipment('grinder', coffeeGrinder)) {
                                 growl.addWarnMessage("It is not enought your balance to choose this grinder.");
                         } else {
                                 $scope.user.equipment.Add('grinder', coffeeGrinder);
-                                $scope.tabs[1].active = true;
-
+                                $scope.openAccordion(2);
+                                growl.addSuccessMessage("Thank you! You've chosen Grinder.");
                                 $scope.user.update(checkEquipmentFinish);
                         }
                 };
@@ -97,7 +107,8 @@
                                 growl.addWarnMessage("It is not enought your balance to choose this machine.");
                         } else {
                                 $scope.user.equipment.Add('machine', coffeeMachine);
-                                $scope.tabs[2].active = true;
+                                $scope.openAccordion(3);
+                                growl.addSuccessMessage("Thank you! You've chosen Machine.");
 
                                 $scope.user.update(checkEquipmentFinish);
                         }
@@ -108,7 +119,8 @@
                                 growl.addWarnMessage("It is not enought your balance to choose this place.");
                         } else {
                                 $scope.user.equipment.Add('place', coffeePlace);
-                                $scope.tabs[3].active = true;
+                                $scope.openAccordion(4);
+                                growl.addSuccessMessage("Thank you! You've chosen Place.");
 
                                 $scope.user.update(checkEquipmentFinish);
                         }
@@ -119,7 +131,8 @@
                                 growl.addWarnMessage("It is not enought your balance to choose this employee.");
                         } else {
                                 $scope.user.employee.Set(coffeeEmployee);
-                                $scope.tabs[4].active = true;
+                                $scope.openAccordion(5);
+                                growl.addSuccessMessage("Thank you! You've chosen Employee.");
 
                                 $scope.user.update(checkEquipmentFinish);
                         }
@@ -130,7 +143,8 @@
                                 growl.addWarnMessage("It is not enought your balance to choose this coffee type.");
                         } else {
                                 $scope.user.coffee.type.Set(coffeeType);
-                                $scope.tabs[5].active = true;
+                                $scope.openAccordion(6);
+                                growl.addSuccessMessage("Thank you! You've chosen Coffee.");
 
                                 $scope.user.update(checkEquipmentFinish);
                         }
@@ -138,7 +152,7 @@
 
                 $scope.chooseCoffeePrice = function(coffeePrice) {
                         $scope.user.coffee.price.Set(coffeePrice);
-
+                        growl.addSuccessMessage("Thank you! You've chosen Price.");
                         $scope.user.update(checkEquipmentFinish);
                 };
 
