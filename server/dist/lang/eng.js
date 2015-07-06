@@ -111,5 +111,12 @@ var translationsEN = {
         RESET_QUESTION:'Do you want to reset the game and start over?',
         RESET_OK:'Yes, I want to start over',
         RESET_BACK:'No, go back to my game', 
+        LOG_OUT:'Log out',
+        SING_IN:'Sign in/Register',
+        LOGIN:'Login',
+        SING_IN_PLAING:'Sign in to continue playing',
+        OR:' or ' ,
+        REGISTER_SHOP:'register a new coffee shop'
+
 
 };

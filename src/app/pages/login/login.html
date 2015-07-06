@@ -1,5 +1,5 @@
 	<div class="panel panel-primary">
-	  <div class="panel-heading"><i class="fa fa-sign-in fa-lg fa-fw"></i> Sign in to continue playing</div>
+	  <div class="panel-heading"><i class="fa fa-sign-in fa-lg fa-fw"></i> {{'SING_IN_PLAING' | translate}}</div>
 	  <div class="panel-body">
 	<div id="login-form">
 		<form role="form" ng-controller="LoginCtrl">
@@ -9,7 +9,7 @@
 		  <div class="form-group responsive">
 		    <input type="password" class="form-control" id="password" name="password" placeholder="Enter the password" ng-model="model.password">
 		  </div>
-		  <button type="button" name="submit" value="login" class="btn btn-success btn-lg" ng-click="login()">Login</button>&nbsp;&nbsp;or <a  href="#/register"><u>register a new coffee shop</u></a>.
+		  <button type="button" name="submit" value="login" class="btn btn-success btn-lg" ng-click="login()">{{'LOGIN'|translate}}</button>&nbsp;&nbsp;{{'OR'|translate}}  <a  href="#/register"><u> {{'REGISTER_SHOP' |translate}}</u></a>.
 		</form>
 	</div>
 	  </div>
