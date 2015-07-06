@@ -7,10 +7,16 @@
 
         TranslateCtrl.$inject = ['$scope', '$translate'];
 
-        function TranslateCtrl($scope, $translate) {
-                $scope.changeLanguage = function(langKey) { 
-                        $translate.uses(langKey);
-                }
+        function TranslateCtrl($scope, $translate) { 
 
+                $scope.changeLanguage = function(langKey) {
+                        $translate.uses(langKey);  
+                        console.log('NOW is' + langKey);
+                }
+ 
         };
+
+
+
+
 })();

@@ -37,30 +37,31 @@
                                         <span class="sr-only">Toggle navigation</span>
                                         <span class="icon-bar"></span>
                                         <span class="icon-bar"></span>
-                                        <span class="icon-bar"></span>
+                                        <span class="icon-bar"></span> 
                                 </button>
                                 <a class="navbar-brand" href="/dist/" ng-include src="'app/controls/user-auth/userAuth.html'"></a>
                         </div>
-                        <div class="collapse navbar-collapse">
+                        <div class="collapse navbar-collapse" ng-controller="TranslateCtrl">
                                 <ul class="nav navbar-nav navbar-right">
-                                        <li><a href="#" data-toggle="modal" data-target="#myModalInfo"><i class="fa fa-info fa-lg fa-fw"></i> Info</a>
+                                        <li><a href="#" data-toggle="modal" data-target="#myModalInfo"><i class="fa fa-info fa-lg fa-fw"></i> {{'INFO' | translate}}</a>
                                         </li>
-                                        <li><a href="#" data-toggle="modal" data-target="#myModalLanguage"><i class="fa fa-language fa-lg fa-fw"></i> Language</a>
+                                        <li><a href="#" data-toggle="modal" data-target="#myModalLanguage"><i class="fa fa-language fa-lg fa-fw"></i> {{'LANGUAGE' | translate}}  </a>
                                         </li>
-                                        <li><a href="#" data-toggle="modal" data-target="#myModalReset"><i class="fa fa-refresh fa-lg fa-fw"></i> Reset</a>
+                                        <li><a href="#" data-toggle="modal" data-target="#myModalReset"><i class="fa fa-refresh fa-lg fa-fw"></i> {{'RESET' | translate}}</a>
                                         </li>
-                                        <li><a href="#" data-toggle="modal" data-target="#myModalStats"><i class="fa fa-bar-chart fa-lg fa-fw"></i> Stats</a>
+                                        <li><a href="#" data-toggle="modal" data-target="#myModalStats"><i class="fa fa-bar-chart fa-lg fa-fw"></i>  {{'STATS' | translate}}</a>
                                         </li>
                                 </ul>
                         </div>
                 </div>
         </div>
-        <!-- /menu-->
+        <!-- /menu-->  
 
         <div class="container">
                 <div class="row">
-                        <div class="col-lg-7">Here <strong>after registration and login</strong> will be stats, cup animation, buttons for drink preparation and coffee buying, alerts.
-                                <br>
+                        <div class="col-lg-7"> 
+                               <p ng-bind-html="'AFTER_REGISTRATION' | translate"></p> 
+                                <br> 
                                 <br>
                                 <div style="position: relative; left: 0; top: 0;">
                                         <img src="x-1back.gif" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
@@ -72,28 +73,30 @@
         </div>
 
         <div ng-controller="HeartbeatCtrl"></div>
-
-        <!-- Modals-->
+ 
+        <!-- Modals--> 
         <div class="modal fade" id="myModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                                <div class="modal-body">
+                <div class="modal-dialog modal-lg"> 
+                        <div class="modal-content"> 
+                                <div class="modal-body"> 
                                         <div class="panel panel-primary">
-                                                <div class="panel-heading"><i class="fa fa-info fa-lg fa-fw"></i> Info</div>
+                                                <div class="panel-heading"><i class="fa fa-info fa-lg fa-fw"></i> {{'INFO'| translate}}</div>
                                                 <div class="panel-body">
-                                                        <p><strong>What is this game about?</strong>
-                                                                <br>Have you ever dreamt about your own cafe? Do you want to try it yourself? Here is your chance to experience the rush! The game was created using the extensive knowledge of the inner workings of a coffee shop. Also, it mimics real-life prices and crowd mechanics (in a way).</p>
-                                                        <p><strong>What is the aim of the game?</strong>
-                                                                <br>Max out the Popularity percentage up to 100 %, unlock all of the Achievements, earn 10 000 000 coins, or just enjoy the simulation. :)</p>
-                                                        <p><strong>Why sould I upgrade things?</strong>
-                                                                <br>Choosing better alternatives increases the attractiveness of your business—Popularity.</p>
-                                                        <p><strong>What Popularity percentage is and why is it important?</strong>
-                                                                <br>Higher popularity allows you either to sell more drinks per month or to increase the price of the drink without customers leaving the queue. You need to find the right balance between the price of the drink and the Popularity percentage in order to maximize your profit.</p>
+                                                                <div ng-bind-html="'INFO_GAME_ABOUT' | translate"> 
+                                                                </div>
+                                                                <div ng-bind-html="'INFO_GAME_AIM' | translate"> 
+                                                                </div> 
+                                                                <div ng-bind-html="'INFO_GAME_UPGRADE' | translate"> 
+                                                                </div>
+                                                                 <div ng-bind-html="'INFO_GAME_POPULARITY' | translate"> 
+                                                                </div>
+                                                         
                                                         <p>
                                                                 <br>
-                                                                <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-lg fa-fw"></i> Close</button>
+                                                                <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-lg fa-fw"></i> 
+                                                                {{'CLOSE' | translate}}</button>
                                                         </p>
-                                                        <p class="text-right">&copy; <a href="http://jaknakavu.eu" target="_blank">jaknakavu.eu</a>. Game version: 0.1</p>
+                                                        <p class="text-right">&copy; <a href="http://jaknakavu.eu" target="_blank">{{'SITE' | translate}}</a>.  {{ 'GAME_VERSION' |translate}}</p>
                                                 </div>
                                         </div>
                                 </div>
@@ -109,7 +112,7 @@
                         <div class="modal-content">
                                 <div class="modal-body">
                                         <div class="panel panel-primary" ng-controller="TranslateCtrl">
-                                                <div class="panel-heading"><i class="fa fa-language fa-lg fa-fw"></i> Language</div>
+                                                <div class="panel-heading"><i class="fa fa-language fa-lg fa-fw"></i> {{'LANGUAGE' | translate}}</div>
                                                 <div class="panel-body">
                                                         <p>
                                                                 <button type="button" 
@@ -156,13 +159,13 @@
                         <div class="modal-content">
                                 <div class="modal-body">
                                         <div class="panel panel-primary">
-                                                <div class="panel-heading"><i class="fa fa-refresh fa-lg fa-fw"></i> Reset</div>
+                                                <div class="panel-heading"><i class="fa fa-refresh fa-lg fa-fw"></i>{{'RESET'|translate}}</div>
                                                 <div class="panel-body">
-                                                        <p>Do you want to reset the game and start over?</p>
+                                                        <p> {{'RESET_QUESTION'|translate}}</p>
                                                         <p>
-                                                                <button type="button" class="btn btn-danger btn-block" data-dismiss="modal" aria-hidden="true"><i class="fa fa-refresh fa-fw fa-lg"></i> Yes, I want to start over</button>
+                                                                <button type="button" class="btn btn-danger btn-block" data-dismiss="modal" aria-hidden="true"><i class="fa fa-refresh fa-fw fa-lg"></i> {{'RESET_OK'|translate}}</button>
                                                         </p>
-                                                        <button type="button" class="btn btn-success btn-block" data-dismiss="modal" aria-hidden="true"><i class="fa fa-reply fa-fw fa-lg"></i> No, go back to my game</button>
+                                                        <button type="button" class="btn btn-success btn-block" data-dismiss="modal" aria-hidden="true"><i class="fa fa-reply fa-fw fa-lg"></i> {{'RESET_BACK'|translate}}</button>
                                                 </div>
                                         </div>
                                 </div>
@@ -178,11 +181,11 @@
                         <div class="modal-content">
                                 <div class="modal-body">
                                         <div class="panel panel-primary">
-                                                <div class="panel-heading"><i class="fa fa-bar-chart fa-lg fa-fw"></i> Stats</div>
+                                                <div class="panel-heading"><i class="fa fa-bar-chart fa-lg fa-fw"></i> {{'STATS'|translate}}</div>
                                                 <div class="panel-body">
-                                                        <p>Stats of top 20 players. Time played and money gained.</p>
+                                                        <p> {{'STATS_TOP'|translate}}</p>
                                                         <br>
-                                                        <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-lg fa-fw"></i> Close</button>
+                                                        <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-lg fa-fw"></i>  {{'CLOSE'|translate}}</button>
                                                 </div>
                                         </div>
                                 </div>
@@ -204,6 +207,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.1/angular.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.1/angular-route.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-rc.1/angular-cookies.js"></script>
+        <script src="js/vendor/angular-sanitize.js"></script>
 
         <script src="js/vendor/ui-bootstrap.js"></script>
         <script src="js/vendor/ui-bootstrap-tpls.js"></script>

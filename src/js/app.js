@@ -7,7 +7,8 @@
                         'ngCookies',
                         'ui.bootstrap',
                         'angular-growl',
-                        'pascalprecht.translate'
+                        'pascalprecht.translate',
+                        'ngSanitize'
                 ]);
 
 

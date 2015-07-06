@@ -93,6 +93,23 @@ var translationsEN = {
         BUTTON_LANG_CZ: 'Česky',
         BUTTON_LANG_EN: 'English',
         BUTTON_LANG_RU: 'По-русски',
-        //new 
-        BUTTON_LANG_UA: 'Українською'
+        //new  need to translate (except eng.js)
+        BUTTON_LANG_UA: 'Українською',
+        LANGUAGE: 'Language',
+        INFO: 'Info',
+        INFO_GAME_ABOUT:'<p><strong>What is this game about?</strong> <br>Have you ever dreamt about your own cafe? Do you want to try it yourself? Here is your chance to experience the rush! The game was created using the extensive knowledge of the inner workings of a coffee shop. Also, it mimics real-life prices and crowd mechanics (in a way).</p>',
+        INFO_GAME_AIM:'<p><strong>What is the aim of the game?</strong> <br>Max out the Popularity percentage up to 100 %, unlock all of the Achievements, earn 10 000 000 coins, or just enjoy the simulation. :)</p>',
+        INFO_GAME_UPGRADE:'<p><strong>Why sould I upgrade things?</strong> <br>Choosing better alternatives increases the attractiveness of your business—Popularity.</p>',
+        INFO_GAME_POPULARITY:'<p><strong>What Popularity percentage is and why is it important?</strong> <br>Higher popularity allows you either to sell more drinks per month or to increase the price of the drink without customers leaving the queue. You need to find the right balance between the price of the drink and the Popularity percentage in order to maximize your profit.</p>',
+        RESET: 'Reset',
+        STATS: 'Stats',
+        STATS_TOP:'Stats of top 20 players. Time played and money gained.',
+        AFTER_REGISTRATION: 'Here <strong>after registration and login</strong> will be stats, cup animation, buttons for drink preparation and coffee buying, alerts.',
+        GAME_VERSION: 'Game version: 0.1',
+        SITE: 'jaknakavu.eu',
+        CLOSE: 'Close',
+        RESET_QUESTION:'Do you want to reset the game and start over?',
+        RESET_OK:'Yes, I want to start over',
+        RESET_BACK:'No, go back to my game', 
+
 };

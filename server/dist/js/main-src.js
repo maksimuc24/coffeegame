@@ -7,7 +7,8 @@
                         'ngCookies',
                         'ui.bootstrap',
                         'angular-growl',
-                        'pascalprecht.translate'
+                        'pascalprecht.translate',
+                        'ngSanitize'
                 ]);
 
 
@@ -542,6 +543,31 @@
 
         angular
                 .module('coffeeGame')
+                .controller('GameCtrl', GameCtrl);
+
+        GameCtrl.$inject = ['$scope', '$rootScope', 'User'];
+
+        function GameCtrl($scope, $rootScope, User) {
+                $scope.game = {};
+
+                $rootScope.$on('gameStartEvent', function() {
+                        console.log('GameCtrl gameStartEvent');
+                        $scope.game.equipmentChooseFinished = true;
+                });
+
+                $rootScope.$on('userLogin', function(e, authUser) {
+                        $scope.user = new User(authUser);
+                        $scope.user.getBalance();
+                });
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('LoginCtrl', LoginCtrl);
 
         LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
@@ -567,43 +593,24 @@
 (function() {
         'use strict'
 
-
-        angular
-                .module('coffeeGame')
-                .controller('GameCtrl', GameCtrl);
-
-        GameCtrl.$inject = ['$scope', '$rootScope', 'User'];
-
-        function GameCtrl($scope, $rootScope, User) {
-                $scope.game = {};
-
-                $rootScope.$on('gameStartEvent', function() {
-                        console.log('GameCtrl gameStartEvent');
-                        $scope.game.equipmentChooseFinished = true;
-                });
-
-                $rootScope.$on('userLogin', function(e, authUser) {
-                        $scope.user = new User(authUser);
-                        $scope.user.getBalance();
-                });
-        };
-})();
-
-(function() {
-        'use strict'
-
         angular
                 .module('coffeeGame')
                 .controller('TranslateCtrl', TranslateCtrl);
 
         TranslateCtrl.$inject = ['$scope', '$translate'];
 
-        function TranslateCtrl($scope, $translate) {
-                $scope.changeLanguage = function(langKey) { 
-                        $translate.uses(langKey);
-                }
+        function TranslateCtrl($scope, $translate) { 
 
+                $scope.changeLanguage = function(langKey) {
+                        $translate.uses(langKey);  
+                        console.log('NOW is' + langKey);
+                }
+ 
         };
+
+
+
+
 })();
 
 (function() {
