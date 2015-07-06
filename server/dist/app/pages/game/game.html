@@ -1,7 +1,8 @@
 <div class="alert alert-success" role="alert">
-	<p><strong>Welcome!</strong><br>The game was created using the extensive knowledge of the inner workings of a coffee shop. Also, it mimics real-life prices and crowd mechanics. So, let the simulation begin…</p>
+     <div ng-bind-html="'WELCOME' | translate">  </div>
+	 
 	<p></p>
-	<button type="button" class="btn btn-success" data-dismiss="alert">Dismiss this message</button>
+	<button type="button" class="btn btn-success" data-dismiss="alert">{{'DISMISS_MESSAGE'|translate}}</button>
 </div>
 
 <div ng-if="game.equipmentChooseFinished">

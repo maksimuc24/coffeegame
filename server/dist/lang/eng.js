@@ -122,7 +122,9 @@ var translationsEN = {
         DESIRED_ENTER_PASSWORD:"Enter your desired password",
         ENTER_PASSWORD:"Enter the password",
         ENTER_SHOP_NAME:"Enter your coffee shop's name",
-        REGISTER:"Register"
-
+        REGISTER:"Register",
+        DISMISS_MESSAGE:"Dismiss this message",
+        WELCOME:"<p><strong>Welcome!</strong><br>The game was created using the extensive knowledge of the inner workings of a coffee shop. Also, it mimics real-life prices and crowd mechanics. So, let the simulation begin…</p>",
+        r:''
 
 };
