@@ -4,10 +4,12 @@
 	<div id="login-form">
 		<form role="form" ng-controller="LoginCtrl">
 		  <div class="form-group">
-		    <input type="text" class="form-control" id="cafeName" name="cafeName" placeholder="Enter your coffee shop's name" ng-model="model.cafeName">
+		    <input type="text" class="form-control" id="cafeName" name="cafeName"
+		           placeholder="{{'ENTER_SHOP_NAME'|translate}}" ng-model="model.cafeName">
 		  </div>
 		  <div class="form-group responsive">
-		    <input type="password" class="form-control" id="password" name="password" placeholder="Enter the password" ng-model="model.password">
+		    <input type="password" class="form-control" id="password" name="password" 
+		           placeholder="{{'ENTER_PASSWORD'|translate}}" ng-model="model.password">
 		  </div>
 		  <button type="button" name="submit" value="login" class="btn btn-success btn-lg" ng-click="login()">{{'LOGIN'|translate}}</button>&nbsp;&nbsp;{{'OR'|translate}}  <a  href="#/register"><u> {{'REGISTER_SHOP' |translate}}</u></a>.
 		</form>

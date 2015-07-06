@@ -116,7 +116,13 @@ var translationsEN = {
         LOGIN:'Login',
         SING_IN_PLAING:'Sign in to continue playing',
         OR:' or ' ,
-        REGISTER_SHOP:'register a new coffee shop'
+        REGISTER_SHOP:'register a new coffee shop',
+        REGISTER_PLAYING:'Register to start playing',
+        DESIRED_SHOP_NAME:"Enter your desired coffee shop's name",
+        DESIRED_ENTER_PASSWORD:"Enter your desired password",
+        ENTER_PASSWORD:"Enter the password",
+        ENTER_SHOP_NAME:"Enter your coffee shop's name",
+        REGISTER:"Register"
 
 
 };
