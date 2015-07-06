@@ -44,7 +44,7 @@ var translationsEN = {
         'price7': '…',
         'price8': '…',
         'price9': '…',
-        TABPRICEEXPLANATION: 'From supermarket coffee without roast date through specialty micro lots—to your own plantation. Choose the drink price wisely and the crowd will adore your business.',
+        TABPRICEEXPLANATION: 'Choose the drink price wisely and the crowd will adore your business.',
         TABGRINDER: 'Grinder',
         'grinder1': 'Marble mortar',
         'grinder2': 'Noname blade grinder',
@@ -125,6 +125,34 @@ var translationsEN = {
         REGISTER:"Register",
         DISMISS_MESSAGE:"Dismiss this message",
         WELCOME:"<p><strong>Welcome!</strong><br>The game was created using the extensive knowledge of the inner workings of a coffee shop. Also, it mimics real-life prices and crowd mechanics. So, let the simulation begin…</p>",
-        KG:'kg'
+        KG:'kg',
+        INITIAL_BUDGET:'<p>Your initial budget is 55,000 coins. To start your business you need to make choices in all of the six sections below. Right now you have left to spend: [[aktualnoje kol-vo monet v zavisimosti ot togo chto vybrali]].</p>',
+        BETTER_PLACE:"Better place attracts more customers to your business, thus resulting in better sales.",
+        EARN_MORE:"Please earn more money to unlock",
+        SHOULD_EARN:"you should earn",
+        TO_UNLOCK:" to unlock ",
+        PER:"per",
+        EMPLOY_MORE_PEOPLE:"Employ more people and provide them with training and benefits. This results in quicker drinks preparation and higher customer satisfaction.",
+        MORE_EXPENSIVE_GRINDERS:" More expensive grinders grind faster with reduced clumps and improve espresso extraction.",
+        EARN_TO_UNLOCK:"Earn to unlock",
+        BETTER_MACHINES:"Better machines result in higher quality beverages, served more quickly.",
+        FROM_SUPERMARKET:"From supermarket coffee without roast date through specialty micro lots—to your own plantation.",
+        NOT_ENOUGTH_BALANCE_FOR:"It is not enought your balance to choose this {{name}}.",
+        THANKS_YOU_CHOSEN:"Thank you! You've chosen {{name}}.",
+        THANKS_YOU_FINISHED:"Thank you! You've finished choosing equipment!"
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 };

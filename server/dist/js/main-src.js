@@ -481,6 +481,21 @@
 
         angular
                 .module('coffeeGame')
+                .controller('UserBalanceCtrl', UserBalanceCtrl)
+
+        UserBalanceCtrl.$inject = ['$scope'];
+
+        function UserBalanceCtrl($scope) {
+
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('UserAuthCtrl', UserAuthCtrl);
 
         UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService'];
@@ -519,21 +534,6 @@
                                         }
                                 });
                 };
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('UserBalanceCtrl', UserBalanceCtrl)
-
-        UserBalanceCtrl.$inject = ['$scope'];
-
-        function UserBalanceCtrl($scope) {
-
         };
 })();
 
@@ -648,9 +648,9 @@
                 .module('coffeeGame')
                 .controller('StartEquipmentChooseCtrl', StartEquipmentChooseCtrl);
 
-        StartEquipmentChooseCtrl.$inject = ['$scope', '$rootScope', 'gameSettingsService', 'growl'];
+        StartEquipmentChooseCtrl.$inject = ['$scope', '$rootScope', 'gameSettingsService', 'growl', '$filter'];
 
-        function StartEquipmentChooseCtrl($scope, $rootScope, gameSettingsService, growl) {
+        function StartEquipmentChooseCtrl($scope, $rootScope, gameSettingsService, growl, $filter) {
 
                 $scope.tabs = [{
                         name: 'Grinder',
@@ -729,28 +729,34 @@
                 $scope.openAccordion = function(num) {
                         var id = "#accordion-" + num;
                         $(id).click();
-                }
-
-
+                };
 
                 $scope.chooseCoffeeGinder = function(coffeeGrinder) {
                         if (!$scope.user.canBuyEquipment('grinder', coffeeGrinder)) {
-                                growl.addWarnMessage("It is not enought your balance to choose this grinder.");
+                                growl.addWarnMessage($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                                        name: 'grinder'
+                                }));
                         } else {
                                 $scope.user.equipment.Add('grinder', coffeeGrinder);
                                 $scope.openAccordion(2);
-                                growl.addSuccessMessage("Thank you! You've chosen Grinder.");
+                                growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                                        name: 'Grinder'
+                                }));
                                 $scope.user.update(checkEquipmentFinish);
                         }
                 };
 
                 $scope.chooseCoffeeMachine = function(coffeeMachine) {
                         if (!$scope.user.canBuyEquipment('machine', coffeeMachine)) {
-                                growl.addWarnMessage("It is not enought your balance to choose this machine.");
+                                growl.addWarnMessage($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                                        name: 'machine'
+                                }));
                         } else {
                                 $scope.user.equipment.Add('machine', coffeeMachine);
                                 $scope.openAccordion(3);
-                                growl.addSuccessMessage("Thank you! You've chosen Machine.");
+                                growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                                        name: 'Machine'
+                                }));
 
                                 $scope.user.update(checkEquipmentFinish);
                         }
@@ -758,11 +764,17 @@
 
                 $scope.chooseCoffeePlace = function(coffeePlace) {
                         if (!$scope.user.canBuyEquipment('place', coffeePlace)) {
-                                growl.addWarnMessage("It is not enought your balance to choose this place.");
+                                growl.addWarnMessage($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                                        name: 'place'
+                                }));
+
+
                         } else {
                                 $scope.user.equipment.Add('place', coffeePlace);
                                 $scope.openAccordion(4);
-                                growl.addSuccessMessage("Thank you! You've chosen Place.");
+                                growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                                        name: 'Place'
+                                }));
 
                                 $scope.user.update(checkEquipmentFinish);
                         }
@@ -770,11 +782,15 @@
 
                 $scope.chooseCoffeeEmployee = function(coffeeEmployee) {
                         if (!$scope.user.canBuyEmployee(coffeeEmployee.price)) {
-                                growl.addWarnMessage("It is not enought your balance to choose this employee.");
+                                growl.addWarnMessage($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                                        name: 'employee'
+                                }));
                         } else {
                                 $scope.user.employee.Set(coffeeEmployee);
                                 $scope.openAccordion(5);
-                                growl.addSuccessMessage("Thank you! You've chosen Employee.");
+                                growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                                        name: 'Employee'
+                                }));
 
                                 $scope.user.update(checkEquipmentFinish);
                         }
@@ -782,11 +798,15 @@
 
                 $scope.chooseCoffeeType = function(coffeeType) {
                         if (!$scope.user.canBuyCoffeeType(coffeeType.price)) {
-                                growl.addWarnMessage("It is not enought your balance to choose this coffee type.");
+                                growl.addWarnMessage($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                                        name: 'coffee type'
+                                }));
                         } else {
                                 $scope.user.coffee.type.Set(coffeeType);
                                 $scope.openAccordion(6);
-                                growl.addSuccessMessage("Thank you! You've chosen Coffee.");
+                                growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                                        name: 'Coffee'
+                                }));
 
                                 $scope.user.update(checkEquipmentFinish);
                         }
@@ -794,12 +814,14 @@
 
                 $scope.chooseCoffeePrice = function(coffeePrice) {
                         $scope.user.coffee.price.Set(coffeePrice);
-                        growl.addSuccessMessage("Thank you! You've chosen Price.");
+                        growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                                name: 'Price'
+                        }));
                         $scope.user.update(checkEquipmentFinish);
                 };
 
                 function checkEquipmentFinish() {
-                        growl.addSuccessMessage("Thank you! You've finished choosing equipment!");
+                        growl.addSuccessMessage($filter('translate')('THANKS_YOU_FINISHED'));
 
                         $rootScope.$emit('gameStartEvent');
                 };
