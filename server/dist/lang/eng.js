@@ -92,5 +92,7 @@ var translationsEN = {
         MONTH: 'month',
         BUTTON_LANG_CZ: 'Česky',
         BUTTON_LANG_EN: 'English',
-        BUTTON_LANG_RU: 'По-русски'
+        BUTTON_LANG_RU: 'По-русски',
+        //new 
+        BUTTON_LANG_UA: 'Українською'
 };
