@@ -125,6 +125,6 @@ var translationsEN = {
         REGISTER:"Register",
         DISMISS_MESSAGE:"Dismiss this message",
         WELCOME:"<p><strong>Welcome!</strong><br>The game was created using the extensive knowledge of the inner workings of a coffee shop. Also, it mimics real-life prices and crowd mechanics. So, let the simulation begin…</p>",
-        r:''
+        KG:'kg'
 
 };

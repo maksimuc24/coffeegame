@@ -4,12 +4,12 @@
 			<!-- Start left column stats + animation -->
 			<div class="col-xs-7">
 			   <p>
-				   Drink price: <strong>{{user.equipment.coffeePrice.data.price}}</strong><br>
-				   Customers in queue: x<br>
+				   {{'DRINKPRICE'|translate}} <strong>{{user.equipment.coffeePrice.data.price}}</strong><br>
+				   {{'CUSTOMERSINQUEUE'|translate}}: x<br>
 				   <span ng-include src="'app/controls/user-balance/userBalance.html'"></span><br />
-				   Opened months: {{model.openedTimeDisplay() | number:3}}<br>
-				   Total kgs coffee: 0<br>
-				   Total drinks: 0
+				   {{'OPENEDMONTHS'|translate}} {{model.openedTimeDisplay() | number:3}}<br>
+				   {{'TOTALKGS'|translate}} 0<br>
+				   {{'TOTALDRINKS'|translate}} 0
 			   </p>
 		  	</div>
 		  	<div class="col-xs-5">
@@ -34,10 +34,10 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div>
-				 	<p><button input="" type="button" href="#carousel-captions" data-slide="prev" name="drinksCount" class="btn btn-danger btn-lg btn-block">Prepare a drink</button></p>
+				 	<p><button input="" type="button" href="#carousel-captions" data-slide="prev" name="drinksCount" class="btn btn-danger btn-lg btn-block">{{'PREPAREADRINK'|translate}}</button></p>
 				</div>
 				<div>
-				 	<p><button input="" type="button" name="kgsCoffeeCount" class="btn btn-warning btn-lg btn-block ng-pristine ng-valid">Buy a kg of coffee <sup>0.000 kg</sup></button></p>
+				 	<p><button input="" type="button" name="kgsCoffeeCount" class="btn btn-warning btn-lg btn-block ng-pristine ng-valid">{{'BUYAKGOFCOFFEE'"translate"}} <sup>0.000 {{'KG'|translate}}</sup></button></p>
 				</div>
 			</div>
 		</div>
