@@ -821,6 +821,7 @@
                 };
 
                 function checkEquipmentFinish() {
+                        console.log('errorr');
                         growl.addSuccessMessage($filter('translate')('THANKS_YOU_FINISHED'));
 
                         $rootScope.$emit('gameStartEvent');
