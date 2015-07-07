@@ -1,6 +1,6 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-
+ 
 /**
  * API framework front controller.
  * 
@@ -75,5 +75,5 @@ else {
 /**
  * Send the response to the client.
  */
-$response_obj = Response::create($response_str, $_SERVER['HTTP_ACCEPT']);
+$response_obj = Response::create($response_str, $_SERVER['HTTP_ACCEPT']); 
 echo $response_obj->render();
