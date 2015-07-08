@@ -124,7 +124,7 @@ var translationsCZ = {
         ENTER_SHOP_NAME:"Zadejte jméno kavárny",
         REGISTER:"Hotovo",
         DISMISS_MESSAGE:"Zavřít sdělení",
-        WELCOME:"<p><strong>Vítejte!</strong><br>Hra byla vytvořena na základě znalostí fungování kavárny. Také používá ceny z reálného života a každé vaše rozhodnutí má vliv na návštěvnost a tržby. Tak, můžeme začít…</p>",
+        WELCOME:"<p><strong>Vítejte!</strong><br>Hra byla vytvořena na základě znalostí fungování kavárny. Také používá ceny z&nbsp;reálného života a&nbsp;každé vaše rozhodnutí má vliv na návštěvnost a&nbsp;tržby. Tak, můžeme začít…<br>Na rozjezd vaší kavárny máte 55&nbsp;000&nbsp;Kč. Vyberte jednu variantu v&nbsp;každé z&nbsp;šesti níže uvedených sekcí.</p>",
         KG:'kg',
         INITIAL_BUDGET:'<p>Na rozjezd vaší kavárny máte 55,000 Kč. Vyberte jednu variantu v každé z šesti níže uvedených sekcí. Momentálně máte: [[aktualnoje kol-vo monet v zavisimosti ot togo chto vybrali]] Kč.</p>',
         BETTER_PLACE:"Atraktivnější místo nabízí více šancí k získání zákazníků, což vede k vyšším tržbám.",
