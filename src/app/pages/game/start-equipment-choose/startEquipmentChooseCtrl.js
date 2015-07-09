@@ -9,7 +9,7 @@
         StartEquipmentChooseCtrl.$inject = ['$scope', '$rootScope', 'gameSettingsService', 'growl', '$filter'];
 
         function StartEquipmentChooseCtrl($scope, $rootScope, gameSettingsService, growl, $filter) {
-
+     
                 $scope.tabs = [{
                         name: 'Grinder',
                         active: true
@@ -110,7 +110,7 @@
 
                 $scope.chooseCoffeeGinder = function(coffeeGrinder) {
                         if (!$scope.user.canBuyEquipment('grinder', coffeeGrinder)) {
-                                growl.addWarnMessage($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                                growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: 'grinder'
                                 }));
                         } else {
@@ -118,7 +118,7 @@
                                 $scope.addSelectedNameToEquipment('grinder', coffeeGrinder); 
 
                                 $scope.openAccordion(2);
-                                growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                                growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: 'Grinder'
                                 }));
                                 $scope.user.update(checkEquipmentFinish);
@@ -127,14 +127,14 @@
 
                 $scope.chooseCoffeeMachine = function(coffeeMachine) {
                         if (!$scope.user.canBuyEquipment('machine', coffeeMachine)) {
-                                growl.addWarnMessage($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                                growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: 'machine'
                                 }));
                         } else {
                                 $scope.user.equipment.Add('machine', coffeeMachine);
                                 $scope.addSelectedNameToEquipment('machine', coffeeMachine);
                                 $scope.openAccordion(3);
-                                growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                                growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: 'Machine'
                                 }));
 
@@ -144,7 +144,7 @@
 
                 $scope.chooseCoffeePlace = function(coffeePlace) {
                         if (!$scope.user.canBuyEquipment('place', coffeePlace)) {
-                                growl.addWarnMessage($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                                growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: 'place'
                                 }));
 
@@ -153,7 +153,7 @@
                                 $scope.user.equipment.Add('place', coffeePlace);
                                 $scope.addSelectedNameToEquipment('place', coffeePlace);
                                 $scope.openAccordion(4);
-                                growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                                growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: 'Place'
                                 }));
 
@@ -163,14 +163,14 @@
 
                 $scope.chooseCoffeeEmployee = function(coffeeEmployee) {
                         if (!$scope.user.canBuyEmployee(coffeeEmployee.price)) {
-                                growl.addWarnMessage($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                                growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: 'employee'
                                 }));
                         } else {
                                 $scope.user.employee.Set(coffeeEmployee); 
                                 $scope.addSelectedNameToEquipment('employee', coffeeEmployee);
                                 $scope.openAccordion(5);
-                                growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                                growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: 'Employee'
                                 }));
 
@@ -180,14 +180,14 @@
 
                 $scope.chooseCoffeeType = function(coffeeType) {
                         if (!$scope.user.canBuyCoffeeType(coffeeType.price)) {
-                                growl.addWarnMessage($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                                growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: 'coffee type'
                                 }));
                         } else {
                                 $scope.user.coffee.type.Set(coffeeType);
                                 $scope.addSelectedNameToEquipment('coffe', coffeeType);
                                 $scope.openAccordion(6);
-                                growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                                growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: 'Coffee'
                                 }));
 
@@ -197,7 +197,7 @@
 
                 $scope.chooseCoffeePrice = function(coffeePrice) {
                         $scope.user.coffee.price.Set(coffeePrice);
-                        growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
+                        growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                 name: 'Price'
                         }));
                         $scope.addSelectedNameToEquipment('drink_price', coffeePrice);
@@ -206,7 +206,7 @@
 
                 function checkEquipmentFinish() {
                         console.log('errorr');
-                        growl.addSuccessMessage($filter('translate')('THANKS_YOU_FINISHED'));
+                        growl.success($filter('translate')('THANKS_YOU_FINISHED'));
 
                         $rootScope.$emit('gameStartEvent');
                 };
