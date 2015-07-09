@@ -120,6 +120,7 @@ gulp.task('copy:main.css', function () {
 });
 
 gulp.task('copy:misc', function () {
+    livereload.listen();
     return gulp.src([
 
         // Copy all files

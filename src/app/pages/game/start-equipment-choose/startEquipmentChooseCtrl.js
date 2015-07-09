@@ -30,6 +30,14 @@
                         active: false
                 }];
 
+                $scope.selectedEquipment = {
+                        "grinder":null,
+                        "machine":null,
+                        "place":null,
+                        "employee":null,
+                        "coffe":null,
+                        "drink_price":null
+                };
 
 
                 $scope.model = {};
@@ -88,6 +96,17 @@
                         var id = "#accordion-" + num;
                         $(id).click();
                 };
+                /**
+                * Update name to the equipment
+                */
+                $scope.addSelectedNameToEquipment = function(index,data){
+                       if(index=="drink_price"){
+                                $scope.selectedEquipment[index] = data.price;
+                                return;
+                       }
+
+                       $scope.selectedEquipment[index] = data.name; 
+                };
 
                 $scope.chooseCoffeeGinder = function(coffeeGrinder) {
                         if (!$scope.user.canBuyEquipment('grinder', coffeeGrinder)) {
@@ -96,6 +115,8 @@
                                 }));
                         } else {
                                 $scope.user.equipment.Add('grinder', coffeeGrinder);
+                                $scope.addSelectedNameToEquipment('grinder', coffeeGrinder); 
+
                                 $scope.openAccordion(2);
                                 growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: 'Grinder'
@@ -111,6 +132,7 @@
                                 }));
                         } else {
                                 $scope.user.equipment.Add('machine', coffeeMachine);
+                                $scope.addSelectedNameToEquipment('machine', coffeeMachine);
                                 $scope.openAccordion(3);
                                 growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: 'Machine'
@@ -129,6 +151,7 @@
 
                         } else {
                                 $scope.user.equipment.Add('place', coffeePlace);
+                                $scope.addSelectedNameToEquipment('place', coffeePlace);
                                 $scope.openAccordion(4);
                                 growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: 'Place'
@@ -144,7 +167,8 @@
                                         name: 'employee'
                                 }));
                         } else {
-                                $scope.user.employee.Set(coffeeEmployee);
+                                $scope.user.employee.Set(coffeeEmployee); 
+                                $scope.addSelectedNameToEquipment('employee', coffeeEmployee);
                                 $scope.openAccordion(5);
                                 growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: 'Employee'
@@ -161,6 +185,7 @@
                                 }));
                         } else {
                                 $scope.user.coffee.type.Set(coffeeType);
+                                $scope.addSelectedNameToEquipment('coffe', coffeeType);
                                 $scope.openAccordion(6);
                                 growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: 'Coffee'
@@ -175,6 +200,7 @@
                         growl.addSuccessMessage($filter('translate')('THANKS_YOU_CHOSEN', {
                                 name: 'Price'
                         }));
+                        $scope.addSelectedNameToEquipment('drink_price', coffeePrice);
                         $scope.user.update(checkEquipmentFinish);
                 };
 

@@ -5,109 +5,57 @@
                 <div class="col-md-12">
                         <div id="accordion1" class="panel-group panel-group-primary panel-group-lists collapse in" style="">
                                 <div class="panel-group panel-group-lists" id="accordion1">
+                                           <!--Grinder start-->
                                         <div class="panel">
                                                 <div class="panel-heading">
                                                         <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion1" href="#collapse1" id='accordion-1'>
-                <i class="fa fa-certificate fa-lg fa-fw"></i> <i ng-show="user.equipment.grinder.id"></i>{{'TABGRINDER'|translate}}
-              </a>
-            </h4>
+                                                          <a data-toggle="collapse" data-parent="#accordion1" href="#collapse1" id='accordion-1'>
+                                                            <i class="fa fa-certificate fa-lg fa-fw"></i> <i ng-show="user.equipment.grinder.id"></i>{{'TABGRINDER'|translate}}
+                                                          </a>
+                                                        </h4>
                                                 </div>
+
                                                 <div id="collapse1" class="panel-collapse collapse">
                                                         <div class="panel-body">
                                                                 <div class="alert alert-warning" role="alert">
                                                                         <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">{{'CLOSE'|translate}}</span>
                                                                         </button>
-                                                                         {{'MORE_EXPENSIVE_GRINDERS'|translate}} 
-                                                                </div>
-                                                                <p>
-                                                                        <button type="button" class="btn btn-normal btn-block">
-                                                                                <div class="pull-left"> {{'grinder1'|translate}} </div>
-                                                                                <div class="pull-right">1,000 {{'CURRENCY'|translate}} </div>
-                                                                        </button>
-                                                                </p>
-                                                                <p>
-                                                                        <button type="button" class="btn btn-normal btn-block">
-                                                                                <div class="pull-left">{{'grinder2'|translate}} </div>
-                                                                                <div class="pull-right">1,200 {{'CURRENCY'|translate}}</div>
-                                                                        </button>
-                                                                </p>
-                                                                <p>
-                                                                        <button type="button" class="btn btn-normal btn-block">
-                                                                                <div class="pull-left">
-                                                                                {{'grinder3'|translate}} </div>
-                                                                                <div class="pull-right">3,000 {{'CURRENCY'|translate}}</div>
-                                                                        </button>
-                                                                </p>
-                                                                <p>
-                                                                        <button type="button" class="btn btn-normal btn-block">
-                                                                                <div class="pull-left">{{'grinder4'|translate}}</div>
-                                                                                <div class="pull-right">7,000 {{'CURRENCY'|translate}}</div>
-                                                                        </button>
-                                                                </p>
-                                                                <p>
-                                                                        <button type="button" class="btn btn-normal btn-block">
-                                                                                <div class="pull-left">{{'grinder5'|translate}}</div>
-                                                                                <div class="pull-right">11,000 {{'CURRENCY'|translate}}</div>
-                                                                        </button>
-                                                                </p>
-                                                                <p>
-                                                                        <button type="button" class="btn btn-normal btn-block">
-                                                                                <div class="pull-left">{{'grinder6'|translate}}</div>
-                                                                                <div class="pull-right">16,000 {{'CURRENCY'|translate}}</div>
-                                                                        </button>
-                                                                </p>
-                                                                <p>
-                                                                        <button type="button" class="btn btn-success btn-block">
-                                                                                <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{'grinder8'|translate}}</div>
-                                                                                <div class="pull-right">25,000 {{'CURRENCY'|translate}}</div>
-                                                                        </button>
-                                                                </p>
-                                                                <p>
-                                                                        <button type="button" class="btn btn-normal btn-block">
-                                                                                <div class="pull-left">{{'grinder9'|translate}}</div>
-                                                                                <div class="pull-right">48,000 {{'CURRENCY'|translate}}</div>
-                                                                        </button>
-                                                                </p>
-                                                                <p>
-                                                                        <button type="button" class="btn btn-danger btn-block">
-                                                                                <div class="pull-left"><i class="fa fa-minus-circle fa-lg fa-fw"></i> {{'EARN_TO_UNLOCK'|translate}}</div>
-                                                                                <div class="pull-right">68,000 {{'CURRENCY'|translate}}</div>
-                                                                        </button>
-                                                                </p>
-                                                                <p>
-                                                                        <button type="button" class="btn btn-danger btn-block">
-                                                                                <div class="pull-left"><i class="fa fa-minus-circle fa-lg fa-fw"></i> {{'EARN_TO_UNLOCK'|translate}}</div>
-                                                                                <div class="pull-right">75,000 {{'CURRENCY'|translate}}</div>
-                                                                        </button>
-                                                                </p>
-                                                                <ul class="list-unstyled inline-block-list" ng-repeat="grinder in model.coffeeGrinders" ng-switch on="grinder.name || 'null'">
-                                                                        <li ng-switch-when="null">
-                                                                                <div class="alert alert-danger" role="alert">
-                                                                                         {{'EARN_MORE'|translate}}
-                                                                                        <br />
-                                                                                         <small>({{'SHOULD_EARN'|translate}} {{grinder.price | number:0}} {{grinder.currency_name}} 
-                                                                                         {{'TO_UNLOCK'|translate}})</small>
-                                                                                </div>
+                                                                        {{'MORE_EXPENSIVE_GRINDERS'|translate}}
+                                                                </div>  
+                                                              
+                                                                <ul class="list-unstyled inline-block-list" ng-repeat="grinder in model.coffeeGrinders">
+                                                                        <li ng-if="grinder.name == null">
+                                                                                <button type="button" class="btn btn-danger btn-block">
+                                                                                        <div class="pull-left"><i class="fa fa-minus-circle fa-lg fa-fw"></i> {{'EARN_TO_UNLOCK'|translate}}</div>
+                                                                                        <div class="pull-right">{{grinder.price | number:0}} {{'CURRENCY'|translate}}</div> 
+                                                                                </button> 
+                                                                        </li> 
+
+                                                                        <li ng-if="grinder.name == selectedEquipment.grinder && grinder.name !=null">
+                                                                               <button type="button" class="btn btn-success btn-block">
+                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{grinder.name}}</div>
+                                                                                    <div class="pull-right">{{grinder.price | number:0}} {{'CURRENCY'|translate}}</div>
+                                                                                </button>
                                                                         </li>
-                                                                        <li ng-switch-default>
-                                                                                <a ng-click="chooseCoffeeGinder(grinder)" ng-class="user.equipment.grinder.id == grinder.id ? 'choosen' : '' ">
-                                                                                        <span>{{grinder.name}}</span>
-                                                                                        <span class="price">{{grinder.price | number:0}} {{grinder.currency_name}}</span>
-                                                                                </a>
+                                                                        <li ng-if="grinder.name != selectedEquipment.grinder && grinder.name !=null">
+                                                                                <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeeGinder(grinder)"  >
+                                                                                        <div class="pull-left">{{grinder.name}}</div>
+                                                                                        <div class="pull-right">{{grinder.price | number:0}} {{'CURRENCY'|translate}}</div>
+                                                                                </button> 
                                                                         </li>
                                                                 </ul>
                                                         </div>
                                                 </div>
                                         </div>
-
+                                        <!--Grinder end-->
+                                        <!--Machine start-->
                                         <div class="panel">
                                                 <div class="panel-heading">
-                                                        <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion1" href="#collapse2" id='accordion-2'>
-                <i class="fa fa-tint fa-lg fa-fw"></i> <i ng-show="user.equipment.machine.id"></i>{{'TABMACHINE'|translate}}
-              </a>
-            </h4>
+                                                    <h4 class="panel-title">
+                                                  <a data-toggle="collapse" data-parent="#accordion1" href="#collapse2" id='accordion-2'>
+                                                    <i class="fa fa-tint fa-lg fa-fw"></i> <i ng-show="user.equipment.machine.id"></i>{{'TABMACHINE'|translate}}
+                                                  </a>
+                                                </h4>
                                                 </div>
                                                 <div id="collapse2" class="panel-collapse collapse">
                                                         <div class="panel-body">
@@ -116,31 +64,40 @@
                                                                         </button>
                                                                         {{'BETTER_MACHINES'|translate}}
                                                                 </div>
-                                                                <ul class="list-unstyled inline-block-list" role="tablist" ng-repeat="machine in model.coffeeMachines" ng-switch on="machine.name || 'null'">
-                                                                        <li ng-switch-when="null">
-                                                                                <div class="alert alert-danger" role="alert">
-                                                                                        {{machine.price | number:0}} {{machine.currency_name}} {{'TO_UNLOCK'|translate}}
-                                                                                </div>
+                                                                <ul class="list-unstyled inline-block-list" role="tablist" ng-repeat="machine in model.coffeeMachines" >
+                                                                         <li ng-if="machine.name == null">
+                                                                                <button type="button" class="btn btn-danger btn-block">
+                                                                                        <div class="pull-left"><i class="fa fa-minus-circle fa-lg fa-fw"></i> {{'EARN_TO_UNLOCK'|translate}}</div>
+                                                                                        <div class="pull-right">{{machine.price | number:0}} {{'CURRENCY'|translate}}</div> 
+                                                                                </button> 
+                                                                        </li> 
+
+                                                                        <li ng-if="machine.name == selectedEquipment.machine && machine.name !=null">
+                                                                               <button type="button" class="btn btn-success btn-block">
+                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{machine.name}}</div>
+                                                                                    <div class="pull-right">{{machine.price | number:0}} {{'CURRENCY'|translate}}</div>
+                                                                                </button>
                                                                         </li>
-                                                                        <li ng-switch-default>
-                                                                                <a ng-click="chooseCoffeeMachine(machine)" ng-class="user.equipment.machine.id == machine.id ? 'choosen' : '' ">
-                                                                                        <span>{{machine.name}}</span>
-                                                                                        <span class="label label-info">{{machine.price | number:0}} {{machine.currency_name}}</span>
-                                                                                </a>
+                                                                        <li ng-if="machine.name != selectedEquipment.machine && machine.name !=null">
+                                                                                <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeeMachine(machine)"  >
+                                                                                        <div class="pull-left">{{machine.name}}</div>
+                                                                                        <div class="pull-right">{{machine.price | number:0}} {{'CURRENCY'|translate}}</div>
+                                                                                </button> 
                                                                         </li>
                                                                 </ul>
                                                         </div>
                                                 </div>
                                         </div>
-
+                                         <!--Machine end-->
+                                         <!--Place start-->
                                         <div class="panel">
                                                 <div class="panel-heading">
                                                         <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion1" href="#collapse3" id='accordion-3'>
-                <i class="fa fa-home fa-lg fa-fw"></i> <i ng-show="user.equipment.place.id"></i>{{'TABPLACE'|translate}}
-              </a>
-            </h4>
-                                                </div>
+                                                          <a data-toggle="collapse" data-parent="#accordion1" href="#collapse3" id='accordion-3'>
+                                                            <i class="fa fa-home fa-lg fa-fw"></i> <i ng-show="user.equipment.place.id"></i>{{'TABPLACE'|translate}}
+                                                          </a>
+                                                        </h4>
+                                                          </div>
                                                 <div id="collapse3" class="panel-collapse collapse">
                                                         <div class="panel-body">
                                                                 <div class="alert alert-warning" role="alert">
@@ -148,35 +105,40 @@
                                                                         </button>
                                                                         {{'BETTER_PLACE'|translate}}
                                                                 </div>
-                                                                <ul class="list-unstyled inline-block-list" ng-repeat="place in model.coffeePlaces" ng-switch on="place.name || 'null'">
-                                                                        <li ng-switch-when="null">
-                                                                                <div class="alert alert-danger" role="alert">
-                                                                                        {{'EARN_MORE'|translate}}
-                                                                                        <br />
-                                                                                        <small>( 
-                                                                                        {{'SHOULD_EARN'|translate}} {{place.price | number:0}} {{place.currency_name}}  {{'TO_UNLOCK' |translate}})</small>
-                                                                                </div>
+                                                                <ul class="list-unstyled inline-block-list" ng-repeat="place in model.coffeePlaces">
+                                                                        <li ng-if="place.name == null">
+                                                                                <button type="button" class="btn btn-danger btn-block">
+                                                                                        <div class="pull-left"><i class="fa fa-minus-circle fa-lg fa-fw"></i> {{'EARN_TO_UNLOCK'|translate}}</div>
+                                                                                        <div class="pull-right">{{place.price | number:0}} {{'CURRENCY'|translate}}</div> 
+                                                                                </button> 
+                                                                        </li> 
+
+                                                                        <li ng-if="place.name == selectedEquipment.place && place.name !=null">
+                                                                               <button type="button" class="btn btn-success btn-block">
+                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{place.name}}</div>
+                                                                                    <div class="pull-right">{{place.price | number:0}} {{'CURRENCY'|translate}}</div>
+                                                                                </button>
                                                                         </li>
-                                                                        <li ng-switch-default>
-                                                                                <a ng-click="chooseCoffeePlace(place)" ng-class="user.equipment.Exists('place', place.id) ? 'choosen' : '' ">
-                                                                                        <span>{{place.name}}</span>
-                                                                                        <br />
-                                                                                        <span class="price">{{place.price | number:0}} {{place.currency_name}} {{'PER'|translate}} {{place.timePeriod_name}}</span>
-                                                                                </a>
-                                                                        </li>
+                                                                        <li ng-if="place.name != selectedEquipment.place && place.name !=null">
+                                                                                <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeePlace(place)"  >
+                                                                                        <div class="pull-left">{{place.name}}</div>
+                                                                                        <div class="pull-right">{{place.price | number:0}} {{'CURRENCY'|translate}}</div>
+                                                                                </button> 
+                                                                        </li> 
                                                                 </ul>
                                                         </div>
                                                 </div>
                                         </div>
-
+                                        <!--Place end-->
+                                        <!--Employees start-->
                                         <div class="panel">
                                                 <div class="panel-heading">
                                                         <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse4" id='accordion-4'>
-                      <i class="fa fa-users fa-lg fa-fw"></i> <i ng-show="user.equipment.employee.id"></i>{{'TABEMPLOYEES'|translate}}
-                    </a>
-                  </h4>
-                                                </div>
+                                                        <a data-toggle="collapse" data-parent="#accordion1" href="#collapse4" id='accordion-4'>
+                                                          <i class="fa fa-users fa-lg fa-fw"></i> <i ng-show="user.equipment.employee.id"></i>{{'TABEMPLOYEES'|translate}}
+                                                        </a>
+                                                      </h4>
+                                                                                    </div>
                                                 <div id="collapse4" class="panel-collapse collapse">
                                                         <div class="panel-body">
                                                                 <div class="alert alert-warning" role="alert">
@@ -184,33 +146,39 @@
                                                                         </button>
                                                                         {{'EMPLOY_MORE_PEOPLE'|translate}}
                                                                 </div>
-                                                                <ul class="list-unstyled inline-block-list" ng-repeat="employee in model.coffeeEmployees" ng-switch on="employee.name || 'null'">
-                                                                        <li ng-switch-when="null">
-                                                                                <div class="alert alert-danger" role="alert">
-                                                                                         {{'EARN_MORE'|translate}}
-                                                                                        <br />
-                                                                                        <small>({{'SHOULD_EARN'|translate}} {{employee.price | number:0}} {{employee.currency_name}} {{'TO_UNLOCK'|translate}})</small>
-                                                                                </div>
+                                                                <ul class="list-unstyled inline-block-list" ng-repeat="employee in model.coffeeEmployees" >
+                                                                        <li ng-if="employee.name == null">
+                                                                                <button type="button" class="btn btn-danger btn-block">
+                                                                                        <div class="pull-left"><i class="fa fa-minus-circle fa-lg fa-fw"></i> {{'EARN_TO_UNLOCK'|translate}}</div>
+                                                                                        <div class="pull-right">{{employee.price | number:0}} {{'CURRENCY'|translate}}</div> 
+                                                                                </button> 
+                                                                        </li> 
+
+                                                                        <li ng-if="employee.name == selectedEquipment.employee && employee.name !=null">
+                                                                               <button type="button" class="btn btn-success btn-block">
+                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{employee.name}}</div>
+                                                                                    <div class="pull-right">{{employee.price | number:0}} {{'CURRENCY'|translate}} {{'PER'|translate}} {{employee.timePeriod_name}}</div>
+                                                                                </button>
                                                                         </li>
-                                                                        <li ng-switch-default>
-                                                                                <a ng-click="chooseCoffeeEmployee(employee)" ng-class="user.equipment.employee.id == employee.id ? 'choosen' : '' ">
-                                                                                        <span>{{employee.name}}</span>
-                                                                                        <br />
-                                                                                        <span class="price">{{employee.price | number:0}} {{employee.currency_name}} {{'PER'|translate}} {{employee.timePeriod_name}}</span>
-                                                                                </a>
-                                                                        </li>
+                                                                        <li ng-if="employee.name != selectedEquipment.employee && employee.name !=null">
+                                                                                <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeeEmployee(employee)"  >
+                                                                                        <div class="pull-left">{{employee.name}}</div>
+                                                                                        <div class="pull-right">{{employee.price | number:0}} {{'CURRENCY'|translate}} {{'PER'|translate}} {{employee.timePeriod_name}}</div>
+                                                                                </button> 
+                                                                        </li>  
                                                                 </ul>
                                                         </div>
                                                 </div>
                                         </div>
-
+                                        <!--Employees end-->
+                                        <!--Coffe start-->
                                         <div class="panel">
                                                 <div class="panel-heading">
                                                         <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse5" id='accordion-5'>
-                      <i class="fa fa-cube fa-lg fa-fw"></i> <i ng-show="user.equipment.coffeeType.id"></i>{{'TABCOFFEE'|translate}}
-                    </a>
-                  </h4>
+                                                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse5" id='accordion-5'>
+                                                      <i class="fa fa-cube fa-lg fa-fw"></i> <i ng-show="user.equipment.coffeeType.id"></i>{{'TABCOFFEE'|translate}}
+                                                    </a>
+                                                  </h4>
                                                 </div>
                                                 <div id="collapse5" class="panel-collapse collapse">
                                                         <div class="panel-body">
@@ -219,33 +187,39 @@
                                                                         </button>
                                                                         {{'FROM_SUPERMARKET'|translate}}
                                                                 </div>
-                                                                <ul class="list-unstyled inline-block-list" ng-repeat="coffeeType in model.coffeeTypes" ng-switch on="coffeeType.name || 'null'">
-                                                                        <li ng-switch-when="null">
-                                                                                <div class="alert alert-danger" role="alert">
-                                                                                         {{'EARN_MORE'|translate}}
-                                                                                        <br />
-                                                                                        <small>({{'SHOULD_EARN'|translate}}  {{coffeeType.price | number:0}} {{coffeeType.currency_name}} {{'TO_UNLOCK'|translate}})</small>
-                                                                                </div>
+                                                                <ul class="list-unstyled inline-block-list" ng-repeat="coffeeType in model.coffeeTypes">
+                                                                        <li ng-if="coffeeType.name == null">
+                                                                                <button type="button" class="btn btn-danger btn-block">
+                                                                                        <div class="pull-left"><i class="fa fa-minus-circle fa-lg fa-fw"></i> {{'EARN_TO_UNLOCK'|translate}}</div>
+                                                                                        <div class="pull-right">{{coffeeType.price | number:0}} {{'CURRENCY'|translate}}</div> 
+                                                                                </button> 
+                                                                        </li> 
+
+                                                                        <li ng-if="coffeeType.name == selectedEquipment.coffe && coffeeType.name !=null">
+                                                                               <button type="button" class="btn btn-success btn-block">
+                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{coffeeType.name}}</div>
+                                                                                    <div class="pull-right">{{coffeeType.price | number:0}} {{'CURRENCY'|translate}}</div>
+                                                                                </button>
                                                                         </li>
-                                                                        <li ng-switch-default>
-                                                                                <a ng-click="chooseCoffeeType(coffeeType)" ng-class="user.equipment.coffeeType.id == coffeeType.id ? 'choosen' : '' ">
-                                                                                        <span>{{coffeeType.name}}</span>
-                                                                                        <br />
-                                                                                        <span class="price">{{coffeeType.price | number:0}} {{coffeeType.currency_name}} {{'PER'|translate}} {{coffeeType.weight_name}}</span>
-                                                                                </a>
-                                                                        </li>
+                                                                        <li ng-if="coffeeType.name != selectedEquipment.coffe && coffeeType.name !=null">
+                                                                                <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeeType(coffeeType)"  >
+                                                                                        <div class="pull-left">{{coffeeType.name}}</div>
+                                                                                        <div class="pull-right">{{coffeeType.price | number:0}} {{'CURRENCY'|translate}} {{'PER'|translate}} {{coffeeType.weight_name}}</div>
+                                                                                </button> 
+                                                                        </li>  
                                                                 </ul>
                                                         </div>
                                                 </div>
                                         </div>
-
+                                        <!--Coffe end-->
+                                        <!--Price start-->
                                         <div class="panel">
                                                 <div class="panel-heading">
                                                         <h4 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion1" href="#collapse6" id='accordion-6'>
-                      <i class="fa fa-money fa-lg fa-fw"></i> <i ng-show="user.equipment.coffeePrice.id"></i>{{'TABPRICE'|translate}}
-                    </a>
-                  </h4>
+                                                            <a data-toggle="collapse" data-parent="#accordion1" href="#collapse6" id='accordion-6'>
+                                                              <i class="fa fa-money fa-lg fa-fw"></i> <i ng-show="user.equipment.coffeePrice.id"></i>{{'TABPRICE'|translate}}
+                                                            </a>
+                                                          </h4>
                                                 </div>
                                                 <div id="collapse6" class="panel-collapse collapse">
                                                         <div class="panel-body">
@@ -255,15 +229,24 @@
                                                                         {{'TABPRICEEXPLANATION'|translate}}
                                                                 </div>
                                                                 <ul class="list-unstyled inline-block-list" ng-repeat="coffeePrice in model.coffeePrices">
-                                                                        <li>
-                                                                                <a ng-click="chooseCoffeePrice(coffeePrice)" ng-class="user.equipment.coffeePrice.id == coffeePrice.id ? 'choosen' : '' ">
-                                                                                        <span class="price">{{coffeePrice.price | number:0}} {{coffeePrice.currency_name}} {{'PER'|translate}} {{coffeePrice.portion_name}}</span>
-                                                                                </a>
+ 
+                                                                        <li ng-if="coffeePrice.price == selectedEquipment.drink_price ">
+                                                                               <button type="button" class="btn btn-success btn-block">
+                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{coffeePrice.price | number:0}}   {{'CURRENCY'|translate}}</div>
+                                                                                    <div class="pull-right">   {{'PER'|translate}} {{coffeePrice.portion_name}}</div>
+                                                                                </button>
                                                                         </li>
+                                                                        <li ng-if="coffeePrice.price != selectedEquipment.drink_price">
+                                                                                <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeePrice(coffeePrice)"  >
+                                                                                        <div class="pull-left">{{coffeePrice.price | number:0}}  {{'CURRENCY'|translate}} </div>
+                                                                                        <div class="pull-right">    {{'PER'|translate}} {{coffeePrice.portion_name}}</div>
+                                                                                </button> 
+                                                                        </li>  
                                                                 </ul>
                                                         </div>
                                                 </div>
                                         </div>
+                                        <!--Price end-->
 
                                 </div>
                         </div>
