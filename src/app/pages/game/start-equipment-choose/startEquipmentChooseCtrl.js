@@ -99,13 +99,8 @@
                 /**
                 * Update name to the equipment
                 */
-                $scope.addSelectedNameToEquipment = function(index,data){
-                       if(index=="drink_price"){
-                                $scope.selectedEquipment[index] = data.price;
-                                return;
-                       }
-
-                       $scope.selectedEquipment[index] = data.name; 
+                $scope.addSelectedNameToEquipment = function(index,data){  
+                       $scope.selectedEquipment[index] = data.id;  
                 };
 
                 $scope.chooseCoffeeGinder = function(coffeeGrinder) {

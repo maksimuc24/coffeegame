@@ -10,8 +10,7 @@
         function TranslateCtrl($scope, $translate) { 
 
                 $scope.changeLanguage = function(langKey) {
-                        $translate.uses(langKey);  
-                        console.log('NOW is' + langKey);
+                        $translate.uses(langKey);   
                 }
  
         };
