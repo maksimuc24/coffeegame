@@ -90,7 +90,7 @@ var translationsUA = {
         TABPLACEEXPLANATION: 'Місце',
         KG: 'кг',
         MONTH: 'місяць',
-        PER_MONTH: 'місяць',
+        PER_MONTH: 'кожен місяць',
         BUTTON_LANG_CZ: 'Česky',
         BUTTON_LANG_EN: 'English',
         BUTTON_LANG_RU: 'По-русски',
