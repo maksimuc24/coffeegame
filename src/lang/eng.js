@@ -90,6 +90,7 @@ var translationsEN = {
         TABPLACEEXPLANATION: 'Place',
         KG: 'kg',
         MONTH: 'month',
+        PER_MONTH: 'monthly',
         BUTTON_LANG_CZ: 'Česky',
         BUTTON_LANG_EN: 'English',
         BUTTON_LANG_RU: 'По-русски',
@@ -132,6 +133,7 @@ var translationsEN = {
         SHOULD_EARN:"you should earn",
         TO_UNLOCK:" to unlock ",
         PER:"per",
+        PER_CUP:"a cup",
         EMPLOY_MORE_PEOPLE:"Employ more people and provide them with training and benefits. This results in quicker drinks preparation and higher customer satisfaction.",
         MORE_EXPENSIVE_GRINDERS:" More expensive grinders grind faster with reduced clumps and improve espresso extraction.",
         EARN_TO_UNLOCK:"Earn to unlock",
@@ -140,19 +142,4 @@ var translationsEN = {
         NOT_ENOUGTH_BALANCE_FOR:"It is not enought your balance to choose this {{name}}.",
         THANKS_YOU_CHOSEN:"Thank you! You've chosen {{name}}.",
         THANKS_YOU_FINISHED:"Thank you! You've finished choosing equipment!"
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 };
