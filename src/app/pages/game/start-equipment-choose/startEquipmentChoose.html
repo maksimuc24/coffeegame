@@ -233,13 +233,13 @@
                                                                         <li ng-if="coffeePrice.price == selectedEquipment.drink_price ">
                                                                                <button type="button" class="btn btn-success btn-block">
                                                                                     <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{coffeePrice.price | number:0}}   {{'CURRENCY'|translate}}</div>
-                                                                                    <div class="pull-right">   {{'PER'|translate}} {{coffeePrice.portion_name}}</div>
+                                                                                    <div class="pull-right">{{'PER_CUP'|translate}}</div>
                                                                                 </button>
                                                                         </li>
                                                                         <li ng-if="coffeePrice.price != selectedEquipment.drink_price">
                                                                                 <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeePrice(coffeePrice)"  >
                                                                                         <div class="pull-left">{{coffeePrice.price | number:0}}  {{'CURRENCY'|translate}} </div>
-                                                                                        <div class="pull-right">    {{'PER'|translate}} {{coffeePrice.portion_name}}</div>
+                                                                                        <div class="pull-right">{{'PER_CUP'|translate}}</div>
                                                                                 </button> 
                                                                         </li>  
                                                                 </ul>
