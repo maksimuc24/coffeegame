@@ -131,13 +131,13 @@ var translationsUA = {
         EARN_MORE:"Недостатньо фінансів1",
         SHOULD_EARN:"you should earn",
         TO_UNLOCK:" to unlock ",
-        PER:"per",
+        PER:"за філіжанку",
         EMPLOY_MORE_PEOPLE:"Employ more people and provide them with training and benefits. This results in quicker drinks preparation and higher customer satisfaction.",
         MORE_EXPENSIVE_GRINDERS:" More expensive grinders grind faster with reduced clumps and improve espresso extraction.",
         EARN_TO_UNLOCK:"Недостатньо фінансів",
         BETTER_MACHINES:"Better machines result in higher quality beverages, served more quickly.",
         FROM_SUPERMARKET:"From supermarket coffee without roast date through specialty micro lots—to your own plantation.",
-        NOT_ENOUGTH_BALANCE_FOR:"It is not enought your balance to choose this {{name}}.",
-        THANKS_YOU_CHOSEN:"Thank you! You've chosen {{name}}.",
-        THANKS_YOU_FINISHED:"Thank you! You've finished choosing equipment!"
+        NOT_ENOUGTH_BALANCE_FOR:"Недостатньо фінансів для вибору {{name}}.",
+        THANKS_YOU_CHOSEN:"{{name}} обраний.",
+        THANKS_YOU_FINISHED:"Дякую! Ви закінчили вибір обладнання!<br><br>♫ This was a triumph.<br>♫ I'm making a note here: HUGE SUCCESS.<br>♫ It's hard to overstate my satisfaction…"
 };
