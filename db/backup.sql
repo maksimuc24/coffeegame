@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50621
 File Encoding         : 65001
 
-Date: 2015-07-08 01:54:23
+Date: 2015-07-11 01:24:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -49,6 +49,7 @@ CREATE TABLE `coffeeemployees` (
 `price`  decimal(15,2) NOT NULL ,
 `currency_id`  int(11) NULL DEFAULT NULL ,
 `timePeriod_id`  int(11) NULL DEFAULT NULL ,
+`translate_name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 PRIMARY KEY (`coffeeEmployee_id`)
 )
 ENGINE=MyISAM
@@ -61,7 +62,7 @@ AUTO_INCREMENT=11
 -- Records of coffeeemployees
 -- ----------------------------
 BEGIN;
-INSERT INTO `coffeeemployees` VALUES ('1', 'Only you', '0.00', '1', '1'), ('2', 'One part-time worker', '10000.00', '1', '1'), ('3', 'Two part-time workers', '20000.00', '1', '1'), ('4', 'Three part-time workers', '30000.00', '1', '1'), ('5', 'One full-time worker', '38000.00', '1', '1'), ('6', 'Two full-time workers', '76000.00', '1', '1'), ('7', 'Two full-time workers, training, benefits and motivation', '96000.00', '1', '1'), ('8', 'Three full-time workers', '114000.00', '1', '1'), ('9', 'Three full-time workers, training, benefits and motivation', '144000.00', '1', '1'), ('10', 'Your country`s Barista Champion + three full-time workers, training, benefits and motivation', '196000.00', '1', '1');
+INSERT INTO `coffeeemployees` VALUES ('1', 'Only you', '0.00', '1', '1', 'employees1'), ('2', 'One part-time worker', '10000.00', '1', '1', 'employees2'), ('3', 'Two part-time workers', '20000.00', '1', '1', 'employees3'), ('4', 'Three part-time workers', '30000.00', '1', '1', 'employees4'), ('5', 'One full-time worker', '38000.00', '1', '1', 'employees5'), ('6', 'Two full-time workers', '76000.00', '1', '1', 'employees6'), ('7', 'Two full-time workers, training, benefits and motivation', '96000.00', '1', '1', 'employees7'), ('8', 'Three full-time workers', '114000.00', '1', '1', 'employees8'), ('9', 'Three full-time workers, training, benefits and motivation', '144000.00', '1', '1', 'employees9'), ('10', 'Your country`s Barista Champion + three full-time workers, training, benefits and motivation', '196000.00', '1', '1', 'employees10');
 COMMIT;
 
 -- ----------------------------
@@ -73,6 +74,7 @@ CREATE TABLE `coffeegrinders` (
 `name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 `price`  decimal(15,2) NOT NULL ,
 `currency_id`  int(11) NULL DEFAULT NULL ,
+`translate_name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 PRIMARY KEY (`coffeeGrinder_id`)
 )
 ENGINE=MyISAM
@@ -85,7 +87,7 @@ AUTO_INCREMENT=18
 -- Records of coffeegrinders
 -- ----------------------------
 BEGIN;
-INSERT INTO `coffeegrinders` VALUES ('1', 'Marble mortar', '1000.00', '1'), ('2', 'Noname blade grinder', '1200.00', '1'), ('3', 'OE Lido, hand-powered', '3000.00', '1'), ('11', 'Rancilio Rocky, 50 mm planar burrs', '7000.00', '1'), ('12', 'Anfim KS-T, 50 mm planar burrs', '11000.00', '1'), ('13', 'Mazzer Mini, x0 mm planar burrs, doser', '16000.00', '1'), ('14', 'Anfim Super Caimano, 75 mm planar titanium burrs, doser', '25000.00', '1'), ('15', ' Mahlkonig K30 Vario, 65 mm planar burrs, doserless', '48000.00', '1'), ('16', 'Elektra Nino, 68 mm conical burrs, doserless', '68000.00', '1'), ('17', 'Mazzer Robur E, 71 mm conical burrs, doserless', '75000.00', '1');
+INSERT INTO `coffeegrinders` VALUES ('1', 'Marble mortar', '1000.00', '1', 'grinder1'), ('2', 'Noname blade grinder', '1200.00', '1', 'grinder2'), ('3', 'OE Lido, hand-powered', '3000.00', '1', 'grinder3'), ('11', 'Rancilio Rocky, 50 mm planar burrs', '7000.00', '1', 'grinder4'), ('12', 'Anfim KS-T, 50 mm planar burrs', '11000.00', '1', 'grinder5'), ('13', 'Mazzer Mini, x0 mm planar burrs, doser', '16000.00', '1', 'grinder6'), ('14', 'Anfim Super Caimano, 75 mm planar titanium burrs, doser', '25000.00', '1', 'grinder7'), ('15', ' Mahlkonig K30 Vario, 65 mm planar burrs, doserless', '48000.00', '1', 'grinder8'), ('16', 'Elektra Nino, 68 mm conical burrs, doserless', '68000.00', '1', 'grinder9'), ('17', 'Mazzer Robur E, 71 mm conical burrs, doserless', '75000.00', '1', 'grinder10');
 COMMIT;
 
 -- ----------------------------
@@ -97,6 +99,7 @@ CREATE TABLE `coffeemachines` (
 `name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL ,
 `price`  decimal(15,2) NOT NULL ,
 `currency_id`  int(11) NULL DEFAULT NULL ,
+`translate_name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 PRIMARY KEY (`coffeeMachine_id`)
 )
 ENGINE=MyISAM
@@ -109,7 +112,7 @@ AUTO_INCREMENT=11
 -- Records of coffeemachines
 -- ----------------------------
 BEGIN;
-INSERT INTO `coffeemachines` VALUES ('1', 'French press', '300.00', '1'), ('2', 'HX brew head, 1-group', '45000.00', '1'), ('3', 'E61 brew head, 1-group', '70000.00', '1'), ('4', 'Saturated brew head, 1-group', '120000.00', '1'), ('5', 'Saturated brew head, 1-group, double boilers', '145000.00', '1'), ('6', 'Saturated brew head, 1-group, double boilers, PID', '146000.00', '1'), ('7', 'Saturated brew head, 1-group, double boilers, PID, VST baskets and a naked portafilter', '147000.00', '1'), ('8', 'Saturated brew head, 1-group, with all the possible upgrades', '156000.00', '1'), ('9', '2-group, saturated brew heads, double boilers, PID, volumetrics, VST baskets and naked portafilters, preinfusion', '250000.00', '1'), ('10', '4-group, saturated brew heads, double boilers, PID, volumetrics, VST baskets and naked portafilters, preinfusion', '550000.00', '1');
+INSERT INTO `coffeemachines` VALUES ('1', 'French press', '300.00', '1', 'machine1'), ('2', 'HX brew head, 1-group', '45000.00', '1', 'machine2'), ('3', 'E61 brew head, 1-group', '70000.00', '1', 'machine3'), ('4', 'Saturated brew head, 1-group', '120000.00', '1', 'machine4'), ('5', 'Saturated brew head, 1-group, double boilers', '145000.00', '1', 'machine5'), ('6', 'Saturated brew head, 1-group, double boilers, PID', '146000.00', '1', 'machine6'), ('7', 'Saturated brew head, 1-group, double boilers, PID, VST baskets and a naked portafilter', '147000.00', '1', 'machine7'), ('8', 'Saturated brew head, 1-group, with all the possible upgrades', '156000.00', '1', 'machine8'), ('9', '2-group, saturated brew heads, double boilers, PID, volumetrics, VST baskets and naked portafilters, preinfusion', '250000.00', '1', 'machine9'), ('10', '4-group, saturated brew heads, double boilers, PID, volumetrics, VST baskets and naked portafilters, preinfusion', '550000.00', '1', 'machine10');
 COMMIT;
 
 -- ----------------------------
@@ -122,6 +125,7 @@ CREATE TABLE `coffeeplaces` (
 `price`  decimal(15,2) NOT NULL ,
 `currency_id`  int(11) NULL DEFAULT NULL ,
 `timePeriod_id`  int(11) NULL DEFAULT NULL ,
+`translate_name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 PRIMARY KEY (`coffeePlace_id`)
 )
 ENGINE=MyISAM
@@ -134,7 +138,7 @@ AUTO_INCREMENT=6
 -- Records of coffeeplaces
 -- ----------------------------
 BEGIN;
-INSERT INTO `coffeeplaces` VALUES ('1', 'Sufficient', '6000.00', '1', '1'), ('2', 'Slightly better', '8000.00', '1', '1'), ('3', 'Good', '14000.00', '1', '1'), ('4', 'Great', '55000.00', '1', '1'), ('5', 'Fantastic', '130000.00', '1', '1');
+INSERT INTO `coffeeplaces` VALUES ('1', 'Sufficient', '6000.00', '1', '1', 'place1'), ('2', 'Slightly better', '8000.00', '1', '1', 'place2'), ('3', 'Good', '14000.00', '1', '1', 'place3'), ('4', 'Great', '55000.00', '1', '1', 'place4'), ('5', 'Fantastic', '130000.00', '1', '1', 'place5');
 COMMIT;
 
 -- ----------------------------
@@ -147,6 +151,7 @@ CREATE TABLE `coffeetypes` (
 `price`  decimal(15,2) NOT NULL ,
 `currency_id`  int(11) NULL DEFAULT NULL ,
 `weightMeasurement_id`  int(11) NULL DEFAULT NULL ,
+`translate_name`  varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL ,
 PRIMARY KEY (`coffeeType_id`)
 )
 ENGINE=MyISAM
@@ -159,7 +164,7 @@ AUTO_INCREMENT=10
 -- Records of coffeetypes
 -- ----------------------------
 BEGIN;
-INSERT INTO `coffeetypes` VALUES ('1', '100% Robusta with unknown roasting date', '300.00', '1', '1'), ('2', '100% Robusta with unknown roasting date', '400.00', '1', '1'), ('3', '30/70 Robusta/Arabica blend with unknown roasting date', '450.00', '1', '1'), ('4', '10/90 Robusta/Arabica blend with unknown roasting date', '470.00', '1', '1'), ('5', '100% Arabica with unknown roasting date', '500.00', '1', '1'), ('6', 'Commodity grade Arabica, freshly roasted', '600.00', '1', '1'), ('7', 'Specialty coffee, freshly roasted', '700.00', '1', '1'), ('8', 'Micro lot, freshly roasted', '750.00', '1', '1'), ('9', 'Nano lot, freshly roasted', '800.00', '1', '1');
+INSERT INTO `coffeetypes` VALUES ('1', '100% Robusta with unknown roasting date', '300.00', '1', '1', 'coffee1'), ('2', '100% Robusta with unknown roasting date', '400.00', '1', '1', 'coffee2'), ('3', '30/70 Robusta/Arabica blend with unknown roasting date', '450.00', '1', '1', 'coffee3'), ('4', '10/90 Robusta/Arabica blend with unknown roasting date', '470.00', '1', '1', 'coffee4'), ('5', '100% Arabica with unknown roasting date', '500.00', '1', '1', 'coffee5'), ('6', 'Commodity grade Arabica, freshly roasted', '600.00', '1', '1', 'coffee6'), ('7', 'Specialty coffee, freshly roasted', '700.00', '1', '1', 'coffee7'), ('8', 'Micro lot, freshly roasted', '750.00', '1', '1', 'coffee8'), ('9', 'Nano lot, freshly roasted', '800.00', '1', '1', 'coffee9');
 COMMIT;
 
 -- ----------------------------
@@ -298,7 +303,7 @@ AUTO_INCREMENT=7
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES ('1', 'Cafe1', '36759e3c012ba75562fe2e31d144c483', '', '0', '55000.00'), ('2', 'Barry Lyndon', '39a664ecbd7d66ea6f075021cbb8117f', '6a033eba31bf6f759089c03add0f2f5d', '0', '55000.00'), ('3', 'illy', 'e08a7c49d96c2b475656cc8fe18cee8e', '6a25f15df607e95df221fd5902318031', '0', '55000.00'), ('4', 'shopmania', '474e45c3f259290616d4189b25f71421', '25c6dcb26503d38c8167a49d45d6022a', '0', '55000.00'), ('5', 'sergey_onix', 'c290a3d21ccbbbd136c20d9202dcf6df', 'c6cd3ec60b2412ddb53dd7cebc2ad57e', '0', '55000.00'), ('6', 'test', 'fb469d7ef430b0baf0cab6c436e70375', '', '0', '55000.00');
+INSERT INTO `users` VALUES ('1', 'Cafe1', '36759e3c012ba75562fe2e31d144c483', '', '0', '55000.00'), ('2', 'Barry Lyndon', '39a664ecbd7d66ea6f075021cbb8117f', '6396a727d443db883ced9507fed8951a', '0', '55000.00'), ('3', 'illy', 'e08a7c49d96c2b475656cc8fe18cee8e', '6a25f15df607e95df221fd5902318031', '0', '55000.00'), ('4', 'shopmania', '474e45c3f259290616d4189b25f71421', '25c6dcb26503d38c8167a49d45d6022a', '0', '55000.00'), ('5', 'sergey_onix', 'c290a3d21ccbbbd136c20d9202dcf6df', 'c6cd3ec60b2412ddb53dd7cebc2ad57e', '0', '55000.00'), ('6', 'test', 'fb469d7ef430b0baf0cab6c436e70375', '', '0', '55000.00');
 COMMIT;
 
 -- ----------------------------
