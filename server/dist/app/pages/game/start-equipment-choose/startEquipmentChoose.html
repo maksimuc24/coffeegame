@@ -31,15 +31,15 @@
                                                                                 </button> 
                                                                         </li> 
 
-                                                                        <li ng-if="grinder.name == selectedEquipment.grinder && grinder.name !=null">
+                                                                        <li ng-if="grinder.id == selectedEquipment.grinder && grinder.name !=null">
                                                                                <button type="button" class="btn btn-success btn-block">
-                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{grinder.name}}</div>
+                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{grinder.translate_name |translate}}</div>
                                                                                     <div class="pull-right">{{grinder.price | number:0}} {{'CURRENCY'|translate}}</div>
                                                                                 </button>
                                                                         </li>
-                                                                        <li ng-if="grinder.name != selectedEquipment.grinder && grinder.name !=null">
+                                                                        <li ng-if="grinder.id != selectedEquipment.grinder && grinder.name !=null">
                                                                                 <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeeGinder(grinder)"  >
-                                                                                        <div class="pull-left">{{grinder.name}}</div>
+                                                                                        <div class="pull-left">{{grinder.translate_name |translate}}</div>
                                                                                         <div class="pull-right">{{grinder.price | number:0}} {{'CURRENCY'|translate}}</div>
                                                                                 </button> 
                                                                         </li>
@@ -72,15 +72,15 @@
                                                                                 </button> 
                                                                         </li> 
 
-                                                                        <li ng-if="machine.name == selectedEquipment.machine && machine.name !=null">
+                                                                        <li ng-if="machine.id == selectedEquipment.machine && machine.name !=null">
                                                                                <button type="button" class="btn btn-success btn-block">
-                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{machine.name}}</div>
+                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{machine.translate_name |translate}}</div>
                                                                                     <div class="pull-right">{{machine.price | number:0}} {{'CURRENCY'|translate}}</div>
                                                                                 </button>
                                                                         </li>
-                                                                        <li ng-if="machine.name != selectedEquipment.machine && machine.name !=null">
+                                                                        <li ng-if="machine.id != selectedEquipment.machine && machine.name !=null">
                                                                                 <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeeMachine(machine)"  >
-                                                                                        <div class="pull-left">{{machine.name}}</div>
+                                                                                        <div class="pull-left">{{machine.translate_name |translate}}</div>
                                                                                         <div class="pull-right">{{machine.price | number:0}} {{'CURRENCY'|translate}}</div>
                                                                                 </button> 
                                                                         </li>
@@ -113,16 +113,16 @@
                                                                                 </button> 
                                                                         </li> 
 
-                                                                        <li ng-if="place.name == selectedEquipment.place && place.name !=null">
+                                                                        <li ng-if="place.id == selectedEquipment.place && place.name !=null">
                                                                                <button type="button" class="btn btn-success btn-block">
-                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{place.name}}</div>
-                                                                                    <div class="pull-right">{{place.price | number:0}} {{'CURRENCY'|translate}}</div>
+                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{place.translate_name |translate}}</div>
+                                                                                    <div class="pull-right">{{place.price | number:0}} {{'CURRENCY'|translate}} {{'PER_MONTH'|translate}}</div>
                                                                                 </button>
                                                                         </li>
-                                                                        <li ng-if="place.name != selectedEquipment.place && place.name !=null">
+                                                                        <li ng-if="place.id != selectedEquipment.place && place.name !=null">
                                                                                 <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeePlace(place)"  >
-                                                                                        <div class="pull-left">{{place.name}}</div>
-                                                                                        <div class="pull-right">{{place.price | number:0}} {{'CURRENCY'|translate}}</div>
+                                                                                        <div class="pull-left">{{place.translate_name |translate}}</div>
+                                                                                        <div class="pull-right">{{place.price | number:0}} {{'CURRENCY'|translate}} {{'PER_MONTH'|translate}}</div>
                                                                                 </button> 
                                                                         </li> 
                                                                 </ul>
@@ -154,16 +154,16 @@
                                                                                 </button> 
                                                                         </li> 
 
-                                                                        <li ng-if="employee.name == selectedEquipment.employee && employee.name !=null">
+                                                                        <li ng-if="employee.id == selectedEquipment.employee && employee.name !=null">
                                                                                <button type="button" class="btn btn-success btn-block">
-                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{employee.name}}</div>
-                                                                                    <div class="pull-right">{{employee.price | number:0}} {{'CURRENCY'|translate}} {{'PER'|translate}} {{employee.timePeriod_name}}</div>
+                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{employee.translate_name |translate}}</div>
+                                                                                    <div class="pull-right">{{employee.price | number:0}} {{'CURRENCY'|translate}} {{'PER_MONTH'|translate}}</div>
                                                                                 </button>
                                                                         </li>
-                                                                        <li ng-if="employee.name != selectedEquipment.employee && employee.name !=null">
+                                                                        <li ng-if="employee.id != selectedEquipment.employee && employee.name !=null">
                                                                                 <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeeEmployee(employee)"  >
-                                                                                        <div class="pull-left">{{employee.name}}</div>
-                                                                                        <div class="pull-right">{{employee.price | number:0}} {{'CURRENCY'|translate}} {{'PER'|translate}} {{employee.timePeriod_name}}</div>
+                                                                                        <div class="pull-left">{{employee.translate_name |translate}}</div>
+                                                                                        <div class="pull-right">{{employee.price | number:0}} {{'CURRENCY'|translate}} {{'PER_MONTH'|translate}}</div>
                                                                                 </button> 
                                                                         </li>  
                                                                 </ul>
@@ -195,16 +195,16 @@
                                                                                 </button> 
                                                                         </li> 
 
-                                                                        <li ng-if="coffeeType.name == selectedEquipment.coffe && coffeeType.name !=null">
+                                                                        <li ng-if="coffeeType.id == selectedEquipment.coffe && coffeeType.name !=null">
                                                                                <button type="button" class="btn btn-success btn-block">
-                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{coffeeType.name}}</div>
-                                                                                    <div class="pull-right">{{coffeeType.price | number:0}} {{'CURRENCY'|translate}}</div>
+                                                                                    <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{coffeeType.translate_name |translate}}</div>
+                                                                                    <div class="pull-right">{{coffeeType.price | number:0}} {{'CURRENCY'|translate}} {{'PER'|translate}} {{'KG'|translate}}</div>
                                                                                 </button>
                                                                         </li>
-                                                                        <li ng-if="coffeeType.name != selectedEquipment.coffe && coffeeType.name !=null">
+                                                                        <li ng-if="coffeeType.id != selectedEquipment.coffe && coffeeType.name !=null">
                                                                                 <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeeType(coffeeType)"  >
-                                                                                        <div class="pull-left">{{coffeeType.name}}</div>
-                                                                                        <div class="pull-right">{{coffeeType.price | number:0}} {{'CURRENCY'|translate}} {{'PER'|translate}} {{coffeeType.weight_name}}</div>
+                                                                                        <div class="pull-left">{{coffeeType.translate_name |translate}}</div>
+                                                                                        <div class="pull-right">{{coffeeType.price | number:0}} {{'CURRENCY'|translate}} {{'PER'|translate}} {{'KG'|translate}}</div>
                                                                                 </button> 
                                                                         </li>  
                                                                 </ul>
@@ -230,16 +230,16 @@
                                                                 </div>
                                                                 <ul class="list-unstyled inline-block-list" ng-repeat="coffeePrice in model.coffeePrices">
  
-                                                                        <li ng-if="coffeePrice.price == selectedEquipment.drink_price ">
+                                                                        <li ng-if="coffeePrice.id == selectedEquipment.drink_price ">
                                                                                <button type="button" class="btn btn-success btn-block">
                                                                                     <div class="pull-left"><i class="fa fa-check-square-o fa-lg fa-fw"></i> {{coffeePrice.price | number:0}}   {{'CURRENCY'|translate}}</div>
-                                                                                    <div class="pull-right">   {{'PER'|translate}} {{coffeePrice.portion_name}}</div>
+                                                                                    <div class="pull-right">{{'PER_CUP'|translate}}</div>
                                                                                 </button>
                                                                         </li>
-                                                                        <li ng-if="coffeePrice.price != selectedEquipment.drink_price">
+                                                                        <li ng-if="coffeePrice.id != selectedEquipment.drink_price">
                                                                                 <button type="button" class="btn btn-normal btn-block" ng-click="chooseCoffeePrice(coffeePrice)"  >
                                                                                         <div class="pull-left">{{coffeePrice.price | number:0}}  {{'CURRENCY'|translate}} </div>
-                                                                                        <div class="pull-right">    {{'PER'|translate}} {{coffeePrice.portion_name}}</div>
+                                                                                        <div class="pull-right">{{'PER_CUP'|translate}}</div>
                                                                                 </button> 
                                                                         </li>  
                                                                 </ul>
