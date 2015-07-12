@@ -59,7 +59,7 @@ var translationsEN = {
         
 //accordeon
         TABGRINDER: 'Grinder',
-        TABGRINDEREXPLANATION: 'Grinder',
+        TABGRINDEREXPLANATION: "More expensive grinder grind coffee beans faster and with better homogenity—thus leading to better espresso extraction. The higher is the quality of a grind the more discernible are the notes of beverage's taste. Choosing a good coffee grinder is a very important decision—more important than choosing an overly expensive espresso machine.",
         'grinder1': 'Marble mortar',
         'grinder2': 'Noname blade grinder',
         'grinder3': 'OE Lido, hand-powered',
@@ -71,7 +71,7 @@ var translationsEN = {
         'grinder9': 'Elektra Nino, 68 mm conical burrs, doserless',
         'grinder10': 'Mazzer Robur E, 71 mm conical burrs, doserless',
         TABMACHINE: 'Espresso machine',
-        TABMACHINEEXPLANATION: 'Machine',
+        TABMACHINEEXPLANATION: 'Better espresso machines prepare higher quality beverages in shorter time. Precise temperature adjustments and its stability, same volume of water in espresso (volumetrics)—all this makes sure that your delicious drinks will be repeatable.',
         'machine1': 'French press',
         'machine2': 'HX brew head, 1-group',
         'machine3': 'E61 brew head, 1-group',
@@ -83,12 +83,12 @@ var translationsEN = {
         'machine9': '2-group, saturated brew heads, double boilers, PID, volumetrics, VST baskets and naked portafilters, preinfusion',
         'machine10': '4-group, saturated brew heads, double boilers, PID, volumetrics, VST baskets and naked portafilters, preinfusion',
         TABPLACE: 'Place',
-        TABPLACEEXPLANATION: 'Place',
-        'place1': 'Sufficient',
-        'place2': 'Slightly better',
-        'place3': 'Good',
-        'place4': 'Great',
-        'place5': 'Fantastic',
+        TABPLACEEXPLANATION: 'Want to have more potential customers and a chance for a better income—consider renting a better place.',
+        'place1': 'On the outskirts of a small town',
+        'place2': 'In a housing estate',
+        'place3': 'In a shopping mall',
+        'place4': 'In an office center',
+        'place5': 'Near the busiest place in the city',
         TABEMPLOYEES: 'Employees',
         TABEMPLOYEESEXPLANATION: 'Employees',
         'employees1': 'Only you',
@@ -143,5 +143,5 @@ var translationsEN = {
         EMPLOY_MORE_PEOPLE:"Employ more people and provide them with training and benefits. This results in quicker drinks preparation and higher customer satisfaction.",
         MORE_EXPENSIVE_GRINDERS:" More expensive grinders grind faster with reduced clumps and improve espresso extraction.",
         BETTER_MACHINES:"Better machines result in higher quality beverages, served more quickly.",
-        FROM_SUPERMARKET:"From supermarket coffee without roast date through specialty micro lots—to your own plantation.",
+        FROM_SUPERMARKET:"From supermarket coffee without roast date through specialty micro lots—to your own plantation."
 };
