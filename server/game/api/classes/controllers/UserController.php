@@ -20,6 +20,9 @@ class UserController extends AbstractController {
                     case 'balance':
                         return $this->GetBalance();
                         break;
+                    case 'reset-balance':
+                        return $this->resetBalance();
+                        break;
 
                     default:
                         return;
@@ -32,5 +35,13 @@ class UserController extends AbstractController {
 
     public function GetBalance (){
         return $this->gameUserManager->GetUserBalance();
+    }
+
+    /**
+    * Reset all game information
+    * @return {string}
+    */
+    public function resetBalance(){
+        return $this->gameUserManager->globalReset();
     }
 }

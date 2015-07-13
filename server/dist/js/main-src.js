@@ -338,6 +338,28 @@
 })();
 
 (function() {
+        'use strict' 
+
+        angular
+                .module('coffeeGame')
+                .factory('globalService', globalService);
+
+
+        globalService.$inject = ['$http', 'serverUrl','$q'];
+
+
+        function globalService($http, serverUrl,$q) {
+                var urlBase = serverUrl + '/game/api/user';  
+                var Service = {};
+
+                Service.resetData = function() {
+                        return $http.get(urlBase + '/reset-balance');
+                }; 
+                return Service;
+        };
+})();
+
+(function() {
         'use strict'
 
 
@@ -572,11 +594,20 @@
                 .module('coffeeGame')
                 .controller('globalSettingsCtrl', globalSettingsCtrl);
 
-        globalSettingsCtrl.$inject = ['$scope', '$rootScope', 'User'];
+        globalSettingsCtrl.$inject = ['$scope', '$rootScope', 'User','$window','globalService'];
 
-        function globalSettingsCtrl($scope, $rootScope, User) { 
+        function globalSettingsCtrl($scope, $rootScope, User,$window,globalService) { 
 
                 console.log('globalSettingsCtrl');
+
+
+                //reset all information for user
+                $scope.globalReset = function(){ 
+                        globalService.resetData()
+                                .success(function(data) {
+                                        $window.location.reload()
+                                }); 
+                }
         };
 })();
 
