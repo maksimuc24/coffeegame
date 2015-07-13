@@ -198,15 +198,18 @@
                 .module('coffeeGame')
                 .factory('CoffeePrice', CoffeePrice);
 
-        CoffeePrice.$inject = [];
+        CoffeePrice.$inject = ['gameSettingsService'];
         
-        function CoffeePrice() {
+        function CoffeePrice(gameSettingsService) {
                 var CoffeePrice = function() {
                         this.id = 0;
                         this.price = 0;
                 };
 
                 CoffeePrice.prototype.Set = function(coffeePrice) {
+                        //save to the database
+                        gameSettingsService.setUserEquipment(coffeePrice.id,coffeePrice.equipment_type_id,parseFloat(coffeePrice.price));
+                        
                         this.id = coffeePrice.id;
                         this.price = coffeePrice.price;
                 };
@@ -227,9 +230,9 @@
                 .module('coffeeGame')
                 .factory('CoffeeType', CoffeeType);
 
-        CoffeeType.$inject = [];
+        CoffeeType.$inject = ['gameSettingsService'];
 
-        function CoffeeType() {
+        function CoffeeType(gameSettingsService) {
                 var CoffeeType = function() {
                         this.id = 0;
                         this.name = '';
@@ -237,6 +240,10 @@
                 };
 
                 CoffeeType.prototype.Set = function(coffeeType) {
+                         //save to the database
+                        gameSettingsService.setUserEquipment(coffeeType.id,coffeeType.equipment_type_id,parseFloat(coffeeType.price));
+                       
+
                         this.id = coffeeType.id;
                         this.name = coffeeType.name;
                         this.pricePerKg = coffeeType.price;
@@ -258,9 +265,9 @@
                 .module('coffeeGame')
                 .factory('Employee', Employee);
 
-        Employee.$inject = [];
+        Employee.$inject = ['gameSettingsService'];
 
-        function Employee() {
+        function Employee(gameSettingsService) {
                 var Employee = function() {
                         this.id = 0;
                         this.pricePerMonth = 0;
@@ -268,6 +275,10 @@
                 };
 
                 Employee.prototype.Set = function(employee) {
+                        //save to the database
+                        gameSettingsService.setUserEquipment(employee.id,employee.equipment_type_id,parseFloat(employee.price));
+                    
+
                         this.id = employee.id;
                         this.pricePerMonth = employee.price;
                         this.name = employee.name;
@@ -319,7 +330,7 @@
                         return $http.get(urlBase + '/coffeePrices');
                 };
 
-                dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId) {
+                dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId,equipmentPrice) {
                         return $http({
                                 'url': urlBase + '/setUserEquipment',
                                 'method': 'POST',
@@ -328,7 +339,8 @@
                                 },
                                 'data': $.param({
                                         'equipmentId': equipmentId,
-                                        'equipmentTypeId': equipmentTypeId
+                                        'equipmentTypeId': equipmentTypeId,
+                                        'equipmentPrice':equipmentPrice
                                 })
                         });
                 };
@@ -367,14 +379,17 @@
                 .module('coffeeGame')
                 .factory('UserEquipment', UserEquipment);
 
-        UserEquipment.$inject = [];
+        UserEquipment.$inject = ['gameSettingsService'];
 
-        function UserEquipment() {
+        function UserEquipment(gameSettingsService) {
                 var UserEquipment = function() {
                         this.items = [];
                 };
 
                 UserEquipment.prototype.Add = function(name, item) {
+                        //save to the database
+                        gameSettingsService.setUserEquipment(item.id,item.equipment_type_id,parseFloat(item.price));
+
                         if (this.Exists(name)) {
                                 var index = this.IndexOf(name);
                                 this.items[index].name = name;
@@ -449,6 +464,7 @@
                 dataFactory.getBalance = function() {
                         return $http.get(urlBase + '/balance');
                 };
+ 
 
                 dataFactory.heartbeat = function() {
                         return $http.get(urlBase + '/heartbeat');
@@ -702,7 +718,7 @@
         StartEquipmentChooseCtrl.$inject = ['$scope', '$rootScope', 'gameSettingsService', 'growl', '$filter'];
 
         function StartEquipmentChooseCtrl($scope, $rootScope, gameSettingsService, growl, $filter) {
-     
+
                 $scope.tabs = [{
                         name: 'Grinder',
                         active: true
@@ -724,23 +740,44 @@
                 }];
 
                 $scope.selectedEquipment = {
-                        "grinder":null,
-                        "machine":null,
-                        "place":null,
-                        "employee":null,
-                        "coffe":null,
-                        "drink_price":null
+                        "grinder": null,
+                        "machine": null,
+                        "place": null,
+                        "employee": null,
+                        "coffe": null,
+                        "drink_price": null
                 };
 
 
                 $scope.model = {};
 
-                getCoffeeGrinders();
-                getCoffeeMachines();
-                getCoffeePlaces();
-                getCoffeeEmployees();
-                getCoffeeTypes();
-                getCoffeePrices();
+
+                /**
+                 * Initialize game equipment
+                 * @param {string} type  initializeCofeGame(type)
+                 */
+                function initializeCofeGame(type) {
+                         if(type!="grinder"){
+                            getCoffeeGrinders();
+                         }
+                         if(type!="machine"){
+                            getCoffeeMachines();
+                         }
+                         if(type!="place"){
+                            getCoffeePlaces();
+                         }
+                         if(type!="employee"){
+                            getCoffeeEmployees();
+                         }
+                         if(type!="coffe"){
+                            getCoffeeTypes();
+                         }
+                         if(type!="drink_price"){
+                           getCoffeePrices(); 
+                         }     
+                }
+                initializeCofeGame('all');
+
 
                 function getCoffeeGrinders() {
                         gameSettingsService.getCoffeeGrinders()
@@ -790,10 +827,10 @@
                         $(id).click();
                 };
                 /**
-                * Update name to the equipment
-                */
-                $scope.addSelectedNameToEquipment = function(index,data){  
-                       $scope.selectedEquipment[index] = data.id;  
+                 * Update name to the equipment
+                 */
+                $scope.addSelectedNameToEquipment = function(index, data) {
+                        $scope.selectedEquipment[index] = data.id;
                 };
 
                 $scope.chooseCoffeeGinder = function(coffeeGrinder) {
@@ -803,7 +840,9 @@
                                 }));
                         } else {
                                 $scope.user.equipment.Add('grinder', coffeeGrinder);
-                                $scope.addSelectedNameToEquipment('grinder', coffeeGrinder); 
+                                $scope.addSelectedNameToEquipment('grinder', coffeeGrinder);
+                                initializeCofeGame('all');
+
 
                                 $scope.openAccordion(2);
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
@@ -821,6 +860,8 @@
                         } else {
                                 $scope.user.equipment.Add('machine', coffeeMachine);
                                 $scope.addSelectedNameToEquipment('machine', coffeeMachine);
+                                initializeCofeGame('all');
+
                                 $scope.openAccordion(3);
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABMACHINE')
@@ -840,6 +881,8 @@
                         } else {
                                 $scope.user.equipment.Add('place', coffeePlace);
                                 $scope.addSelectedNameToEquipment('place', coffeePlace);
+                                initializeCofeGame('all');
+
                                 $scope.openAccordion(4);
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABPLACE')
@@ -855,8 +898,10 @@
                                         name: $filter('translate')('TABEMPLOYEES')
                                 }));
                         } else {
-                                $scope.user.employee.Set(coffeeEmployee); 
+                                $scope.user.employee.Set(coffeeEmployee);
                                 $scope.addSelectedNameToEquipment('employee', coffeeEmployee);
+                                initializeCofeGame('all');
+
                                 $scope.openAccordion(5);
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABEMPLOYEES')
@@ -874,6 +919,8 @@
                         } else {
                                 $scope.user.coffee.type.Set(coffeeType);
                                 $scope.addSelectedNameToEquipment('coffe', coffeeType);
+                                initializeCofeGame('all');
+
                                 $scope.openAccordion(6);
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABCOFFEE')
@@ -888,6 +935,8 @@
                         growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                 name: $filter('translate')('TABPRICE')
                         }));
+                        initializeCofeGame('all');
+                        
                         $scope.addSelectedNameToEquipment('drink_price', coffeePrice);
                         $scope.user.update(checkEquipmentFinish);
                 };

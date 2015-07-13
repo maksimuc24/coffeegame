@@ -60,7 +60,7 @@ class SettingsController extends AbstractController {
             switch ($settingName) {
                     case 'setUserEquipment':
                         var_dump($request->parameters);
-                        return $this->SetUserEquipment($request->parameters['equipmentId'], $request->parameters['equipmentTypeId']);
+                        return $this->SetUserEquipment($request->parameters['equipmentId'], $request->parameters['equipmentTypeId'], $request->parameters['equipmentPrice']);
                         break;
 
                     default:
@@ -225,10 +225,10 @@ class SettingsController extends AbstractController {
         return $coffeePrices;
     }
 
-    private function SetUserEquipment($equipmentId, $equipmentTypeId){
+    private function SetUserEquipment($equipmentId, $equipmentTypeId,$equipmentPrice){
         $dbManager = new DatabaseManager();
         $db = $dbManager->Connect();
 
-        $this->gameUserManager->SetUserEquipment($equipmentId, $equipmentTypeId);
+        $this->gameUserManager->SetUserEquipment($equipmentId, $equipmentTypeId,$equipmentPrice);
     }
 }

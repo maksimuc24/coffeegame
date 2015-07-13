@@ -6,14 +6,17 @@
                 .module('coffeeGame')
                 .factory('UserEquipment', UserEquipment);
 
-        UserEquipment.$inject = [];
+        UserEquipment.$inject = ['gameSettingsService'];
 
-        function UserEquipment() {
+        function UserEquipment(gameSettingsService) {
                 var UserEquipment = function() {
                         this.items = [];
                 };
 
                 UserEquipment.prototype.Add = function(name, item) {
+                        //save to the database
+                        gameSettingsService.setUserEquipment(item.id,item.equipment_type_id,parseFloat(item.price));
+
                         if (this.Exists(name)) {
                                 var index = this.IndexOf(name);
                                 this.items[index].name = name;

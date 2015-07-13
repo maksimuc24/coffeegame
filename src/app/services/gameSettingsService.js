@@ -36,7 +36,7 @@
                         return $http.get(urlBase + '/coffeePrices');
                 };
 
-                dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId) {
+                dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId,equipmentPrice) {
                         return $http({
                                 'url': urlBase + '/setUserEquipment',
                                 'method': 'POST',
@@ -45,7 +45,8 @@
                                 },
                                 'data': $.param({
                                         'equipmentId': equipmentId,
-                                        'equipmentTypeId': equipmentTypeId
+                                        'equipmentTypeId': equipmentTypeId,
+                                        'equipmentPrice':equipmentPrice
                                 })
                         });
                 };

@@ -29,28 +29,59 @@ class GameUserManager{
 
         return floatval(mysql_result($result, 0));
 	}
-
-	public function SetUserEquipment ($equipmentId, $equipmentTypeId){
+    
+    /**
+    * Set user equipment for user
+    */
+	public function SetUserEquipment ($equipmentId, $equipmentTypeId,$equipmentPrice){
 		$userId = $this->GetCurrentUserId(); 
 
-        $result = mysql_query("SELECT equipment_Id FROM userEquipment 
-        		WHERE user_id='".$userId."' AND equipment_type_id='".$equipmentTypeId."' 
-        		ORDER BY created DESC 
-        		LIMIT 1", $this->database->Connect());
+        $result = mysql_query("SELECT equipment_Id,userEquipment_id FROM userEquipment 
+        		               WHERE user_id='".$userId."' AND equipment_type_id='".$equipmentTypeId."' 
+        		               ORDER BY created DESC 
+        		               LIMIT 1", $this->database->Connect());
 
-        
+        $row = mysql_fetch_array($result);
 
-		mysql_query("INSERT INTO userEquipment 
-        		(user_id, equipment_id, equipment_type_id) 
-        		VALUES ('".$userId."', '".$equipmentId."', '".$equipmentTypeId."')", $this->database->Connect());
+        if(is_array($row)){
+        	 $id = $row['userEquipment_id'];  
+        	 mysql_query("UPDATE userEquipment 
+        		         SET  equipment_id=$equipmentId, equipment_type_id=$equipmentTypeId WHERE userEquipment_id = $id", $this->database->Connect());
+        	$this->updateUserBalance($equipmentPrice);
+        }else{
+        	mysql_query("INSERT INTO userEquipment 
+        		        (user_id, equipment_id, equipment_type_id) 
+        		        VALUES ('".$userId."', '".$equipmentId."', '".$equipmentTypeId."')", $this->database->Connect());
+        	$this->updateUserBalance($equipmentPrice);
+        }  
 	}
 
+	/**
+	* Update user balance
+	*/
+	public function updateUserBalance($price){
+		$userId = $this->GetCurrentUserId(); 
+	    $result = mysql_query("SELECT balance FROM users
+        		               WHERE user_id=$userId", $this->database->Connect());
+
+	    $row         = mysql_fetch_array($result);
+	    //if not find
+	    if(!is_array($row)){
+	    	return;
+	    }
+
+	    $balance     = $row['balance'];
+	    $new_balance = (float)$balance-(float)$price;
+	    $result = mysql_query("UPDATE users SET balance=$new_balance
+        		               WHERE user_id=$userId", $this->database->Connect());
+	}
 	/**
 	* Reset all user settings
 	*/
 	public function globalReset(){ 
 		   $userId = $this->GetCurrentUserId();
 		   mysql_query("UPDATE users SET balance=55000 WHERE user_id = $userId", $this->database->Connect());
+		   mysql_query("DELETE FROM userequipment  WHERE user_id = $userId", $this->database->Connect());
 		   return 'ok';
 	}
 
