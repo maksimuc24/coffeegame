@@ -64,7 +64,7 @@
         angular
                 .module('coffeeGame')
                 .config(['$translateProvider','growlProvider', function($translateProvider,growlProvider) {
-                        growlProvider.globalTimeToLive({success: 3000, error: 3000, warning: 3000, info: 4000});
+                        growlProvider.globalTimeToLive({success: 5000, error: 5000, warning: 5000, info: 5000});
                         
                         // add translation tables
                         $translateProvider.translations('en', translationsEN);
@@ -442,6 +442,47 @@
 
         angular
                 .module('coffeeGame')
+                .controller('HeartbeatCtrl', HeartbeatCtrl);
+
+        HeartbeatCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'userService'];
+
+        function HeartbeatCtrl($scope, $rootScope, $timeout, userService) {
+
+                var timer;
+
+                $rootScope.$on('userLogin', function() {
+                        startHeartbeat();
+                });
+
+                $rootScope.$on('userLogout', function() {
+                        stopHeartbeat();
+                });
+
+                function startHeartbeat() {
+                        if (!timer) {
+                                timer = $timeout(
+                                        function() {
+                                                userService.heartbeat();
+                                        },
+                                        5000);
+                        }
+                };
+
+                function stopHeartbeat() {
+                        if (timer) {
+                                $timeout.cancel(timer);
+                                timer = undefined;
+                        }
+                };
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('UserAuthCtrl', UserAuthCtrl);
 
         UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService'];
@@ -489,47 +530,6 @@
 
         angular
                 .module('coffeeGame')
-                .controller('HeartbeatCtrl', HeartbeatCtrl);
-
-        HeartbeatCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'userService'];
-
-        function HeartbeatCtrl($scope, $rootScope, $timeout, userService) {
-
-                var timer;
-
-                $rootScope.$on('userLogin', function() {
-                        startHeartbeat();
-                });
-
-                $rootScope.$on('userLogout', function() {
-                        stopHeartbeat();
-                });
-
-                function startHeartbeat() {
-                        if (!timer) {
-                                timer = $timeout(
-                                        function() {
-                                                userService.heartbeat();
-                                        },
-                                        5000);
-                        }
-                };
-
-                function stopHeartbeat() {
-                        if (timer) {
-                                $timeout.cancel(timer);
-                                timer = undefined;
-                        }
-                };
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
                 .controller('UserBalanceCtrl', UserBalanceCtrl)
 
         UserBalanceCtrl.$inject = ['$scope'];
@@ -567,6 +567,28 @@
 (function() {
         'use strict'
 
+        angular
+                .module('coffeeGame')
+                .controller('TranslateCtrl', TranslateCtrl);
+
+        TranslateCtrl.$inject = ['$scope', '$translate'];
+
+        function TranslateCtrl($scope, $translate) { 
+
+                $scope.changeLanguage = function(langKey) {
+                        $translate.uses(langKey);   
+                }
+ 
+        };
+
+
+
+
+})();
+
+(function() {
+        'use strict'
+
 
         angular
                 .module('coffeeGame')
@@ -590,28 +612,6 @@
                         });
                 }
         };
-})();
-
-(function() {
-        'use strict'
-
-        angular
-                .module('coffeeGame')
-                .controller('TranslateCtrl', TranslateCtrl);
-
-        TranslateCtrl.$inject = ['$scope', '$translate'];
-
-        function TranslateCtrl($scope, $translate) { 
-
-                $scope.changeLanguage = function(langKey) {
-                        $translate.uses(langKey);   
-                }
- 
-        };
-
-
-
-
 })();
 
 (function() {

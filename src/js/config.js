@@ -17,7 +17,7 @@
         angular
                 .module('coffeeGame')
                 .config(['$translateProvider','growlProvider', function($translateProvider,growlProvider) {
-                        growlProvider.globalTimeToLive({success: 3000, error: 3000, warning: 3000, info: 4000});
+                        growlProvider.globalTimeToLive({success: 5000, error: 5000, warning: 5000, info: 5000});
                         
                         // add translation tables
                         $translateProvider.translations('en', translationsEN);
