@@ -61,11 +61,11 @@
                 <div class="row">
                         <div class="col-lg-7"> 
                                <p ng-bind-html="'AFTER_REGISTRATION' | translate"></p> 
-                                <br> 
+                                <br>  
                                 <br>
                                 <div style="position: relative; left: 0; top: 0;">
-                                        <img src="x-1back.gif" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
-                                        <img src="x-0people.gif" class="img-responsive img-rounded" style="position: absolute; top: 0px; left: 0px; ">
+                                        <img src="2place.png" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
+                                        <img src="1employees.gif" class="img-responsive img-rounded" style="position: absolute; top: 0px; left: 0px; ">
                                 </div> 
                         </div> 
                         <div class="col-md-5" ng-controller="GameCtrl" ng-view></div> 
@@ -157,7 +157,7 @@
         <div class="modal fade" id="myModalReset" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-sm">
                         <div class="modal-content">
-                                <div class="modal-body">
+                                <div class="modal-body" ng-controller="globalSettingsCtrl">
                                         <div class="panel panel-primary">
                                                 <div class="panel-heading"><i class="fa fa-refresh fa-lg fa-fw"></i>{{'RESET'|translate}}</div>
                                                 <div class="panel-body">
