@@ -42,6 +42,10 @@ class SettingsController extends AbstractController {
                         return $this->GetCoffeePrices();
                         break;
 
+                    case 'getUserEquipment':   
+                        return $this->getUserEquipment();
+                        break;
+
                     default:
                         return;
                         break;
@@ -58,8 +62,7 @@ class SettingsController extends AbstractController {
             $settingName = $request->url_elements[1];
 
             switch ($settingName) {
-                    case 'setUserEquipment':
-                        var_dump($request->parameters);
+                    case 'setUserEquipment': 
                         return $this->SetUserEquipment($request->parameters['equipmentId'], $request->parameters['equipmentTypeId'],$request->parameters['equipmentPrice']);
                         break;
 
@@ -86,9 +89,13 @@ class SettingsController extends AbstractController {
             JOIN currencies c ON cg.currency_id = c.currency_id
             JOIN equipmenttypes et ON et.name='coffeeGrinders'", $db);
         $coffeeGrinders = array();
+
+
+        $equipmenId   = $this->getEquipmentIdByType("grinder");
+
         while($row = mysql_fetch_array($result)){  
             $empty_row = array(); 
-            if(floatval($row['price']) <= $user_balance) { 
+            if(floatval($row['price']) <= $user_balance or $row['id'] == $equipmenId) { 
                 $empty_row['id'] = $row['id']; 
                 $empty_row['name'] = $row['name'];
                 $empty_row['price'] = $row['price'];
@@ -117,9 +124,13 @@ class SettingsController extends AbstractController {
             FROM coffeemachines cm 
             JOIN currencies c ON cm.currency_id = c.currency_id
             JOIN equipmenttypes et ON et.name='coffeeMachines'", $db);
+
         $coffeeMachines = array();
+        $equipmenId   = $this->getEquipmentIdByType("machine");
+
+
         while($row = mysql_fetch_array($result)){
-            if(floatval($row['price']) <= $user_balance) {
+            if(floatval($row['price']) <= $user_balance or $row['id'] == $equipmenId) {
                 $coffeeMachines[] = $row;
             }else{
                 $empty_row['price'] = $row['price'];
@@ -142,9 +153,15 @@ class SettingsController extends AbstractController {
             JOIN currencies c ON cp.currency_id = c.currency_id
             JOIN timeperiods tp ON tp.timePeriod_id = cp.timePeriod_id
             JOIN equipmenttypes et ON et.name='coffeePlaces'", $db);
+
+ 
+
         $coffeePlaces = array();
+        $equipmenId   = $this->getEquipmentIdByType("place");
+
+
         while($row = mysql_fetch_array($result)){
-            if(floatval($row['price']) <= $user_balance) {
+            if(floatval($row['price']) <= $user_balance or $row['id'] == $equipmenId) {
                 $coffeePlaces[] = $row;
             }else{
                 $empty_row['price'] = $row['price'];
@@ -169,9 +186,12 @@ class SettingsController extends AbstractController {
             JOIN currencies c ON ce.currency_id = c.currency_id
             JOIN timeperiods tp ON ce.timePeriod_id = tp.timePeriod_id
             JOIN equipmenttypes et ON et.name='coffeeEmployees'", $db);
+
         $coffeeEmployees = array();
+        $equipmenId   = $this->getEquipmentIdByType("employee");
+
         while($row = mysql_fetch_array($result)){
-            if(floatval($row['price']) <= $user_balance) {
+            if(floatval($row['price']) <= $user_balance or $row['id'] == $equipmenId) {
                 $coffeeEmployees[] = $row;
             }else{
                 $empty_row['price'] = $row['price'];
@@ -196,9 +216,12 @@ class SettingsController extends AbstractController {
             JOIN currencies c ON ct.currency_id = c.currency_id
             JOIN weightmeasurements wm ON ct.weightMeasurement_id = wm.weightMeasurement_id
             JOIN equipmenttypes et ON et.name='coffeeTypes'", $db);
+
         $coffeeTypes = array();
+        $equipmenId   = $this->getEquipmentIdByType("coffe");
+
         while($row = mysql_fetch_array($result)){
-            if(floatval($row['price']) <= $user_balance) {
+            if(floatval($row['price']) <= $user_balance or $row['id'] == $equipmenId) {
                 $coffeeTypes[] = $row;
             }else{
                 $empty_row['price'] = $row['price'];
@@ -231,10 +254,26 @@ class SettingsController extends AbstractController {
         return $coffeePrices;
     }
 
-    private function SetUserEquipment($equipmentId, $equipmentTypeId,$equipmentPrice){
-        $dbManager = new DatabaseManager();
-        $db = $dbManager->Connect();
 
-        $this->gameUserManager->SetUserEquipment($equipmentId,$equipmentTypeId,$equipmentPrice);
+    /**
+    * Get equipment id by type
+    */
+    public function getEquipmentIdByType($type){
+           return $this->gameUserManager->getEquipmentIdByType($type);  
+    }
+
+    /**
+    * Get all user equipment
+    */
+
+    private function getUserEquipment(){
+            return $this->gameUserManager->getUserEquipment();
+
+    }
+    /**
+    * Set user equipment for user
+    */
+    private function SetUserEquipment($equipmentId, $equipmentTypeId,$equipmentPrice){
+           $this->gameUserManager->SetUserEquipment($equipmentId,$equipmentTypeId,$equipmentPrice);
     }
 }

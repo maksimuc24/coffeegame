@@ -40,6 +40,7 @@
                 };
 
 
+
                 $scope.model = {};
 
 
@@ -48,26 +49,34 @@
                  * @param {string} type  initializeCofeGame(type)
                  */
                 function initializeCofeGame(type) {
-                         if(type!="grinder"){
-                            getCoffeeGrinders();
-                         }
-                         if(type!="machine"){
-                            getCoffeeMachines();
-                         }
-                         if(type!="place"){
-                            getCoffeePlaces();
-                         }
-                         if(type!="employee"){
-                            getCoffeeEmployees();
-                         }
-                         if(type!="coffe"){
-                            getCoffeeTypes();
-                         }
-                         if(type!="drink_price"){
-                           getCoffeePrices(); 
-                         }     
+                        if (type != "grinder") {
+                                getCoffeeGrinders();
+                        }
+                        if (type != "machine") {
+                                getCoffeeMachines();
+                        }
+                        if (type != "place") {
+                                getCoffeePlaces();
+                        }
+                        if (type != "employee") {
+                                getCoffeeEmployees();
+                        }
+                        if (type != "coffe") {
+                                getCoffeeTypes();
+                        }
+                        if (type != "drink_price") {
+                                getCoffeePrices();
+                        }
+                        getUserEquipment();
                 }
                 initializeCofeGame('all');
+
+                function getUserEquipment() {
+                        gameSettingsService.getUserEquipment()
+                                .success(function(data) {  
+                                        $scope.selectedEquipment = data;
+                                });
+                };
 
 
                 function getCoffeeGrinders() {
@@ -227,7 +236,7 @@
                                 name: $filter('translate')('TABPRICE')
                         }));
                         initializeCofeGame('all');
-                        
+
                         $scope.addSelectedNameToEquipment('drink_price', coffeePrice);
                         $scope.user.update(checkEquipmentFinish);
                 };

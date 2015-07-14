@@ -45,11 +45,11 @@ class GameUserManager{
 
         if(is_array($row)){
         	 $id = $row['userEquipment_id'];  
-        	 mysql_query("UPDATE userEquipment 
+        	 mysql_query("UPDATE userequipment 
         		         SET  equipment_id=$equipmentId, equipment_type_id=$equipmentTypeId WHERE userEquipment_id = $id", $this->database->Connect());
         	$this->updateUserBalance($equipmentPrice);
         }else{
-        	mysql_query("INSERT INTO userEquipment 
+        	mysql_query("INSERT INTO userequipment 
         		        (user_id, equipment_id, equipment_type_id) 
         		        VALUES ('".$userId."', '".$equipmentId."', '".$equipmentTypeId."')", $this->database->Connect());
         	$this->updateUserBalance($equipmentPrice);
@@ -64,7 +64,7 @@ class GameUserManager{
 	    $result = mysql_query("SELECT balance FROM users
         		               WHERE user_id=$userId", $this->database->Connect());
 
-	    $row         = mysql_fetch_array($result);
+	    $row  = mysql_fetch_array($result);
 	    //if not find
 	    if(!is_array($row)){
 	    	return;
@@ -75,6 +75,47 @@ class GameUserManager{
 	    $result = mysql_query("UPDATE users SET balance=$new_balance
         		               WHERE user_id=$userId", $this->database->Connect());
 	}
+
+	/**
+	* return all equipment
+	*/
+	public function getUserEquipment(){
+		   $userId = $this->GetCurrentUserId();
+
+		   $result = mysql_query("SELECT * FROM userequipment
+        		               WHERE user_id=$userId", $this->database->Connect()); 
+           
+           $itog = array("grinder"     => null,
+                         "machine"     => null,
+                         "place"       => null, 
+                         "coffe"       => null,
+                         "employee"    => null,
+                         "drink_price" => null);
+
+	       while($row = mysql_fetch_array($result)){ 
+	             if($row["equipment_type_id"] = 1){
+	             	$itog["grinder"] = $row['equipment_id'];
+	             }
+	             if($row["equipment_type_id"] = 2){
+	             	$itog["machine"] = $row['equipment_id'];
+	             }
+	             if($row["equipment_type_id"] = 3){
+	             	$itog["place"] = $row['equipment_id'];
+	             }
+	             if($row["equipment_type_id"] = 4){
+	             	$itog["coffe"] = $row['equipment_id'];
+	             }
+	             if($row["equipment_type_id"] = 5){
+	             	$itog["employee"] = $row['equipment_id'];
+	             }
+	             if($row["equipment_type_id"] = 6){
+	             	$itog["drink_price"] = $row['equipment_id'];
+	             }
+	       } 
+
+		   return $itog;
+	}
+
 	/**
 	* Reset all user settings
 	*/
@@ -85,4 +126,42 @@ class GameUserManager{
 		   return 'ok';
 	}
 
+	/**
+	* Get id
+	*/
+	public function getEquipmentIdByType($type){
+		    $equipment_type_id = 0;
+		    $userId = $this->GetCurrentUserId();
+
+		    switch ($type) {
+		    	case "grinder":
+		    		$equipment_type_id = 1;
+		    		break;
+		    	case "machine":
+		    		$equipment_type_id = 2;
+		    		break;
+		    	case "place":
+		    		$equipment_type_id = 3;
+		    		break;
+		    	case "coffe":
+		    		$equipment_type_id = 4;
+		    		break; 
+		    	case "employee":
+		    		$equipment_type_id = 5;
+		    		break; 
+		    	case "drink_price":
+		    		$equipment_type_id = 6;
+		    		break;
+		    } 
+
+		    $result = mysql_query("SELECT equipment_id FROM userequipment
+        		               WHERE user_id=$userId AND equipment_type_id=$equipment_type_id", $this->database->Connect()); 
+			
+			$row  = mysql_fetch_array($result);
+		    //if not find
+		    if(!is_array($row)){
+		    	return 0;
+		    }
+		    return $row["equipment_id"];
+	}
 }

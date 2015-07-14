@@ -330,6 +330,10 @@
                         return $http.get(urlBase + '/coffeePrices');
                 };
 
+                dataFactory.getUserEquipment = function() {
+                        return $http.get(urlBase + '/getUserEquipment');
+                };
+
                 dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId,equipmentPrice) {
                         return $http({
                                 'url': urlBase + '/setUserEquipment',
@@ -521,6 +525,21 @@
 
         angular
                 .module('coffeeGame')
+                .controller('UserBalanceCtrl', UserBalanceCtrl)
+
+        UserBalanceCtrl.$inject = ['$scope'];
+
+        function UserBalanceCtrl($scope) {
+
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('UserAuthCtrl', UserAuthCtrl);
 
         UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService'];
@@ -559,21 +578,6 @@
                                         }
                                 });
                 };
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('UserBalanceCtrl', UserBalanceCtrl)
-
-        UserBalanceCtrl.$inject = ['$scope'];
-
-        function UserBalanceCtrl($scope) {
-
         };
 })();
 
@@ -630,6 +634,31 @@
 (function() {
         'use strict'
 
+        angular
+                .module('coffeeGame')
+                .controller('TranslateCtrl', TranslateCtrl);
+
+        TranslateCtrl.$inject = ['$scope', '$translate'];
+
+        function TranslateCtrl($scope, $translate) { 
+                //display modal window with language list
+                $('#myModalLanguage').modal();
+
+                //change lenguage
+                $scope.changeLanguage = function(langKey) {
+                        $translate.uses(langKey);   
+                }
+ 
+        };
+
+
+
+
+})();
+
+(function() {
+        'use strict'
+
 
         angular
                 .module('coffeeGame')
@@ -653,31 +682,6 @@
                         });
                 }
         };
-})();
-
-(function() {
-        'use strict'
-
-        angular
-                .module('coffeeGame')
-                .controller('TranslateCtrl', TranslateCtrl);
-
-        TranslateCtrl.$inject = ['$scope', '$translate'];
-
-        function TranslateCtrl($scope, $translate) { 
-                //display modal window with language list
-                $('#myModalLanguage').modal();
-
-                //change lenguage
-                $scope.changeLanguage = function(langKey) {
-                        $translate.uses(langKey);   
-                }
- 
-        };
-
-
-
-
 })();
 
 (function() {
@@ -749,6 +753,7 @@
                 };
 
 
+
                 $scope.model = {};
 
 
@@ -757,26 +762,34 @@
                  * @param {string} type  initializeCofeGame(type)
                  */
                 function initializeCofeGame(type) {
-                         if(type!="grinder"){
-                            getCoffeeGrinders();
-                         }
-                         if(type!="machine"){
-                            getCoffeeMachines();
-                         }
-                         if(type!="place"){
-                            getCoffeePlaces();
-                         }
-                         if(type!="employee"){
-                            getCoffeeEmployees();
-                         }
-                         if(type!="coffe"){
-                            getCoffeeTypes();
-                         }
-                         if(type!="drink_price"){
-                           getCoffeePrices(); 
-                         }     
+                        if (type != "grinder") {
+                                getCoffeeGrinders();
+                        }
+                        if (type != "machine") {
+                                getCoffeeMachines();
+                        }
+                        if (type != "place") {
+                                getCoffeePlaces();
+                        }
+                        if (type != "employee") {
+                                getCoffeeEmployees();
+                        }
+                        if (type != "coffe") {
+                                getCoffeeTypes();
+                        }
+                        if (type != "drink_price") {
+                                getCoffeePrices();
+                        }
+                        getUserEquipment();
                 }
                 initializeCofeGame('all');
+
+                function getUserEquipment() {
+                        gameSettingsService.getUserEquipment()
+                                .success(function(data) {  
+                                        $scope.selectedEquipment = data;
+                                });
+                };
 
 
                 function getCoffeeGrinders() {
@@ -936,7 +949,7 @@
                                 name: $filter('translate')('TABPRICE')
                         }));
                         initializeCofeGame('all');
-                        
+
                         $scope.addSelectedNameToEquipment('drink_price', coffeePrice);
                         $scope.user.update(checkEquipmentFinish);
                 };

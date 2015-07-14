@@ -36,6 +36,10 @@
                         return $http.get(urlBase + '/coffeePrices');
                 };
 
+                dataFactory.getUserEquipment = function() {
+                        return $http.get(urlBase + '/getUserEquipment');
+                };
+
                 dataFactory.setUserEquipment = function(equipmentId, equipmentTypeId,equipmentPrice) {
                         return $http({
                                 'url': urlBase + '/setUserEquipment',
