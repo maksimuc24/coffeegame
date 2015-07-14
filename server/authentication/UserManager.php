@@ -17,6 +17,16 @@ class UserManager {
         $this->gameManager = new GameManager();
 	}
 
+	public function UserStartPlay($user_id){
+		   $query = mysql_query("UPDATE  users SET is_play=1 WHERE user_id=$user_id", $this->db); 
+	}	
+
+	public function UserIsPlay($user_id){
+		  $query = mysql_query("SELECT is_play FROM users WHERE user_id=$user_id", $this->db);
+    	  $data = mysql_fetch_assoc($query);
+    	  return $data;
+	}
+
 	public function GetUsers(){
 		return mysql_query("select * from users;", $this->db);
 	}

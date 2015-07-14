@@ -116,7 +116,7 @@ class GameUserManager{
 	*/
 	public function globalReset(){ 
 		   $userId = $this->GetCurrentUserId();
-		   mysql_query("UPDATE users SET balance=55000 WHERE user_id = $userId", $this->database->Connect());
+		   mysql_query("UPDATE users SET balance=55000,is_play=0 WHERE user_id = $userId", $this->database->Connect());
 		   mysql_query("DELETE FROM userequipment  WHERE user_id = $userId", $this->database->Connect());
 		   return 'ok';
 	}

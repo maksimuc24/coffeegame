@@ -170,7 +170,14 @@
                 dataFactory.logout = function() {
                         return $http.get(urlBase + '/logout.php');
                 };
-                
+                dataFactory.startPlay = function() {
+                        return $http.get(urlBase + '/start_play.php');
+                };
+
+                dataFactory.isPlay = function() {
+                        return $http.get(urlBase + '/is_play.php');
+                };
+
                 dataFactory.login = function(data) {
                         return $http({
                                 'url': urlBase + '/auth.php',
@@ -587,6 +594,34 @@
 
         angular
                 .module('coffeeGame')
+                .controller('LoginCtrl', LoginCtrl);
+
+        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
+
+        function LoginCtrl($scope, authenticationService, $location) {
+                $scope.model = {
+                        cafeName: '',
+                        password: ''
+                };
+
+                $scope.login = function() {
+                        authenticationService.login({
+                                'cafeName': $scope.model.cafeName,
+                                'password': $scope.model.password,
+                                'submit': 'submit'
+                        }).success(function(result) {
+                                $location.path('/'); 
+                        });
+                }
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('GameCtrl', GameCtrl);
 
         GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService'];
@@ -594,10 +629,12 @@
         function GameCtrl($scope, $rootScope, User, authenticationService) {
                 $scope.game = {};
                 $scope.showGame = false;
+
                 $rootScope.$on('gameStartEvent', function() {
                         console.log('GameCtrl gameStartEvent');
+                        authenticationService.startPlay();
                         $scope.game.equipmentChooseFinished = true;
-                });
+                }); 
 
                 $rootScope.$on('userLogin', function(e, authUser) {
                         $scope.user = new User(authUser);
@@ -605,24 +642,32 @@
                 });
 
 
-                function checkIfShowGame(){
+                //check if user start play some time ago
+                authenticationService.isPlay()
+                        .success(function(data) {
+                                 if (!angular.isUndefined(data.status)) {
+                                         $scope.game.equipmentChooseFinished = true;
+                                 }
+                        });
+
+                function checkIfShowGame() {
                         authenticationService.validate()
-                                .success(function(data) { 
-                                        if(!angular.isUndefined(data.user_id)){
+                                .success(function(data) {
+                                        if (!angular.isUndefined(data.user_id)) {
                                                 console.log('Login');
                                                 $scope.showGame = true;
-                                            return; 
+                                                return;
                                         }
                                         $scope.showGame = false;
                                         console.log('aaaaaaaaaaaaaa');
                                 });
                 };
                 checkIfShowGame();
- 
-                $scope.$on('userLogout',function(){
+
+                $scope.$on('userLogout', function() {
                         checkIfShowGame();
                 });
-                $scope.$on('userLogin',function(){
+                $scope.$on('userLogin', function() {
                         checkIfShowGame();
                 });
         };
@@ -649,34 +694,6 @@
                                 .success(function(data) {
                                         $window.location.reload()
                                 }); 
-                }
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('LoginCtrl', LoginCtrl);
-
-        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
-
-        function LoginCtrl($scope, authenticationService, $location) {
-                $scope.model = {
-                        cafeName: '',
-                        password: ''
-                };
-
-                $scope.login = function() {
-                        authenticationService.login({
-                                'cafeName': $scope.model.cafeName,
-                                'password': $scope.model.password,
-                                'submit': 'submit'
-                        }).success(function(result) {
-                                $location.path('/'); 
-                        });
                 }
         };
 })();
