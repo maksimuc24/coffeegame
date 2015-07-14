@@ -131,7 +131,7 @@ var translationsUA = {
         PER_CUP:"за філіжанку",
         NOT_ENOUGTH_BALANCE_FOR:"Недостатньо фінансів для вибору {{name}}.",
         THANKS_YOU_CHOSEN:"{{name}} обраний.",
-        THANKS_YOU_FINISHED:"Дякую! Ви закінчили вибір обладнання!<br><br>♫ This was a triumph.<br>♫ I'm making a note here: HUGE SUCCESS.<br>♫ It's hard to overstate my satisfaction…"
+        THANKS_YOU_FINISHED:"Дякую! Ви закінчили вибір обладнання!<br><br>♫ This was a triumph.<br>♫ I'm making a note here: HUGE SUCCESS.<br>♫ It's hard to overstate my satisfaction…",
 
 //to be deleted later
         AFTER_REGISTRATION: 'Here <strong>after registration and login</strong> will be stats, cup animation, buttons for drink preparation and coffee buying, alerts.',
@@ -143,5 +143,5 @@ var translationsUA = {
         EMPLOY_MORE_PEOPLE:"Employ more people and provide them with training and benefits. This results in quicker drinks preparation and higher customer satisfaction.",
         MORE_EXPENSIVE_GRINDERS:" More expensive grinders grind faster with reduced clumps and improve espresso extraction.",
         BETTER_MACHINES:"Better machines result in higher quality beverages, served more quickly.",
-        FROM_SUPERMARKET:"From supermarket coffee without roast date through specialty micro lots—to your own plantation.",
+        FROM_SUPERMARKET:"From supermarket coffee without roast date through specialty micro lots—to your own plantation."
 };
