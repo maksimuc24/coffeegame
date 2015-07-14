@@ -579,49 +579,6 @@
 
         angular
                 .module('coffeeGame')
-                .controller('UserBalanceCtrl', UserBalanceCtrl)
-
-        UserBalanceCtrl.$inject = ['$scope'];
-
-        function UserBalanceCtrl($scope) {
-
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('LoginCtrl', LoginCtrl);
-
-        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
-
-        function LoginCtrl($scope, authenticationService, $location) {
-                $scope.model = {
-                        cafeName: '',
-                        password: ''
-                };
-
-                $scope.login = function() {
-                        authenticationService.login({
-                                'cafeName': $scope.model.cafeName,
-                                'password': $scope.model.password,
-                                'submit': 'submit'
-                        }).success(function(result) {
-                                $location.path('/'); 
-                        });
-                }
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
                 .controller('GameCtrl', GameCtrl);
 
         GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService'];
@@ -639,16 +596,21 @@
                 $rootScope.$on('userLogin', function(e, authUser) {
                         $scope.user = new User(authUser);
                         $scope.user.getBalance();
+                        ifUserStartPlay();
                 });
 
 
                 //check if user start play some time ago
-                authenticationService.isPlay()
+                function ifUserStartPlay(){
+                        authenticationService.isPlay()
                         .success(function(data) {
                                  if (!angular.isUndefined(data.status)) {
                                          $scope.game.equipmentChooseFinished = true;
                                  }
                         });
+                };
+                ifUserStartPlay();
+                 
 
                 function checkIfShowGame() {
                         authenticationService.validate()
@@ -658,8 +620,7 @@
                                                 $scope.showGame = true;
                                                 return;
                                         }
-                                        $scope.showGame = false;
-                                        console.log('aaaaaaaaaaaaaa');
+                                        $scope.showGame = false; 
                                 });
                 };
                 checkIfShowGame();
@@ -694,6 +655,49 @@
                                 .success(function(data) {
                                         $window.location.reload()
                                 }); 
+                }
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('UserBalanceCtrl', UserBalanceCtrl)
+
+        UserBalanceCtrl.$inject = ['$scope'];
+
+        function UserBalanceCtrl($scope) {
+
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('LoginCtrl', LoginCtrl);
+
+        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
+
+        function LoginCtrl($scope, authenticationService, $location) {
+                $scope.model = {
+                        cafeName: '',
+                        password: ''
+                };
+
+                $scope.login = function() {
+                        authenticationService.login({
+                                'cafeName': $scope.model.cafeName,
+                                'password': $scope.model.password,
+                                'submit': 'submit'
+                        }).success(function(result) {
+                                $location.path('/'); 
+                        });
                 }
         };
 })();

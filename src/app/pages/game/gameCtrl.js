@@ -21,16 +21,21 @@
                 $rootScope.$on('userLogin', function(e, authUser) {
                         $scope.user = new User(authUser);
                         $scope.user.getBalance();
+                        ifUserStartPlay();
                 });
 
 
                 //check if user start play some time ago
-                authenticationService.isPlay()
+                function ifUserStartPlay(){
+                        authenticationService.isPlay()
                         .success(function(data) {
                                  if (!angular.isUndefined(data.status)) {
                                          $scope.game.equipmentChooseFinished = true;
                                  }
                         });
+                };
+                ifUserStartPlay();
+                 
 
                 function checkIfShowGame() {
                         authenticationService.validate()
@@ -40,8 +45,7 @@
                                                 $scope.showGame = true;
                                                 return;
                                         }
-                                        $scope.showGame = false;
-                                        console.log('aaaaaaaaaaaaaa');
+                                        $scope.showGame = false; 
                                 });
                 };
                 checkIfShowGame();
