@@ -1,4 +1,5 @@
 var translationsUA = {
+        SOME_HELLO_TEXT:"SOME_HELLO_TEXT UA.js",
 //top menus and modals
         SING_IN:'Увійти/Зареєструватися',
         LOG_OUT:'Вийти',

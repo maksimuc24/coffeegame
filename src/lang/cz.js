@@ -1,4 +1,5 @@
 var translationsCZ = {
+        SOME_HELLO_TEXT:"SOME_HELLO_TEXT CZ.js",
 //top menus and modals
         SING_IN:'Přihlášení/Registrace',
         LOG_OUT:'Odhlásit se',

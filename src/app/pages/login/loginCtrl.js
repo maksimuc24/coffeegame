@@ -20,7 +20,7 @@
                                 'password': $scope.model.password,
                                 'submit': 'submit'
                         }).success(function(result) {
-                                $location.path('/');
+                                $location.path('/'); 
                         });
                 }
         };

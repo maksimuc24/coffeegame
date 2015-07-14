@@ -19,7 +19,7 @@
                 dataFactory.logout = function() {
                         return $http.get(urlBase + '/logout.php');
                 };
-
+                
                 dataFactory.login = function(data) {
                         return $http({
                                 'url': urlBase + '/auth.php',

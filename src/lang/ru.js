@@ -1,4 +1,5 @@
 var translationsRU = {
+        SOME_HELLO_TEXT:"SOME_HELLO_TEXT RU.js",
 //top menus and modals
         SING_IN:'Войти/Регистрация',
         LOG_OUT:'Выйти',
