@@ -92,23 +92,18 @@ class GameUserManager{
                          "employee"    => null,
                          "drink_price" => null);
 
-	       while($row = mysql_fetch_array($result)){ 
-	             if($row["equipment_type_id"] = 1){
+	       while($row = mysql_fetch_array($result)){  
+	             if($row["equipment_type_id"] == 1){
 	             	$itog["grinder"] = $row['equipment_id'];
-	             }
-	             if($row["equipment_type_id"] = 2){
+	             }else if($row["equipment_type_id"] == 2){
 	             	$itog["machine"] = $row['equipment_id'];
-	             }
-	             if($row["equipment_type_id"] = 3){
+	             } else if($row["equipment_type_id"] == 3){
 	             	$itog["place"] = $row['equipment_id'];
-	             }
-	             if($row["equipment_type_id"] = 4){
+	             }else if($row["equipment_type_id"] == 4){
 	             	$itog["coffe"] = $row['equipment_id'];
-	             }
-	             if($row["equipment_type_id"] = 5){
+	             }else if($row["equipment_type_id"] == 5){
 	             	$itog["employee"] = $row['equipment_id'];
-	             }
-	             if($row["equipment_type_id"] = 6){
+	             }else if($row["equipment_type_id"] == 6){
 	             	$itog["drink_price"] = $row['equipment_id'];
 	             }
 	       } 
@@ -132,6 +127,9 @@ class GameUserManager{
 	public function getEquipmentIdByType($type){
 		    $equipment_type_id = 0;
 		    $userId = $this->GetCurrentUserId();
+		    if(is_null($userId)){
+		    	return null;
+		    }
 
 		    switch ($type) {
 		    	case "grinder":
@@ -157,6 +155,7 @@ class GameUserManager{
 		    $result = mysql_query("SELECT equipment_id FROM userequipment
         		               WHERE user_id=$userId AND equipment_type_id=$equipment_type_id", $this->database->Connect()); 
 			
+
 			$row  = mysql_fetch_array($result);
 		    //if not find
 		    if(!is_array($row)){

@@ -84,77 +84,6 @@
 
         angular
                 .module('coffeeGame')
-                .factory('User', User);
-
-        User.$inject = ['UserEquipment', 'Employee', 'CoffeeType', 'CoffeePrice', 'userService'];
-
-        function User(UserEquipment, Employee, CoffeeType, CoffeePrice, userService) {
-                var User = function(authUser) {
-                        this.id = authUser.id;
-                        this.cafeName = authUser.cafeName;
-
-                        this.balance = -1;
-
-                        this.displayBalance = function() {
-                                return this.balance - this.equipment.TotalAmount();
-                        };
-
-                        this.equipment = new UserEquipment();
-                        this.employee = new Employee();
-                        this.coffee = {
-                                type: new CoffeeType(),
-                                price: new CoffeePrice()
-                        };
-                };
-
-                User.prototype.getBalance = function() {
-                        var self = this;
-
-                        return userService.getBalance()
-                                .success(function(data) {
-                                        self.balance = data;
-                                });
-                };
-
-                User.prototype.isAuthenticated = function() {
-                        return this.id != '' && this.id != undefined;
-                };
-
-                User.prototype.canBuyEquipment = function(name, item) {
-                        var existingItemPrice = this.equipment.getItemPrice(name);
-                        var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
-                        var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
-                        return (this.balance - this.equipment.TotalAmount() + existingItemPrice - existingEmployeePrice - existingCoffeeTypePrice) > item.price;
-                };
-
-                User.prototype.canBuyEmployee = function(price) {
-                        var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
-                        var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
-                        return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
-                };
-
-                User.prototype.canBuyCoffeeType = function(price) {
-                        var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
-                        var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
-                        return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
-                };
-
-                User.prototype.update = function(callback) {
-                        if (this.equipment.items.length == 3 && this.employee.id != 0 && this.coffee.type.id != 0 && this.coffee.price.id != 0) {
-                                callback();
-                        }
-                };
-
-                return User;
-        }
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
                 .factory('authenticationService', authenticationService)
 
         authenticationService.$inject = ['$http', 'serverUrl'];
@@ -484,6 +413,180 @@
 
         angular
                 .module('coffeeGame')
+                .factory('User', User);
+
+        User.$inject = ['UserEquipment', 'Employee', 'CoffeeType', 'CoffeePrice', 'userService'];
+
+        function User(UserEquipment, Employee, CoffeeType, CoffeePrice, userService) {
+                var User = function(authUser) {
+                        this.id = authUser.id;
+                        this.cafeName = authUser.cafeName;
+
+                        this.balance = -1;
+
+                        this.displayBalance = function() {
+                                return this.balance - this.equipment.TotalAmount();
+                        };
+
+                        this.equipment = new UserEquipment();
+                        this.employee = new Employee();
+                        this.coffee = {
+                                type: new CoffeeType(),
+                                price: new CoffeePrice()
+                        };
+                };
+
+                User.prototype.getBalance = function() {
+                        var self = this;
+
+                        return userService.getBalance()
+                                .success(function(data) {
+                                        self.balance = data;
+                                });
+                };
+
+                User.prototype.isAuthenticated = function() {
+                        return this.id != '' && this.id != undefined;
+                };
+
+                User.prototype.canBuyEquipment = function(name, item) {
+                        var existingItemPrice = this.equipment.getItemPrice(name);
+                        var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+                        var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+                        return (this.balance - this.equipment.TotalAmount() + existingItemPrice - existingEmployeePrice - existingCoffeeTypePrice) > item.price;
+                };
+
+                User.prototype.canBuyEmployee = function(price) {
+                        var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+                        var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+                        return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
+                };
+
+                User.prototype.canBuyCoffeeType = function(price) {
+                        var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
+                        var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;
+                        return (this.balance - this.equipment.TotalAmount() - existingEmployeePrice - existingCoffeeTypePrice) > price;
+                };
+
+                User.prototype.update = function(callback) {
+                        if (this.equipment.items.length == 3 && this.employee.id != 0 && this.coffee.type.id != 0 && this.coffee.price.id != 0) {
+                                callback();
+                        }
+                };
+
+                return User;
+        }
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('GameCtrl', GameCtrl);
+
+        GameCtrl.$inject = ['$scope', '$rootScope', 'User'];
+
+        function GameCtrl($scope, $rootScope, User) {
+                $scope.game = {};
+
+                $rootScope.$on('gameStartEvent', function() {
+                        console.log('GameCtrl gameStartEvent');
+                        $scope.game.equipmentChooseFinished = true;
+                });
+
+                $rootScope.$on('userLogin', function(e, authUser) {
+                        $scope.user = new User(authUser);
+                        $scope.user.getBalance();
+                });
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('globalSettingsCtrl', globalSettingsCtrl);
+
+        globalSettingsCtrl.$inject = ['$scope', '$rootScope', 'User','$window','globalService'];
+
+        function globalSettingsCtrl($scope, $rootScope, User,$window,globalService) { 
+
+                console.log('globalSettingsCtrl');
+
+
+                //reset all information for user
+                $scope.globalReset = function(){ 
+                        globalService.resetData()
+                                .success(function(data) {
+                                        $window.location.reload()
+                                }); 
+                }
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('LoginCtrl', LoginCtrl);
+
+        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
+
+        function LoginCtrl($scope, authenticationService, $location) {
+                $scope.model = {
+                        cafeName: '',
+                        password: ''
+                };
+
+                $scope.login = function() {
+                        authenticationService.login({
+                                'cafeName': $scope.model.cafeName,
+                                'password': $scope.model.password,
+                                'submit': 'submit'
+                        }).success(function(result) {
+                                $location.path('/');
+                        });
+                }
+        };
+})();
+
+(function() {
+        'use strict'
+
+        angular
+                .module('coffeeGame')
+                .controller('TranslateCtrl', TranslateCtrl);
+
+        TranslateCtrl.$inject = ['$scope', '$translate'];
+
+        function TranslateCtrl($scope, $translate) { 
+                //display modal window with language list
+                $('#myModalLanguage').modal();
+
+                //change lenguage
+                $scope.changeLanguage = function(langKey) {
+                        $translate.uses(langKey);   
+                }
+ 
+        };
+
+
+
+
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('HeartbeatCtrl', HeartbeatCtrl);
 
         HeartbeatCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'userService'];
@@ -516,21 +619,6 @@
                                 timer = undefined;
                         }
                 };
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('UserBalanceCtrl', UserBalanceCtrl)
-
-        UserBalanceCtrl.$inject = ['$scope'];
-
-        function UserBalanceCtrl($scope) {
-
         };
 })();
 
@@ -587,100 +675,12 @@
 
         angular
                 .module('coffeeGame')
-                .controller('GameCtrl', GameCtrl);
+                .controller('UserBalanceCtrl', UserBalanceCtrl)
 
-        GameCtrl.$inject = ['$scope', '$rootScope', 'User'];
+        UserBalanceCtrl.$inject = ['$scope'];
 
-        function GameCtrl($scope, $rootScope, User) {
-                $scope.game = {};
+        function UserBalanceCtrl($scope) {
 
-                $rootScope.$on('gameStartEvent', function() {
-                        console.log('GameCtrl gameStartEvent');
-                        $scope.game.equipmentChooseFinished = true;
-                });
-
-                $rootScope.$on('userLogin', function(e, authUser) {
-                        $scope.user = new User(authUser);
-                        $scope.user.getBalance();
-                });
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('globalSettingsCtrl', globalSettingsCtrl);
-
-        globalSettingsCtrl.$inject = ['$scope', '$rootScope', 'User','$window','globalService'];
-
-        function globalSettingsCtrl($scope, $rootScope, User,$window,globalService) { 
-
-                console.log('globalSettingsCtrl');
-
-
-                //reset all information for user
-                $scope.globalReset = function(){ 
-                        globalService.resetData()
-                                .success(function(data) {
-                                        $window.location.reload()
-                                }); 
-                }
-        };
-})();
-
-(function() {
-        'use strict'
-
-        angular
-                .module('coffeeGame')
-                .controller('TranslateCtrl', TranslateCtrl);
-
-        TranslateCtrl.$inject = ['$scope', '$translate'];
-
-        function TranslateCtrl($scope, $translate) { 
-                //display modal window with language list
-                $('#myModalLanguage').modal();
-
-                //change lenguage
-                $scope.changeLanguage = function(langKey) {
-                        $translate.uses(langKey);   
-                }
- 
-        };
-
-
-
-
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('LoginCtrl', LoginCtrl);
-
-        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
-
-        function LoginCtrl($scope, authenticationService, $location) {
-                $scope.model = {
-                        cafeName: '',
-                        password: ''
-                };
-
-                $scope.login = function() {
-                        authenticationService.login({
-                                'cafeName': $scope.model.cafeName,
-                                'password': $scope.model.password,
-                                'submit': 'submit'
-                        }).success(function(result) {
-                                $location.path('/');
-                        });
-                }
         };
 })();
 
