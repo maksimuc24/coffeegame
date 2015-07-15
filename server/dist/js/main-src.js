@@ -532,53 +532,6 @@
 
         angular
                 .module('coffeeGame')
-                .controller('UserAuthCtrl', UserAuthCtrl);
-
-        UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService'];
-
-        function UserAuthCtrl($scope, $rootScope, authenticationService) {
-
-                $scope.user = {
-                        authorized: false
-                };
-
-                validateUser();
-
-                $scope.$on('$routeChangeStart', function(next, current) {
-                        validateUser();
-                });
-
-                $scope.logout = function() {
-                        authenticationService.logout();
-                        $rootScope.$broadcast('userLogout');
-                };
-
-                function validateUser() {
-                        authenticationService.validate()
-                                .success(function(data) {
-                                        var user = {
-                                                'id': data.user_id,
-                                                'cafeName': data.cafeName
-                                        };
-
-                                        if (user.id != '' && user.id != undefined) {
-                                                $scope.user.authorized = true;
-                                                $scope.user.cafeName = user.cafeName;
-                                                $rootScope.$broadcast('userLogin', user);
-                                        } else {
-                                                $scope.user.authorized = false;
-                                        }
-                                });
-                };
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
                 .controller('GameCtrl', GameCtrl);
 
         GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService'];
@@ -656,6 +609,53 @@
                                         $window.location.reload()
                                 }); 
                 }
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('UserAuthCtrl', UserAuthCtrl);
+
+        UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService'];
+
+        function UserAuthCtrl($scope, $rootScope, authenticationService) {
+
+                $scope.user = {
+                        authorized: false
+                };
+
+                validateUser();
+
+                $scope.$on('$routeChangeStart', function(next, current) {
+                        validateUser();
+                });
+
+                $scope.logout = function() {
+                        authenticationService.logout();
+                        $rootScope.$broadcast('userLogout');
+                };
+
+                function validateUser() {
+                        authenticationService.validate()
+                                .success(function(data) {
+                                        var user = {
+                                                'id': data.user_id,
+                                                'cafeName': data.cafeName
+                                        };
+
+                                        if (user.id != '' && user.id != undefined) {
+                                                $scope.user.authorized = true;
+                                                $scope.user.cafeName = user.cafeName;
+                                                $rootScope.$broadcast('userLogin', user);
+                                        } else {
+                                                $scope.user.authorized = false;
+                                        }
+                                });
+                };
         };
 })();
 
