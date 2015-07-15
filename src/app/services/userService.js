@@ -15,7 +15,8 @@
                 dataFactory.getBalance = function() {
                         return $http.get(urlBase + '/balance');
                 };
- 
+                
+                
 
                 dataFactory.heartbeat = function() {
                         return $http.get(urlBase + '/heartbeat');

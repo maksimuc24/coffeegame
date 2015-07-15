@@ -6,9 +6,11 @@ require_once (dirname(__FILE__).'/../../../GameUserManager.php');
 class SettingsController extends AbstractController {
 
     private $gameUserManager;
-
+    private $database;
     function __construct(){
         $this->gameUserManager = new GameUserManager();
+        $this->database        = new DatabaseManager();
+
     }
 
     public function get($request)
@@ -44,6 +46,9 @@ class SettingsController extends AbstractController {
 
                     case 'getUserEquipment':   
                         return $this->getUserEquipment();
+                        break;
+                    case 'get-user-equipment':   
+                        return $this->getSaveUserEquipment();
                         break;
 
                     default:
@@ -83,7 +88,7 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT cg.coffeeGrinder_id as id, cg.name,cg.translate_name, cg.price, 
+        $result = mysql_query("SELECT cg.coffeeGrinder_id as id, cg.name,cg.quality ,cg.translate_name, cg.price, 
                 c.name as currency_name, et.equipmentType_id as equipment_type_id
             FROM coffeegrinders cg 
             JOIN currencies c ON cg.currency_id = c.currency_id
@@ -96,12 +101,13 @@ class SettingsController extends AbstractController {
         while($row = mysql_fetch_array($result)){  
             $empty_row = array(); 
             if(floatval($row['price']) <= $user_balance or $row['id'] == $equipmenId) { 
-                $empty_row['id'] = $row['id']; 
-                $empty_row['name'] = $row['name'];
-                $empty_row['price'] = $row['price'];
+                $empty_row['id']                = $row['id']; 
+                $empty_row['name']              = $row['name'];
+                $empty_row['price']             = $row['price'];
                 $empty_row['equipment_type_id'] = $row['equipment_type_id'];
-                $empty_row['currency_name'] = $row['currency_name'];
-                $empty_row['translate_name'] = $row['translate_name'];
+                $empty_row['currency_name']     = $row['currency_name'];
+                $empty_row['translate_name']    = $row['translate_name'];
+                $empty_row['quality']           = $row['quality'];
                 array_push($coffeeGrinders, $empty_row);
             }else{
                 $empty_row['price'] = $row['price'];
@@ -119,7 +125,7 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT cm.coffeeMachine_id as id, cm.name,cm.translate_name, cm.price, 
+        $result = mysql_query("SELECT cm.coffeeMachine_id as id,cm.quality, cm.name,cm.translate_name, cm.price, 
                 c.name as currency_name, et.equipmentType_id as equipment_type_id
             FROM coffeemachines cm 
             JOIN currencies c ON cm.currency_id = c.currency_id
@@ -147,7 +153,7 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT cp.coffeePlace_id as id, cp.name,cp.translate_name, cp.price, 
+        $result = mysql_query("SELECT cp.coffeePlace_id as id, cp.quality,cp.name,cp.translate_name, cp.price, 
                 c.name as currency_name, tp.name as timePeriod_name, et.equipmentType_id as equipment_type_id
             FROM coffeeplaces cp 
             JOIN currencies c ON cp.currency_id = c.currency_id
@@ -180,7 +186,7 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT ce.coffeeEmployee_id as id, ce.name,ce.translate_name, ce.price, 
+        $result = mysql_query("SELECT ce.coffeeEmployee_id as id,ce.quality, ce.name,ce.translate_name, ce.price, 
                 c.name as currency_name, tp.name as timePeriod_name, et.equipmentType_id as equipment_type_id
             FROM coffeeemployees ce 
             JOIN currencies c ON ce.currency_id = c.currency_id
@@ -210,7 +216,7 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT ct.coffeeType_id as id, ct.name,ct.translate_name, ct.price, 
+        $result = mysql_query("SELECT ct.coffeeType_id as id,ct.quality, ct.name,ct.translate_name, ct.price, 
                 c.name as currency_name, wm.name as weight_name, et.equipmentType_id as equipment_type_id
             FROM coffeetypes ct 
             JOIN currencies c ON ct.currency_id = c.currency_id
@@ -240,7 +246,7 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT cdp.coffeeDrinkPrice_id as id, cdp.price, 
+        $result = mysql_query("SELECT cdp.coffeeDrinkPrice_id as id, cdp.price, cdp.quality, 
                 c.name as currency_name, dp.name as portion_name, et.equipmentType_id as equipment_type_id
             FROM coffeedrinkprices cdp 
             JOIN currencies c ON cdp.currency_id = c.currency_id
@@ -275,5 +281,13 @@ class SettingsController extends AbstractController {
     */
     private function SetUserEquipment($equipmentId, $equipmentTypeId,$equipmentPrice){
            $this->gameUserManager->SetUserEquipment($equipmentId,$equipmentTypeId,$equipmentPrice);
+    }
+
+    /**
+    * Get user equipment for saved users
+    */
+    private function getSaveUserEquipment(){
+            $data = $this->gameUserManager->getSaveUserEquipment(); 
+            return $data;
     }
 }

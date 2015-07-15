@@ -13,15 +13,18 @@
                         this.id = 0;
                         this.name = '';
                         this.pricePerKg = 0;
+                        this.quality = 0;
                 };
 
-                CoffeeType.prototype.Set = function(coffeeType) {
+                CoffeeType.prototype.Set = function(coffeeType,status) {
                          //save to the database
-                        gameSettingsService.setUserEquipment(coffeeType.id,coffeeType.equipment_type_id,parseFloat(coffeeType.price));
-                       
+                        if(status){
+                           gameSettingsService.setUserEquipment(coffeeType.id,coffeeType.equipment_type_id,parseFloat(coffeeType.price));
+                        }
 
                         this.id = coffeeType.id;
                         this.name = coffeeType.name;
+                        this.quality = coffeeType.quality;
                         this.pricePerKg = coffeeType.price;
                 };
 

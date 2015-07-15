@@ -16,6 +16,10 @@
                         return $http.get(urlBase + '/grinders');
                 };
 
+                dataFactory.getSavedUserEquipment = function() {
+                        return $http.get(urlBase + '/get-user-equipment');
+                };
+
                 dataFactory.getCoffeeMachines = function() {
                         return $http.get(urlBase + '/machines');
                 };

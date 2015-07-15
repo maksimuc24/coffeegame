@@ -163,4 +163,63 @@ class GameUserManager{
 		    }
 		    return $row["equipment_id"];
 	}
+
+    
+    /**
+    * Get equipmetn by table
+    */
+    private  function getEquipmentIdByTable($tableType,$id){
+    	    $table = '';
+    	    $row   = ''; 
+    	    if($tableType == 0) return;
+    		switch ($tableType) {
+		    	case 1:
+		    		$table = "coffeegrinders";
+		    		$row   = 'coffeeGrinder_id';
+		    		break;
+		    	case 2: 
+		    		$table = "coffeemachines";
+		    		$row   = 'coffeeMachine_id';
+		    		break;
+		    	case 3:
+		    		$table = "coffeeplaces";
+		    		$row   = 'coffeePlace_id';
+		    		break;
+		    	case 4:
+		    		$table = "coffeetypes";
+		    		$row   = 'coffeeType_id';
+		    		break; 
+		    	case 5:
+		    		$table = "coffeeemployees";
+		    		$row   = 'coffeeEmployee_id';
+		    		break; 
+		    	case 6:
+		    		$table = "coffeedrinkprices";
+		    		$row   = 'coffeeDrinkPrice_id';
+		    		break;
+		    }  
+		    $query  = mysql_query("SELECT * FROM $table WHERE $row = $id", $this->database->Connect());
+		    $result = mysql_fetch_array($query);
+
+		    $itog = array();
+		    $itog[$table] = $result;
+		    return  $itog;
+        	
+
+    }  
+    /**
+    * Get user equipment for saved users
+    */
+    public function getSaveUserEquipment(){ 
+             
+            $userId = $this->GetCurrentUserId();
+            $userequipmentQuery = mysql_query("SELECT * FROM userequipment WHERE user_id=$userId", $this->database->Connect());
+        	
+        	$userequipment = array();
+            while($userequipmentRow   = mysql_fetch_array($userequipmentQuery)){ 
+            	   $data = $this->getEquipmentIdByTable($userequipmentRow["equipment_type_id"],$userequipmentRow["equipment_id"]);
+	               $userequipment[]    = $data; 
+	        }
+	        return $userequipment;  
+    }
 }

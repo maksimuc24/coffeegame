@@ -139,7 +139,7 @@
                                         name: $filter('translate')('TABGRINDER')
                                 }));
                         } else {
-                                $scope.user.equipment.Add('grinder', coffeeGrinder);
+                                $scope.user.equipment.Add('grinder', coffeeGrinder,true);
                                 $scope.addSelectedNameToEquipment('grinder', coffeeGrinder);
                                 initializeCofeGame('all');
 
@@ -149,6 +149,8 @@
                                         name: $filter('translate')('TABGRINDER')
                                 }));
                                 $scope.user.update(checkEquipmentFinish);
+
+                                console.log($scope.user);
                         }
                 };
 
@@ -158,7 +160,7 @@
                                         name: $filter('translate')('TABMACHINE')
                                 }));
                         } else {
-                                $scope.user.equipment.Add('machine', coffeeMachine);
+                                $scope.user.equipment.Add('machine', coffeeMachine,true);
                                 $scope.addSelectedNameToEquipment('machine', coffeeMachine);
                                 initializeCofeGame('all');
 
@@ -179,7 +181,7 @@
 
 
                         } else {
-                                $scope.user.equipment.Add('place', coffeePlace);
+                                $scope.user.equipment.Add('place', coffeePlace,true);
                                 $scope.addSelectedNameToEquipment('place', coffeePlace);
                                 initializeCofeGame('all');
 
@@ -198,7 +200,7 @@
                                         name: $filter('translate')('TABEMPLOYEES')
                                 }));
                         } else {
-                                $scope.user.employee.Set(coffeeEmployee);
+                                $scope.user.employee.Set(coffeeEmployee,true);
                                 $scope.addSelectedNameToEquipment('employee', coffeeEmployee);
                                 initializeCofeGame('all');
 
@@ -217,7 +219,7 @@
                                         name: $filter('translate')('TABCOFFEE')
                                 }));
                         } else {
-                                $scope.user.coffee.type.Set(coffeeType);
+                                $scope.user.coffee.type.Set(coffeeType,true);
                                 $scope.addSelectedNameToEquipment('coffe', coffeeType);
                                 initializeCofeGame('all');
 
@@ -231,7 +233,7 @@
                 };
 
                 $scope.chooseCoffeePrice = function(coffeePrice) {
-                        $scope.user.coffee.price.Set(coffeePrice);
+                        $scope.user.coffee.price.Set(coffeePrice,true);
                         growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                 name: $filter('translate')('TABPRICE')
                         }));

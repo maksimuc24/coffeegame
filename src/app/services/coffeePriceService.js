@@ -12,14 +12,18 @@
                 var CoffeePrice = function() {
                         this.id = 0;
                         this.price = 0;
+                        this.quality = 0;
                 };
 
-                CoffeePrice.prototype.Set = function(coffeePrice) {
+                CoffeePrice.prototype.Set = function(coffeePrice,status) {
                         //save to the database
-                        gameSettingsService.setUserEquipment(coffeePrice.id,coffeePrice.equipment_type_id,parseFloat(coffeePrice.price));
+                        if(status){
+                                gameSettingsService.setUserEquipment(coffeePrice.id,coffeePrice.equipment_type_id,parseFloat(coffeePrice.price));
+                        }
                         
                         this.id = coffeePrice.id;
                         this.price = coffeePrice.price;
+                        this.quality = coffeePrice.quality;
                 };
 
                 CoffeePrice.prototype.update = function(callback) {

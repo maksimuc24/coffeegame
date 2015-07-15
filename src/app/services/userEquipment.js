@@ -13,19 +13,23 @@
                         this.items = [];
                 };
 
-                UserEquipment.prototype.Add = function(name, item) {
+                UserEquipment.prototype.Add = function(name, item,status) {
                         //save to the database
-                        gameSettingsService.setUserEquipment(item.id,item.equipment_type_id,parseFloat(item.price));
+                        if(status){
+                                 gameSettingsService.setUserEquipment(item.id,item.equipment_type_id,parseFloat(item.price));
+                        }
 
                         if (this.Exists(name)) {
                                 var index = this.IndexOf(name);
                                 this.items[index].name = name;
+                                this.items[index].quality = quality;
                                 this.items[index].id = item.id;
                                 this.items[index].price = parseFloat(item.price);
                                 this.items[index].item = item.item;
                         } else {
                                 this.items.push({
                                         'name': name,
+                                        'quality':item.quality,
                                         'id': item.id,
                                         'price': parseFloat(item.price),
                                         'item': item
