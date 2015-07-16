@@ -17,5 +17,11 @@
                 .ready(function() {
                         angular.bootstrap(document, ['coffeeGame']);
                 });
- 
+
+        angular
+                .module('coffeeGame')
+                .run(function() {
+                        FastClick.attach(document.body); 
+                });
+
 })();
