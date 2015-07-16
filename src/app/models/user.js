@@ -40,7 +40,7 @@
                         return this.id != '' && this.id != undefined;
                 };
 
-                User.prototype.canBuyEquipment = function(name, item) {
+                User.prototype.canBuyEquipment = function(price) { 
                         var existingItemPrice = this.equipment.getItemPrice(name);
                         var existingEmployeePrice = this.employee.pricePerMonth ? parseFloat(this.employee.pricePerMonth) : 0;
                         var existingCoffeeTypePrice = this.coffee.type.pricePerKg ? parseFloat(this.coffee.type.pricePerKg) : 0;

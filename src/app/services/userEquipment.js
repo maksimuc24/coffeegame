@@ -22,7 +22,7 @@
                         if (this.Exists(name)) {
                                 var index = this.IndexOf(name);
                                 this.items[index].name = name;
-                                this.items[index].quality = quality;
+                                this.items[index].quality = item.quality;
                                 this.items[index].id = item.id;
                                 this.items[index].price = parseFloat(item.price);
                                 this.items[index].item = item.item;

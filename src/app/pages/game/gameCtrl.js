@@ -6,16 +6,18 @@
                 .module('coffeeGame')
                 .controller('GameCtrl', GameCtrl);
 
-        GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService', 'gameSettingsService'];
+        GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService', 'gameSettingsService','userService'];
 
-        function GameCtrl($scope, $rootScope, User, authenticationService, gameSettingsService) {
+        function GameCtrl($scope, $rootScope, User, authenticationService, gameSettingsService,userService) {
                 $scope.game = {};
                 $scope.showGame = false;
+                $scope.userBalance = 0;
 
                 $rootScope.$on('gameStartEvent', function() {
                         console.log('GameCtrl gameStartEvent');
                         authenticationService.startPlay();
                         $scope.game.equipmentChooseFinished = true;
+                        getSuccesStatus();
                 });
 
                 $rootScope.$on('userLogin', function(e, authUser) {
@@ -24,9 +26,40 @@
                         ifUserStartPlay();
                 });
 
+                $rootScope.$on('buyEquipment', function(e, data) { 
+                        if($scope.showGame){
+                                getSuccesStatus();
+                        }
+                });
+
+                function userBalance(){
+                        userService.getBalance()
+                                .success(function(data) {
+                                        $scope.userBalance = data;
+                                });
+                }
+
+                function getSuccesStatus(){
+                        if(angular.isUndefined($scope.user)){
+                                return;
+                        } 
+                        var coffePrice = $scope.user.coffee.price.quality;
+                        var coffeType  = $scope.user.coffee.type.quality;
+                        var employee = $scope.user.employee.quality;
+                        var place_machine_name = 0;
+
+                        angular.forEach($scope.user.equipment.items,function(val,key){
+                               place_machine_name = place_machine_name +parseFloat(val.quality);
+                        }); 
+                        $scope.successBar = parseFloat(coffePrice)+parseFloat(coffeType)+parseFloat(employee)+parseFloat(place_machine_name);
+                         userBalance();
+                };
 
 
                 function setEquipment(type, data) { 
+                        if(angular.isUndefined($scope.user)){
+                                return;
+                        } 
                         switch (type) {
                                 case "coffeegrinders":
                                         $scope.user.equipment.Add('grinder', data,false);
@@ -66,6 +99,8 @@
                                         }
                                         console.log('<!---- end equipment --->');
                                         console.log($scope.user);
+                                        getSuccesStatus();
+
                                 });
                 };
 

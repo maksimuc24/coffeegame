@@ -6,9 +6,9 @@
                 .module('coffeeGame')
                 .controller('StartEquipmentChooseCtrl', StartEquipmentChooseCtrl);
 
-        StartEquipmentChooseCtrl.$inject = ['$scope', '$rootScope', 'gameSettingsService', 'growl', '$filter'];
+        StartEquipmentChooseCtrl.$inject = ['$scope', '$rootScope', 'gameSettingsService', 'growl', '$filter','userService'];
 
-        function StartEquipmentChooseCtrl($scope, $rootScope, gameSettingsService, growl, $filter) {
+        function StartEquipmentChooseCtrl($scope, $rootScope, gameSettingsService, growl, $filter,userService) {
 
                 $scope.tabs = [{
                         name: 'Grinder',
@@ -43,6 +43,14 @@
 
                 $scope.model = {};
 
+                function checkBalance(){
+                        userService.getBalance()
+                                .success(function(data) {
+                                        $scope.balance = parseFloat(data);
+                                        console.log($scope.balance);
+                       });
+                }
+                checkBalance();
 
                 /**
                  * Initialize game equipment
@@ -68,6 +76,7 @@
                                 getCoffeePrices();
                         }
                         getUserEquipment();
+                        checkBalance();
                 }
                 initializeCofeGame('all');
 
@@ -134,7 +143,7 @@
                 };
 
                 $scope.chooseCoffeeGinder = function(coffeeGrinder) {
-                        if (!$scope.user.canBuyEquipment('grinder', coffeeGrinder)) {
+                        if ($scope.balance<coffeeGrinder.price) {
                                 growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: $filter('translate')('TABGRINDER')
                                 }));
@@ -148,14 +157,14 @@
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABGRINDER')
                                 }));
-                                $scope.user.update(checkEquipmentFinish);
+                                $scope.user.update(checkEquipmentFinish); 
+                                 $rootScope.$broadcast('buyEquipment');
 
-                                console.log($scope.user);
                         }
                 };
 
                 $scope.chooseCoffeeMachine = function(coffeeMachine) {
-                        if (!$scope.user.canBuyEquipment('machine', coffeeMachine)) {
+                        if ($scope.balance<coffeeMachine.price) {
                                 growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: $filter('translate')('TABMACHINE')
                                 }));
@@ -168,13 +177,13 @@
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABMACHINE')
                                 }));
-
+                                $rootScope.$broadcast('buyEquipment');
                                 $scope.user.update(checkEquipmentFinish);
                         }
                 };
 
                 $scope.chooseCoffeePlace = function(coffeePlace) {
-                        if (!$scope.user.canBuyEquipment('place', coffeePlace)) {
+                        if ($scope.balance<coffeePlace.price) {
                                 growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: $filter('translate')('TABPLACE')
                                 }));
@@ -189,13 +198,13 @@
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABPLACE')
                                 }));
-
+                                $rootScope.$broadcast('buyEquipment');
                                 $scope.user.update(checkEquipmentFinish);
                         }
                 };
 
                 $scope.chooseCoffeeEmployee = function(coffeeEmployee) {
-                        if (!$scope.user.canBuyEmployee(coffeeEmployee.price)) {
+                        if ($scope.balance<coffeeEmployee.price) {
                                 growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: $filter('translate')('TABEMPLOYEES')
                                 }));
@@ -208,13 +217,13 @@
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABEMPLOYEES')
                                 }));
-
+                                $rootScope.$broadcast('buyEquipment');
                                 $scope.user.update(checkEquipmentFinish);
                         }
                 };
 
                 $scope.chooseCoffeeType = function(coffeeType) {
-                        if (!$scope.user.canBuyCoffeeType(coffeeType.price)) {
+                        if ($scope.balance<coffeeType.price) {
                                 growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: $filter('translate')('TABCOFFEE')
                                 }));
@@ -229,6 +238,7 @@
                                 }));
 
                                 $scope.user.update(checkEquipmentFinish);
+                                $rootScope.$broadcast('buyEquipment');
                         }
                 };
 
@@ -241,13 +251,14 @@
 
                         $scope.addSelectedNameToEquipment('drink_price', coffeePrice);
                         $scope.user.update(checkEquipmentFinish);
+                        $rootScope.$broadcast('buyEquipment');
                 };
 
-                function checkEquipmentFinish() {
-                        console.log('errorr');
+                function checkEquipmentFinish() { 
                         growl.success($filter('translate')('THANKS_YOU_FINISHED'));
 
                         $rootScope.$emit('gameStartEvent');
+                        $rootScope.$broadcast('buyEquipment');
                 };
         };
 })();
