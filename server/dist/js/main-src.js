@@ -399,6 +399,10 @@
                 Service.resetData = function() {
                         return $http.get(urlBase + '/reset-balance');
                 }; 
+                
+                Service.buyKgCoffe = function() {
+                        return $http.get(urlBase + '/buy-kg-coffe');
+                };
                 return Service;
         };
 })();
@@ -620,42 +624,37 @@
 
         angular
                 .module('coffeeGame')
-                .controller('LoginCtrl', LoginCtrl);
-
-        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
-
-        function LoginCtrl($scope, authenticationService, $location) {
-                $scope.model = {
-                        cafeName: '',
-                        password: ''
-                };
-
-                $scope.login = function() {
-                        authenticationService.login({
-                                'cafeName': $scope.model.cafeName,
-                                'password': $scope.model.password,
-                                'submit': 'submit'
-                        }).success(function(result) {
-                                $location.path('/'); 
-                        });
-                }
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
                 .controller('GameCtrl', GameCtrl);
 
-        GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService', 'gameSettingsService','userService'];
+        GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService', 'gameSettingsService','userService','globalService'];
 
-        function GameCtrl($scope, $rootScope, User, authenticationService, gameSettingsService,userService) {
+        function GameCtrl($scope, $rootScope, User, authenticationService, gameSettingsService,userService,globalService) {
                 $scope.game = {};
                 $scope.showGame = false;
                 $scope.userBalance = 0;
+
+
+                $scope.userSettigs = {
+                      "customers_in_queue":1,
+                      "total_coffe_kg":1,
+                      "total_drink":1
+                };
+
+                //get total coffe kg
+                $scope.buyCoffee = function(){ 
+                         var price = parseFloat($scope.user.coffee.price.price);
+                         var balance = parseFloat($scope.user.balance);
+                         if(price <= balance){
+                            $scope.user.balance = parseFloat($scope.user.balance) - price;
+                            $scope.userBalance = $scope.user.balance; 
+                            $scope.userSettigs.total_coffe_kg+=1;
+                            globalService.buyKgCoffe(); 
+                         }else{
+                            growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                                        name: $filter('translate')('TABCOFFEE')
+                            }));
+                         }  
+                }; 
 
                 $rootScope.$on('gameStartEvent', function() {
                         console.log('GameCtrl gameStartEvent');
@@ -805,6 +804,34 @@
                                 .success(function(data) {
                                         $window.location.reload()
                                 }); 
+                }
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('LoginCtrl', LoginCtrl);
+
+        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
+
+        function LoginCtrl($scope, authenticationService, $location) {
+                $scope.model = {
+                        cafeName: '',
+                        password: ''
+                };
+
+                $scope.login = function() {
+                        authenticationService.login({
+                                'cafeName': $scope.model.cafeName,
+                                'password': $scope.model.password,
+                                'submit': 'submit'
+                        }).success(function(result) {
+                                $location.path('/'); 
+                        });
                 }
         };
 })();

@@ -116,7 +116,7 @@ class GameUserManager{
 	*/
 	public function globalReset(){ 
 		   $userId = $this->GetCurrentUserId();
-		   mysql_query("UPDATE users SET balance=55000,is_play=0 WHERE user_id = $userId", $this->database->Connect());
+		   mysql_query("UPDATE users SET balance=55000,is_play=0,total_drink=0,customers_in_queue=0,total_coffe_kg=0,opened_months=0 WHERE user_id = $userId", $this->database->Connect());
 		   mysql_query("DELETE FROM userequipment  WHERE user_id = $userId", $this->database->Connect());
 		   return 'ok';
 	}
@@ -221,5 +221,28 @@ class GameUserManager{
 	               $userequipment[]    = $data; 
 	        }
 	        return $userequipment;  
+    }
+
+    /**
+    * buy 1 kg of coffe
+    */
+    public function buyKgCoffee(){
+    	   $userId = $this->GetCurrentUserId();
+    	   $userequipmentQuery = mysql_query("SELECT  coffeetypes.price FROM userequipment 
+												LEFT JOIN coffeetypes ON userequipment.equipment_id = coffeetypes.coffeeType_id
+												WHERE userequipment.user_id = $userId
+												and userequipment.equipment_type_id = 4", $this->database->Connect());
+    	   $userequipmentRow   = mysql_fetch_assoc($userequipmentQuery);
+
+    	   $userData = mysql_query("SELECT * FROM users WHERE user_id=$userId", $this->database->Connect());
+    	   $userRow   = mysql_fetch_assoc($userData );
+
+    	   if((float)$userRow['balance']>=(float)$userequipmentRow['price']){ 
+    	   	    $kg = (float)$userRow['total_coffe_kg']+1;
+    	   	    $balance = (float)$userRow['balance']-(float)$userequipmentRow['price'];
+
+    	   	    mysql_query("UPDATE users SET balance=$balance,total_coffe_kg = $kg WHERE user_id=$userId", $this->database->Connect()); 
+    	   } 
+    	    
     }
 }
