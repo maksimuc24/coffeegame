@@ -403,6 +403,24 @@
                 Service.buyKgCoffe = function() {
                         return $http.get(urlBase + '/buy-kg-coffe');
                 };
+
+                Service.updateData = function(opened_months,customers_in_queue,total_coffe_kg,total_drink,balance) {
+                        return $http({
+                                'url': urlBase + '/update-data',
+                                'method': 'POST',
+                                'headers': {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                'data': $.param({
+                                        'opened_months': opened_months,
+                                        'customers_in_queue': customers_in_queue,
+                                        'total_coffe_kg':total_coffe_kg,
+                                        'total_drink':total_drink,
+                                        'balance':balance
+                                })
+                        });
+                };
+
                 return Service;
         };
 })();
@@ -521,47 +539,6 @@
 
         angular
                 .module('coffeeGame')
-                .controller('HeartbeatCtrl', HeartbeatCtrl);
-
-        HeartbeatCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'userService'];
-
-        function HeartbeatCtrl($scope, $rootScope, $timeout, userService) {
-
-                var timer;
-
-                $rootScope.$on('userLogin', function() {
-                        startHeartbeat();
-                });
-
-                $rootScope.$on('userLogout', function() {
-                        stopHeartbeat();
-                });
-
-                function startHeartbeat() {
-                        if (!timer) {
-                                timer = $timeout(
-                                        function() {
-                                                userService.heartbeat();
-                                        },
-                                        5000);
-                        }
-                };
-
-                function stopHeartbeat() {
-                        if (timer) {
-                                $timeout.cancel(timer);
-                                timer = undefined;
-                        }
-                };
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
                 .controller('UserAuthCtrl', UserAuthCtrl);
 
         UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService'];
@@ -619,6 +596,47 @@
 })();
 
 (function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('HeartbeatCtrl', HeartbeatCtrl);
+
+        HeartbeatCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'userService'];
+
+        function HeartbeatCtrl($scope, $rootScope, $timeout, userService) {
+
+                var timer;
+
+                $rootScope.$on('userLogin', function() {
+                        startHeartbeat();
+                });
+
+                $rootScope.$on('userLogout', function() {
+                        stopHeartbeat();
+                });
+
+                function startHeartbeat() {
+                        if (!timer) {
+                                timer = $timeout(
+                                        function() {
+                                                userService.heartbeat();
+                                        },
+                                        5000);
+                        }
+                };
+
+                function stopHeartbeat() {
+                        if (timer) {
+                                $timeout.cancel(timer);
+                                timer = undefined;
+                        }
+                };
+        };
+})();
+
+(function() {
     'use strict'
 
 
@@ -672,8 +690,11 @@
             total = total.toFixed(); 
             $scope.userSettigs.customers_in_queue = total; 
         };
-        $rootScope.$on('openedTimeDisplay',function(){
+
+        $rootScope.$on('openedTimeDisplay',function(e,time){ 
+
             $scope.customers_in_queue();
+            globalService.updateData(time,$scope.userSettigs.customers_in_queue,$scope.userSettigs.total_coffe_kg,$scope.userSettigs.total_drink,$scope.userBalance);
         });
 
 
@@ -922,7 +943,7 @@
 
                 $interval(function() { 
                         if($scope.iterationNum >= 5){
-                               $rootScope.$broadcast('openedTimeDisplay');
+                               $rootScope.$broadcast('openedTimeDisplay',$scope.model.openedTime);
                                $scope.iterationNum = 0;
                         }
                         $scope.model.openedTime = $scope.model.openedTime + 1; 

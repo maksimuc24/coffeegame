@@ -36,6 +36,27 @@ class UserController extends AbstractController {
         }
     }
 
+    public function post($request)
+    {
+        if(count($request->url_elements) == 2)
+        {
+            $settingName = $request->url_elements[1];
+
+            switch ($settingName) {
+                    case 'update-data': 
+                        return $this->updateData($request->parameters['opened_months'], $request->parameters['customers_in_queue'],$request->parameters['total_coffe_kg'],$request->parameters['total_drink'],$request->parameters['balance']);
+                        break;
+
+                    default:
+                        return;
+                        break;
+            }    
+
+        } else {
+            return;
+        }
+    }
+
     public function GetBalance (){
         return $this->gameUserManager->GetUserBalance();
     }
@@ -52,4 +73,8 @@ class UserController extends AbstractController {
         return $this->gameUserManager->buyKgCoffee();
     }
 
+    public function updateData($opened_months, $customers_in_queue,$total_coffe_kg,$total_drink,$balance){
+            return $this->gameUserManager->updateData($opened_months, $customers_in_queue,$total_coffe_kg,$total_drink,$balance);
+
+    }
 }

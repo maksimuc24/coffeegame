@@ -52,8 +52,11 @@
             total = total.toFixed(); 
             $scope.userSettigs.customers_in_queue = total; 
         };
-        $rootScope.$on('openedTimeDisplay',function(){
+
+        $rootScope.$on('openedTimeDisplay',function(e,time){ 
+
             $scope.customers_in_queue();
+            globalService.updateData(time,$scope.userSettigs.customers_in_queue,$scope.userSettigs.total_coffe_kg,$scope.userSettigs.total_drink,$scope.userBalance);
         });
 
 

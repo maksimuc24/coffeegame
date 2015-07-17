@@ -245,4 +245,18 @@ class GameUserManager{
     	   } 
     	    
     }
+    /**
+    * Update all data
+    */
+    public function updateData($opened_months, $customers_in_queue,$total_coffe_kg,$total_drink,$balance){
+    	    $userId = $this->GetCurrentUserId();
+    	   mysql_query("UPDATE users SET opened_months=$opened_months,
+    	   								 customers_in_queue = $customers_in_queue,
+    	   								 total_coffe_kg = $total_coffe_kg, 
+    	   								 total_drink = $total_drink,
+    	   								 balance=$balance 
+ 
+    	   								 WHERE user_id=$userId", $this->database->Connect()); 
+
+    }
 }

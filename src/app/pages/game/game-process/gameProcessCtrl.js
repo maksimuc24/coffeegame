@@ -22,7 +22,7 @@
 
                 $interval(function() { 
                         if($scope.iterationNum >= 5){
-                               $rootScope.$broadcast('openedTimeDisplay');
+                               $rootScope.$broadcast('openedTimeDisplay',$scope.model.openedTime);
                                $scope.iterationNum = 0;
                         }
                         $scope.model.openedTime = $scope.model.openedTime + 1; 
