@@ -1,164 +1,201 @@
 (function() {
-        'use strict'
+    'use strict'
 
 
-        angular
-                .module('coffeeGame')
-                .controller('GameCtrl', GameCtrl);
+    angular
+        .module('coffeeGame')
+        .controller('GameCtrl', GameCtrl);
 
-        GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService', 'gameSettingsService','userService','globalService'];
+    GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService', 'gameSettingsService', 'userService', 'globalService'];
 
-        function GameCtrl($scope, $rootScope, User, authenticationService, gameSettingsService,userService,globalService) {
-                $scope.game = {};
-                $scope.showGame = false;
-                $scope.userBalance = 0;
+    function GameCtrl($scope, $rootScope, User, authenticationService, gameSettingsService, userService, globalService) {
+        $scope.game = {};
+        $scope.showGame = false;
+        $scope.userBalance = 0;
 
 
-                $scope.userSettigs = {
-                      "customers_in_queue":1,
-                      "total_coffe_kg":1,
-                      "total_drink":1
-                };
+        $scope.userSettigs = {
+            "customers_in_queue": 1,
+            "total_coffe_kg": 1,
+            "total_drink": 1
+        };
+        
+        $scope.sellCoffe = function(){
+               var price = parseFloat($scope.user.coffee.price.price);
+               if($scope.userSettigs.customers_in_queue>=2){
+                   $scope.userSettigs.customers_in_queue-=1; 
+                   $scope.userSettigs.total_drink+=1; 
+                   $scope.userSettigs.customers_in_queue-=1;  
+                   $scope.user.balance = parseFloat($scope.user.balance) - price;
+                   $scope.userBalance = $scope.user.balance;
+               }else{
+                    $scope.userSettigs.customers_in_queue = Math.floor(Math.random() * (1 - 0 + 1)) + 0; 
+               }
+               $scope.userSettigs.total_drink+=1;   
+               $scope.user.balance = parseFloat($scope.user.balance) + price;
+               $scope.userBalance = $scope.user.balance;
 
-                //get total coffe kg
-                $scope.buyCoffee = function(){ 
-                         var price = parseFloat($scope.user.coffee.price.price);
-                         var balance = parseFloat($scope.user.balance);
-                         if(price <= balance){
-                            $scope.user.balance = parseFloat($scope.user.balance) - price;
-                            $scope.userBalance = $scope.user.balance; 
-                            $scope.userSettigs.total_coffe_kg+=1;
-                            globalService.buyKgCoffe(); 
-                         }else{
-                            growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
-                                        name: $filter('translate')('TABCOFFEE')
-                            }));
-                         }  
-                }; 
+        }
+        //customers in queue 
+        $scope.customers_in_queue = function() { 
+            var place_quality = 0;
+            var random = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+            var success = $scope.successBar;
 
-                $rootScope.$on('gameStartEvent', function() {
-                        console.log('GameCtrl gameStartEvent');
-                        authenticationService.startPlay();
-                        $scope.game.equipmentChooseFinished = true;
-                        getSuccesStatus();
-                });
-
-                $rootScope.$on('userLogin', function(e, authUser) {
-                        $scope.user = new User(authUser);
-                        $scope.user.getBalance();
-                        ifUserStartPlay();
-                });
-
-                $rootScope.$on('buyEquipment', function(e, data) { 
-                        if($scope.showGame){
-                                getSuccesStatus();
-                        }
-                });
-
-                function userBalance(){
-                        userService.getBalance()
-                                .success(function(data) {
-                                        $scope.userBalance = data;
-                                });
+            angular.forEach($scope.user.equipment.items, function(val, key) {
+                if (val.name == "place") {
+                    place_quality = val.quality;
                 }
-
-                function getSuccesStatus(){
-                        if(angular.isUndefined($scope.user)){
-                                return;
-                        } 
-                        var coffePrice = $scope.user.coffee.price.quality;
-                        var coffeType  = $scope.user.coffee.type.quality;
-                        var employee = $scope.user.employee.quality;
-                        var place_machine_name = 0;
-
-                        angular.forEach($scope.user.equipment.items,function(val,key){
-                               place_machine_name = place_machine_name +parseFloat(val.quality);
-                        }); 
-                        $scope.successBar = parseFloat(coffePrice)+parseFloat(coffeType)+parseFloat(employee)+parseFloat(place_machine_name);
-                         userBalance();
-                };
+            }); 
+            var total; 
+            total = (10*place_quality)*random*(success/100) *(1-(success/100)*place_quality);
+            total = total.toFixed(); 
+            $scope.userSettigs.customers_in_queue = total; 
+        };
+        $rootScope.$on('openedTimeDisplay',function(){
+            $scope.customers_in_queue();
+        });
 
 
-                function setEquipment(type, data) { 
-                        if(angular.isUndefined($scope.user)){
-                                return;
-                        } 
-                        switch (type) {
-                                case "coffeegrinders":
-                                        $scope.user.equipment.Add('grinder', data,false);
-                                        break;
-                                case "coffeemachines":
-                                        $scope.user.equipment.Add('machine', data,false);
-                                        break;
-                                case "coffeeplaces":
-                                        $scope.user.equipment.Add('place', data,false);
-                                        break;
-                                case "coffeetypes":
-                                        $scope.user.coffee.type.Set(data,false);
-                                        break;
-                                case "coffeeemployees":
-                                        $scope.user.employee.Set(data,false);
-                                        break;
-                                case "coffeedrinkprices":
-                                        $scope.user.coffee.price.Set(data,false);
-                                        break;
-                                default:
-                                break;
-                        }
+        //get total coffe kg
+        $scope.buyCoffee = function() {  
+            var price = parseFloat($scope.user.coffee.type.pricePerKg);
+            var balance = parseFloat($scope.user.balance);
+            if (price <= balance) {
+                $scope.user.balance = parseFloat($scope.user.balance) - price;
+                $scope.userBalance = $scope.user.balance;
+                $scope.userSettigs.total_coffe_kg += 1;
+                globalService.buyKgCoffe();
+            } else {
+                growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
+                    name: $filter('translate')('TABCOFFEE')
+                }));
+            }
+        };
 
-                };
-                //set all user equipment
-                $scope.setUserEquipment = function() {
-                        gameSettingsService.getSavedUserEquipment()
-                                .success(function(data) {
-                                        if (data) {
-                                                angular.forEach(data, function(key) {
-                                                        angular.forEach(key, function(info, table) {
-                                                                setEquipment(table, info);
-                                                        });
+        $rootScope.$on('gameStartEvent', function() {
+            console.log('GameCtrl gameStartEvent');
+            authenticationService.startPlay();
+            $scope.game.equipmentChooseFinished = true;
+            getSuccesStatus();
+        });
 
-                                                });
+        $rootScope.$on('userLogin', function(e, authUser) {
+            $scope.user = new User(authUser);
+            $scope.user.getBalance();
+            ifUserStartPlay();
+        });
 
-                                        }
-                                        console.log('<!---- end equipment --->');
-                                        console.log($scope.user);
-                                        getSuccesStatus();
+        $rootScope.$on('buyEquipment', function(e, data) {
+            if ($scope.showGame) {
+                getSuccesStatus();
+            }
+        });
 
-                                });
-                };
-
-
-                //check if user start play some time ago
-                function ifUserStartPlay() {
-                        authenticationService.isPlay()
-                                .success(function(data) {
-                                        if (!angular.isUndefined(data.status)) {
-                                                $scope.game.equipmentChooseFinished = true;
-                                                $scope.setUserEquipment();
-                                        }
-                                });
-                };
-                ifUserStartPlay();
-
-                //check if need to display game block
-                function checkIfShowGame() {
-                        authenticationService.validate()
-                                .success(function(data) {
-                                        if (!angular.isUndefined(data.user_id)) {
-                                                console.log('Login');
-                                                $scope.showGame = true;
-                                                return;
-                                        }
-                                        $scope.showGame = false;
-                                });
-                };
-                checkIfShowGame();
-
-                $scope.$on('userLogout', function() {
-                        checkIfShowGame();
+        function userBalance() {
+            userService.getBalance()
+                .success(function(data) {
+                    $scope.userBalance = data;
                 });
-                $scope.$on('userLogin', function() {
-                        checkIfShowGame();
+        }
+
+        function getSuccesStatus() {
+            if (angular.isUndefined($scope.user)) {
+                return;
+            }
+            var coffePrice = $scope.user.coffee.price.quality;
+            var coffeType = $scope.user.coffee.type.quality;
+            var employee = $scope.user.employee.quality;
+            var place_machine_name = 0;
+
+            angular.forEach($scope.user.equipment.items, function(val, key) {
+                place_machine_name = place_machine_name + parseFloat(val.quality);
+            });
+            $scope.successBar = parseFloat(coffePrice) + parseFloat(coffeType) + parseFloat(employee) + parseFloat(place_machine_name);
+            userBalance();
+        };
+
+
+        function setEquipment(type, data) {
+            if (angular.isUndefined($scope.user)) {
+                return;
+            }
+            switch (type) {
+                case "coffeegrinders":
+                    $scope.user.equipment.Add('grinder', data, false);
+                    break;
+                case "coffeemachines":
+                    $scope.user.equipment.Add('machine', data, false);
+                    break;
+                case "coffeeplaces":
+                    $scope.user.equipment.Add('place', data, false);
+                    break;
+                case "coffeetypes":
+                    $scope.user.coffee.type.Set(data, false);
+                    break;
+                case "coffeeemployees":
+                    $scope.user.employee.Set(data, false);
+                    break;
+                case "coffeedrinkprices":
+                    $scope.user.coffee.price.Set(data, false);
+                    break;
+                default:
+                    break;
+            }
+
+        };
+        //set all user equipment
+        $scope.setUserEquipment = function() {
+            gameSettingsService.getSavedUserEquipment()
+                .success(function(data) {
+                    if (data) {
+                        angular.forEach(data, function(key) {
+                            angular.forEach(key, function(info, table) {
+                                setEquipment(table, info);
+                            });
+
+                        });
+
+                    }
+                    console.log('<!---- end equipment --->');
+                    console.log($scope.user);
+                    getSuccesStatus();
+
                 });
         };
+
+
+        //check if user start play some time ago
+        function ifUserStartPlay() {
+            authenticationService.isPlay()
+                .success(function(data) {
+                    if (!angular.isUndefined(data.status)) {
+                        $scope.game.equipmentChooseFinished = true;
+                        $scope.setUserEquipment();
+                    }
+                });
+        };
+        ifUserStartPlay();
+
+        //check if need to display game block
+        function checkIfShowGame() {
+            authenticationService.validate()
+                .success(function(data) {
+                    if (!angular.isUndefined(data.user_id)) {
+                        console.log('Login');
+                        $scope.showGame = true;
+                        return;
+                    }
+                    $scope.showGame = false;
+                });
+        };
+        checkIfShowGame();
+
+        $scope.$on('userLogout', function() {
+            checkIfShowGame();
+        });
+        $scope.$on('userLogin', function() {
+            checkIfShowGame();
+        });
+    };
 })();

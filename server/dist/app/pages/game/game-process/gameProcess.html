@@ -42,7 +42,7 @@
 			        </progressbar>
 			    </div>
 				<div>
-				 	<p><button input="" type="button" href="#carousel-captions" data-slide="prev" name="drinksCount" class="btn btn-danger btn-lg btn-block">{{'PREPAREADRINK'|translate}}</button></p>
+				 	<p ng-click="sellCoffe()"><button input="" type="button" href="#carousel-captions" data-slide="prev" name="drinksCount"   class="btn btn-danger btn-lg btn-block">{{'PREPAREADRINK'|translate}}</button></p>
 				</div>
 				<div>
 				 	<p><button input="" type="button" name="kgsCoffeeCount" ng-click="buyCoffee()" class="btn btn-warning btn-lg btn-block ng-pristine ng-valid">{{'BUYAKGOFCOFFEE'|translate}} <sup>{{userSettigs.total_coffe_kg|number:3}} {{'KG'|translate}}</sup></button></p>
