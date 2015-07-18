@@ -1,5 +1,5 @@
 var translationsEN = {
-        SOME_HELLO_TEXT:"SOME_HELLO_TEXT ENG.js",
+        SOME_HELLO_TEXT:"Have you ever dreamt about your own cafe? Do you want to try it yourself? Here is your chance to experience the rush! The game was created using the extensive knowledge of the inner workings of a coffee shop. Also, it mimics real-life prices and crowd mechanics (in a way).",
         NEED_BUY_KG_COFFE:"NEED_BUY_KG_COFFE",
 //top menus and modals
         SING_IN:'Sign in/Register',
