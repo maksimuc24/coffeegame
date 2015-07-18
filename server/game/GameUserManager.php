@@ -36,18 +36,18 @@ class GameUserManager{
 	public function SetUserEquipment ($equipmentId, $equipmentTypeId,$equipmentPrice){
 		$userId = $this->GetCurrentUserId(); 
 
-        $result = mysql_query("SELECT equipment_Id,userEquipment_id FROM userEquipment 
+        $result = mysql_query("SELECT equipment_id,userEquipment_id FROM userequipment 
         		               WHERE user_id='".$userId."' AND equipment_type_id='".$equipmentTypeId."' 
         		               ORDER BY created DESC 
         		               LIMIT 1", $this->database->Connect());
 
-        $row = mysql_fetch_array($result);
-
+        $row = mysql_fetch_array($result); 
         if(is_array($row)){
         	 $id = $row['userEquipment_id'];  
         	 mysql_query("UPDATE userequipment 
         		         SET  equipment_id=$equipmentId, equipment_type_id=$equipmentTypeId WHERE userEquipment_id = $id", $this->database->Connect());
         	$this->updateUserBalance($equipmentPrice);
+        	
         }else{
         	mysql_query("INSERT INTO userequipment 
         		        (user_id, equipment_id, equipment_type_id) 

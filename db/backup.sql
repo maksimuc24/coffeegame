@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-07-18 03:33:05
+Date: 2015-07-18 14:35:31
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -275,7 +275,7 @@ PRIMARY KEY (`userEquipment_id`)
 )
 ENGINE=MyISAM
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=185
+AUTO_INCREMENT=211
 
 ;
 
@@ -283,7 +283,7 @@ AUTO_INCREMENT=185
 -- Records of userequipment
 -- ----------------------------
 BEGIN;
-INSERT INTO `userequipment` VALUES ('184', '2', '2', '6', '2015-07-18 03:28:36'), ('183', '2', '2', '4', '2015-07-18 03:28:35'), ('182', '2', '3', '5', '2015-07-18 03:28:34'), ('181', '2', '3', '3', '2015-07-18 03:28:33'), ('180', '2', '1', '2', '2015-07-18 03:28:33'), ('179', '2', '3', '1', '2015-07-18 03:29:12');
+INSERT INTO `userequipment` VALUES ('210', '2', '1', '6', '2015-07-18 14:31:42'), ('209', '2', '3', '4', '2015-07-18 14:31:44'), ('208', '2', '5', '5', '2015-07-18 14:31:47'), ('207', '2', '1', '3', '2015-07-18 14:31:31'), ('206', '2', '1', '2', '2015-07-18 14:31:30'), ('205', '2', '2', '1', '2015-07-18 14:31:28');
 COMMIT;
 
 -- ----------------------------
@@ -314,7 +314,7 @@ AUTO_INCREMENT=7
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES ('1', 'Cafe1', '36759e3c012ba75562fe2e31d144c483', '', '0', '55000.00', '0', '0', '0', '0', '0'), ('2', 'Barry Lyndon', '39a664ecbd7d66ea6f075021cbb8117f', 'e6c3a4cfa288d144045d50d717c7a8c4', '0', '1275.00', '1', '0', '-130', '0', '200'), ('3', 'illy', 'e08a7c49d96c2b475656cc8fe18cee8e', '6a25f15df607e95df221fd5902318031', '0', '55000.00', '0', '0', '0', '0', '0'), ('4', 'shopmania', '474e45c3f259290616d4189b25f71421', '25c6dcb26503d38c8167a49d45d6022a', '0', '55000.00', '0', '0', '0', '0', '0'), ('5', 'sergey_onix', 'c290a3d21ccbbbd136c20d9202dcf6df', 'c6cd3ec60b2412ddb53dd7cebc2ad57e', '0', '55000.00', '0', '0', '0', '0', '0'), ('6', 'test', 'fb469d7ef430b0baf0cab6c436e70375', '', '0', '55000.00', '0', '0', '0', '0', '0');
+INSERT INTO `users` VALUES ('1', 'Cafe1', '36759e3c012ba75562fe2e31d144c483', '', '0', '55000.00', '0', '0', '0', '0', '0'), ('2', 'Barry Lyndon', '39a664ecbd7d66ea6f075021cbb8117f', 'a1079d672712c33e4ac0d592ee438452', '0', '8650.00', '1', '0', '2', '0', '226'), ('3', 'illy', 'e08a7c49d96c2b475656cc8fe18cee8e', '6a25f15df607e95df221fd5902318031', '0', '55000.00', '0', '0', '0', '0', '0'), ('4', 'shopmania', '474e45c3f259290616d4189b25f71421', '25c6dcb26503d38c8167a49d45d6022a', '0', '55000.00', '0', '0', '0', '0', '0'), ('5', 'sergey_onix', 'c290a3d21ccbbbd136c20d9202dcf6df', 'c6cd3ec60b2412ddb53dd7cebc2ad57e', '0', '55000.00', '0', '0', '0', '0', '0'), ('6', 'test', 'fb469d7ef430b0baf0cab6c436e70375', '', '0', '55000.00', '0', '0', '0', '0', '0');
 COMMIT;
 
 -- ----------------------------
@@ -392,7 +392,7 @@ ALTER TABLE `timeperiods` AUTO_INCREMENT=2;
 -- ----------------------------
 -- Auto increment value for `userequipment`
 -- ----------------------------
-ALTER TABLE `userequipment` AUTO_INCREMENT=185;
+ALTER TABLE `userequipment` AUTO_INCREMENT=211;
 
 -- ----------------------------
 -- Auto increment value for `users`
