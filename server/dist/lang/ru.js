@@ -1,5 +1,6 @@
 var translationsRU = {
         SOME_HELLO_TEXT:"SOME_HELLO_TEXT RU.js",
+        NEED_BUY_KG_COFFE:"NEED_BUY_KG_COFFE",
 //top menus and modals
         SING_IN:'Войти/Регистрация',
         LOG_OUT:'Выйти',

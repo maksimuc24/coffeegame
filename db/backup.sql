@@ -1,22 +1,22 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : LocalMysql
-Source Server Version : 50621
+Source Server         : local_mysql
+Source Server Version : 50624
 Source Host           : localhost:3306
 Source Database       : jaknakavueu01
 
 Target Server Type    : MYSQL
-Target Server Version : 50621
+Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-07-17 02:38:28
+Date: 2015-07-18 03:33:05
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for coffeedrinkprices
+-- Table structure for `coffeedrinkprices`
 -- ----------------------------
 DROP TABLE IF EXISTS `coffeedrinkprices`;
 CREATE TABLE `coffeedrinkprices` (
@@ -41,7 +41,7 @@ INSERT INTO `coffeedrinkprices` VALUES ('1', '20.00', '1', '1', '0.08'), ('2', '
 COMMIT;
 
 -- ----------------------------
--- Table structure for coffeeemployees
+-- Table structure for `coffeeemployees`
 -- ----------------------------
 DROP TABLE IF EXISTS `coffeeemployees`;
 CREATE TABLE `coffeeemployees` (
@@ -68,7 +68,7 @@ INSERT INTO `coffeeemployees` VALUES ('1', 'Only you', '0.00', '1', '1', 'employ
 COMMIT;
 
 -- ----------------------------
--- Table structure for coffeegrinders
+-- Table structure for `coffeegrinders`
 -- ----------------------------
 DROP TABLE IF EXISTS `coffeegrinders`;
 CREATE TABLE `coffeegrinders` (
@@ -94,7 +94,7 @@ INSERT INTO `coffeegrinders` VALUES ('1', 'Marble mortar', '1000.00', '1', 'grin
 COMMIT;
 
 -- ----------------------------
--- Table structure for coffeemachines
+-- Table structure for `coffeemachines`
 -- ----------------------------
 DROP TABLE IF EXISTS `coffeemachines`;
 CREATE TABLE `coffeemachines` (
@@ -120,7 +120,7 @@ INSERT INTO `coffeemachines` VALUES ('1', 'French press', '300.00', '1', 'machin
 COMMIT;
 
 -- ----------------------------
--- Table structure for coffeeplaces
+-- Table structure for `coffeeplaces`
 -- ----------------------------
 DROP TABLE IF EXISTS `coffeeplaces`;
 CREATE TABLE `coffeeplaces` (
@@ -147,7 +147,7 @@ INSERT INTO `coffeeplaces` VALUES ('1', 'Sufficient', '6000.00', '1', '1', 'plac
 COMMIT;
 
 -- ----------------------------
--- Table structure for coffeetypes
+-- Table structure for `coffeetypes`
 -- ----------------------------
 DROP TABLE IF EXISTS `coffeetypes`;
 CREATE TABLE `coffeetypes` (
@@ -174,7 +174,7 @@ INSERT INTO `coffeetypes` VALUES ('1', '100% Robusta with unknown roasting date'
 COMMIT;
 
 -- ----------------------------
--- Table structure for currencies
+-- Table structure for `currencies`
 -- ----------------------------
 DROP TABLE IF EXISTS `currencies`;
 CREATE TABLE `currencies` (
@@ -196,7 +196,7 @@ INSERT INTO `currencies` VALUES ('1', 'coins');
 COMMIT;
 
 -- ----------------------------
--- Table structure for drinkportions
+-- Table structure for `drinkportions`
 -- ----------------------------
 DROP TABLE IF EXISTS `drinkportions`;
 CREATE TABLE `drinkportions` (
@@ -218,7 +218,7 @@ INSERT INTO `drinkportions` VALUES ('1', 'cup');
 COMMIT;
 
 -- ----------------------------
--- Table structure for equipmenttypes
+-- Table structure for `equipmenttypes`
 -- ----------------------------
 DROP TABLE IF EXISTS `equipmenttypes`;
 CREATE TABLE `equipmenttypes` (
@@ -240,7 +240,7 @@ INSERT INTO `equipmenttypes` VALUES ('1', 'coffeeGrinders'), ('2', 'coffeeMachin
 COMMIT;
 
 -- ----------------------------
--- Table structure for timeperiods
+-- Table structure for `timeperiods`
 -- ----------------------------
 DROP TABLE IF EXISTS `timeperiods`;
 CREATE TABLE `timeperiods` (
@@ -262,7 +262,7 @@ INSERT INTO `timeperiods` VALUES ('1', 'month');
 COMMIT;
 
 -- ----------------------------
--- Table structure for userequipment
+-- Table structure for `userequipment`
 -- ----------------------------
 DROP TABLE IF EXISTS `userequipment`;
 CREATE TABLE `userequipment` (
@@ -275,7 +275,7 @@ PRIMARY KEY (`userEquipment_id`)
 )
 ENGINE=MyISAM
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=137
+AUTO_INCREMENT=185
 
 ;
 
@@ -283,11 +283,11 @@ AUTO_INCREMENT=137
 -- Records of userequipment
 -- ----------------------------
 BEGIN;
-INSERT INTO `userequipment` VALUES ('136', '2', '1', '3', '2015-07-17 01:16:56'), ('135', '2', '1', '1', '2015-07-17 01:16:44'), ('134', '2', '1', '2', '2015-07-17 01:16:42'), ('133', '2', '3', '5', '2015-07-17 01:16:39'), ('132', '2', '4', '4', '2015-07-17 01:16:36'), ('131', '2', '9', '6', '2015-07-17 01:16:48');
+INSERT INTO `userequipment` VALUES ('184', '2', '2', '6', '2015-07-18 03:28:36'), ('183', '2', '2', '4', '2015-07-18 03:28:35'), ('182', '2', '3', '5', '2015-07-18 03:28:34'), ('181', '2', '3', '3', '2015-07-18 03:28:33'), ('180', '2', '1', '2', '2015-07-18 03:28:33'), ('179', '2', '3', '1', '2015-07-18 03:29:12');
 COMMIT;
 
 -- ----------------------------
--- Table structure for users
+-- Table structure for `users`
 -- ----------------------------
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -297,7 +297,11 @@ CREATE TABLE `users` (
 `user_hash`  varchar(32) CHARACTER SET cp1251 COLLATE cp1251_general_ci NOT NULL ,
 `user_ip`  int(10) UNSIGNED NOT NULL DEFAULT 0 ,
 `balance`  float(8,2) NOT NULL DEFAULT 0.00 ,
-`is_play`  tinyint(4) NULL DEFAULT 0 ,
+`is_play`  tinyint(4) NOT NULL DEFAULT 0 ,
+`total_drink`  float(8,0) NOT NULL DEFAULT 0 ,
+`customers_in_queue`  float(8,0) NOT NULL DEFAULT 0 ,
+`total_coffe_kg`  float(8,0) NOT NULL DEFAULT 0 ,
+`opened_months`  float(8,0) NOT NULL DEFAULT 0 ,
 PRIMARY KEY (`user_id`)
 )
 ENGINE=MyISAM
@@ -310,11 +314,11 @@ AUTO_INCREMENT=7
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES ('1', 'Cafe1', '36759e3c012ba75562fe2e31d144c483', '', '0', '55000.00', '0'), ('2', 'Barry Lyndon', '39a664ecbd7d66ea6f075021cbb8117f', '72fdd3eac594b0762b679c9e46faf92b', '0', '27125.00', '1'), ('3', 'illy', 'e08a7c49d96c2b475656cc8fe18cee8e', '6a25f15df607e95df221fd5902318031', '0', '55000.00', '0'), ('4', 'shopmania', '474e45c3f259290616d4189b25f71421', '25c6dcb26503d38c8167a49d45d6022a', '0', '55000.00', '0'), ('5', 'sergey_onix', 'c290a3d21ccbbbd136c20d9202dcf6df', 'c6cd3ec60b2412ddb53dd7cebc2ad57e', '0', '55000.00', '0'), ('6', 'test', 'fb469d7ef430b0baf0cab6c436e70375', '', '0', '55000.00', '0');
+INSERT INTO `users` VALUES ('1', 'Cafe1', '36759e3c012ba75562fe2e31d144c483', '', '0', '55000.00', '0', '0', '0', '0', '0'), ('2', 'Barry Lyndon', '39a664ecbd7d66ea6f075021cbb8117f', 'e6c3a4cfa288d144045d50d717c7a8c4', '0', '1275.00', '1', '0', '-130', '0', '200'), ('3', 'illy', 'e08a7c49d96c2b475656cc8fe18cee8e', '6a25f15df607e95df221fd5902318031', '0', '55000.00', '0', '0', '0', '0', '0'), ('4', 'shopmania', '474e45c3f259290616d4189b25f71421', '25c6dcb26503d38c8167a49d45d6022a', '0', '55000.00', '0', '0', '0', '0', '0'), ('5', 'sergey_onix', 'c290a3d21ccbbbd136c20d9202dcf6df', 'c6cd3ec60b2412ddb53dd7cebc2ad57e', '0', '55000.00', '0', '0', '0', '0', '0'), ('6', 'test', 'fb469d7ef430b0baf0cab6c436e70375', '', '0', '55000.00', '0', '0', '0', '0', '0');
 COMMIT;
 
 -- ----------------------------
--- Table structure for weightmeasurements
+-- Table structure for `weightmeasurements`
 -- ----------------------------
 DROP TABLE IF EXISTS `weightmeasurements`;
 CREATE TABLE `weightmeasurements` (
@@ -336,66 +340,66 @@ INSERT INTO `weightmeasurements` VALUES ('1', 'kg');
 COMMIT;
 
 -- ----------------------------
--- Auto increment value for coffeedrinkprices
+-- Auto increment value for `coffeedrinkprices`
 -- ----------------------------
 ALTER TABLE `coffeedrinkprices` AUTO_INCREMENT=10;
 
 -- ----------------------------
--- Auto increment value for coffeeemployees
+-- Auto increment value for `coffeeemployees`
 -- ----------------------------
 ALTER TABLE `coffeeemployees` AUTO_INCREMENT=11;
 
 -- ----------------------------
--- Auto increment value for coffeegrinders
+-- Auto increment value for `coffeegrinders`
 -- ----------------------------
 ALTER TABLE `coffeegrinders` AUTO_INCREMENT=18;
 
 -- ----------------------------
--- Auto increment value for coffeemachines
+-- Auto increment value for `coffeemachines`
 -- ----------------------------
 ALTER TABLE `coffeemachines` AUTO_INCREMENT=11;
 
 -- ----------------------------
--- Auto increment value for coffeeplaces
+-- Auto increment value for `coffeeplaces`
 -- ----------------------------
 ALTER TABLE `coffeeplaces` AUTO_INCREMENT=6;
 
 -- ----------------------------
--- Auto increment value for coffeetypes
+-- Auto increment value for `coffeetypes`
 -- ----------------------------
 ALTER TABLE `coffeetypes` AUTO_INCREMENT=10;
 
 -- ----------------------------
--- Auto increment value for currencies
+-- Auto increment value for `currencies`
 -- ----------------------------
 ALTER TABLE `currencies` AUTO_INCREMENT=2;
 
 -- ----------------------------
--- Auto increment value for drinkportions
+-- Auto increment value for `drinkportions`
 -- ----------------------------
 ALTER TABLE `drinkportions` AUTO_INCREMENT=2;
 
 -- ----------------------------
--- Auto increment value for equipmenttypes
+-- Auto increment value for `equipmenttypes`
 -- ----------------------------
 ALTER TABLE `equipmenttypes` AUTO_INCREMENT=7;
 
 -- ----------------------------
--- Auto increment value for timeperiods
+-- Auto increment value for `timeperiods`
 -- ----------------------------
 ALTER TABLE `timeperiods` AUTO_INCREMENT=2;
 
 -- ----------------------------
--- Auto increment value for userequipment
+-- Auto increment value for `userequipment`
 -- ----------------------------
-ALTER TABLE `userequipment` AUTO_INCREMENT=137;
+ALTER TABLE `userequipment` AUTO_INCREMENT=185;
 
 -- ----------------------------
--- Auto increment value for users
+-- Auto increment value for `users`
 -- ----------------------------
 ALTER TABLE `users` AUTO_INCREMENT=7;
 
 -- ----------------------------
--- Auto increment value for weightmeasurements
+-- Auto increment value for `weightmeasurements`
 -- ----------------------------
 ALTER TABLE `weightmeasurements` AUTO_INCREMENT=2;

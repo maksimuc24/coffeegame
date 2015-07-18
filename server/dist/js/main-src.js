@@ -641,6 +641,34 @@
 })();
 
 (function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('LoginCtrl', LoginCtrl);
+
+        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
+
+        function LoginCtrl($scope, authenticationService, $location) {
+                $scope.model = {
+                        cafeName: '',
+                        password: ''
+                };
+
+                $scope.login = function() {
+                        authenticationService.login({
+                                'cafeName': $scope.model.cafeName,
+                                'password': $scope.model.password,
+                                'submit': 'submit'
+                        }).success(function(result) {
+                                $location.path('/'); 
+                        });
+                }
+        };
+})();
+
+(function() {
     'use strict'
 
 
@@ -672,9 +700,7 @@
 
                 var price = parseFloat($scope.user.coffee.price.price);
                 if ($scope.userSettigs.customers_in_queue >= 2) {
-                    $scope.userSettigs.customers_in_queue -= 1;
-                    $scope.userSettigs.total_drink += 1;
-                    $scope.userSettigs.customers_in_queue -= 1;
+                    $scope.userSettigs.customers_in_queue -= 1; 
                     $scope.user.balance = parseFloat($scope.user.balance) - price;
                     $scope.userBalance = $scope.user.balance;
                 } else {
@@ -703,7 +729,10 @@
             var total;
             total = (10 * place_quality) * random * (success / 100) * (1 - (success / 100) * place_quality);
             total = total.toFixed();
-            $scope.userSettigs.customers_in_queue = total;
+            
+            if(total>=0){
+                $scope.userSettigs.customers_in_queue = total;
+            }
         };
 
         $rootScope.$on('openedTimeDisplay', function(e, time) {
@@ -885,34 +914,6 @@
                                 .success(function(data) {
                                         $window.location.reload()
                                 }); 
-                }
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('LoginCtrl', LoginCtrl);
-
-        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
-
-        function LoginCtrl($scope, authenticationService, $location) {
-                $scope.model = {
-                        cafeName: '',
-                        password: ''
-                };
-
-                $scope.login = function() {
-                        authenticationService.login({
-                                'cafeName': $scope.model.cafeName,
-                                'password': $scope.model.password,
-                                'submit': 'submit'
-                        }).success(function(result) {
-                                $location.path('/'); 
-                        });
                 }
         };
 })();

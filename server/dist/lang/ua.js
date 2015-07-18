@@ -1,5 +1,6 @@
 var translationsUA = {
         SOME_HELLO_TEXT:"SOME_HELLO_TEXT UA.js",
+        NEED_BUY_KG_COFFE:"NEED_BUY_KG_COFFE",
 //top menus and modals
         SING_IN:'Увійти/Зареєструватися',
         LOG_OUT:'Вийти',
