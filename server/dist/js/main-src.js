@@ -633,6 +633,34 @@
 
         angular
                 .module('coffeeGame')
+                .controller('LoginCtrl', LoginCtrl);
+
+        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
+
+        function LoginCtrl($scope, authenticationService, $location) {
+                $scope.model = {
+                        cafeName: '',
+                        password: ''
+                };
+
+                $scope.login = function() {
+                        authenticationService.login({
+                                'cafeName': $scope.model.cafeName,
+                                'password': $scope.model.password,
+                                'submit': 'submit'
+                        }).success(function(result) {
+                                $location.path('/'); 
+                        });
+                }
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('UserBalanceCtrl', UserBalanceCtrl)
 
         UserBalanceCtrl.$inject = ['$scope'];
@@ -662,11 +690,11 @@
             "customers_in_queue": 0,
             "total_coffe_kg": 0,
             "total_drink": 0,
-            "buy_total_coffe_kg":0
+            "buy_total_coffe_kg": 0
         };
 
         $scope.sellCoffe = function() {
-            if($scope.userSettigs.customers_in_queue <= 0){
+            if ($scope.userSettigs.customers_in_queue <= 0) {
                 return;
             }
 
@@ -697,26 +725,23 @@
         //customers in queue 
         $scope.customers_in_queue = function() {
             var drink_quality = $scope.user.coffee.price.quality;
-            var random = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
+            var random = Math.floor(Math.random() * (500 - 1 + 1)) + 1;
             var success = $scope.successBar;
             var total;
 
-          
-             
-            total = (10 * drink_quality) * random * (success/100) * Math.abs((1 - success * drink_quality));
+            total = (10 * drink_quality) * random * (success / 100) * Math.abs((1 - success * drink_quality));
             total = total.toFixed();
 
             if (total >= 0) {
                 $scope.userSettigs.customers_in_queue = total;
             }
-            console.log(Math.abs(1 - success * drink_quality))
-            console.log((10 * drink_quality) * random * (success / 100))
         };
 
-        $rootScope.$on('openedTimeDisplay', function(e, time) {
+        $rootScope.$on('openedTimeDisplay', function(e, data) {
             $rootScope.$broadcast('reload');
-            var month = time;
-            time = time / (30 * 24 * 60 * 60 / 1000);
+
+            var month = data.openedTimeDisplay;
+            var time = data.openedTimeDisplay / (30 * 24 * 60 * 60 / 1000);
             //pay pear month
             if (parseInt(time) == time && time > 0) {
                 var place, employee;
@@ -730,8 +755,12 @@
                 $scope.user.balance = parseFloat($scope.user.balance) - employee - place;
                 $scope.userBalance = $scope.user.balance;
             }
-            $scope.customers_in_queue();
-            globalService.updateData(month, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance,$scope.userSettigs.buy_total_coffe_kg);
+             
+            globalService.updateData(month, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance, $scope.userSettigs.buy_total_coffe_kg);
+            
+            if(data.iterationNum == 10){
+                    $scope.customers_in_queue(); 
+            }
         });
 
 
@@ -740,7 +769,7 @@
             var price = parseFloat($scope.user.coffee.type.pricePerKg);
             var balance = parseFloat($scope.user.balance);
             if (price <= balance) {
-                $scope.userSettigs.buy_total_coffe_kg+=1;
+                $scope.userSettigs.buy_total_coffe_kg += 1;
                 $scope.user.balance = parseFloat($scope.user.balance) - price;
                 $scope.userBalance = $scope.user.balance;
                 $scope.userSettigs.total_coffe_kg += 1;
@@ -780,6 +809,7 @@
             }
         });
 
+
         function userBalance() {
             userService.getBalance()
                 .success(function(data) {
@@ -812,7 +842,7 @@
                     $scope.userSettigs.customers_in_queue = parseInt(data.customers_in_queue);
                     $scope.userSettigs.total_coffe_kg = parseFloat(data.total_coffe_kg);
                     $scope.userSettigs.total_drink = parseInt(data.total_drink);
-                    $scope.userSettigs.buy_total_coffe_kg = parseInt(data.buy_total_coffe_kg); 
+                    $scope.userSettigs.buy_total_coffe_kg = parseInt(data.buy_total_coffe_kg);
                     $rootScope.$broadcast('setopenedTime', parseFloat(data.opened_months));
                 });
         };
@@ -901,7 +931,7 @@
         function checkCookie() {
             console.log($scope.showGam)
             setTimeout(function() {
-                console.log('sdasd ',$scope.showGame)
+                console.log('sdasd ', $scope.showGame)
                 if (!$scope.showGame) {
                     $('#myModalLanguage').modal();
                 }
@@ -937,34 +967,6 @@
 })();
 
 (function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('LoginCtrl', LoginCtrl);
-
-        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
-
-        function LoginCtrl($scope, authenticationService, $location) {
-                $scope.model = {
-                        cafeName: '',
-                        password: ''
-                };
-
-                $scope.login = function() {
-                        authenticationService.login({
-                                'cafeName': $scope.model.cafeName,
-                                'password': $scope.model.password,
-                                'submit': 'submit'
-                        }).success(function(result) {
-                                $location.path('/'); 
-                        });
-                }
-        };
-})();
-
-(function() {
     'use strict'
 
     angular
@@ -989,40 +991,46 @@
 })();
 
 (function() {
-        'use strict'
+    'use strict'
 
 
-        angular
-                .module('coffeeGame')
-                .controller('GameProcessCtrl', GameProcessCtrl);
+    angular
+        .module('coffeeGame')
+        .controller('GameProcessCtrl', GameProcessCtrl);
 
-        GameProcessCtrl.$inject = ['$scope', '$interval','$rootScope'];
+    GameProcessCtrl.$inject = ['$scope', '$interval', '$rootScope'];
 
-        function GameProcessCtrl($scope, $interval,$rootScope) {
-                $scope.model = {
-                        openedTime: 0
-                };
-                $scope.iterationNum = 0;
-
-                var refreshTime = 1000;
-
-                $scope.model.openedTimeDisplay = function() { 
-                        return $scope.model.openedTime / (30 * 24 * 60 * 60 / 1000);
-                };
-
-                $interval(function() { 
-                        if($scope.iterationNum >= 5){
-                               $rootScope.$broadcast('openedTimeDisplay',$scope.model.openedTime);
-                               $scope.iterationNum = 0;
-                        }
-                        $scope.model.openedTime = $scope.model.openedTime + 1; 
-                        $scope.iterationNum+=1;
-                }, refreshTime);
-
-                $rootScope.$on('setopenedTime',function(e,val){
-                                $scope.model.openedTime = val; 
-                });
+    function GameProcessCtrl($scope, $interval, $rootScope) {
+        $scope.model = {
+            openedTime: 0
         };
+        $scope.iterationNum = 0;
+
+        var refreshTime = 1000;
+
+        $scope.model.openedTimeDisplay = function() {
+            return $scope.model.openedTime / (30 * 24 * 60 * 60 / 1000);
+        };
+
+        $interval(function() {
+            var data = {
+                'openedTimeDisplay': $scope.model.openedTime,
+                'iterationNum':  $scope.iterationNum
+            };
+            if ($scope.iterationNum >= 11) {
+                $scope.iterationNum = 0;
+            }
+            
+            $rootScope.$broadcast('openedTimeDisplay', data);
+            $scope.model.openedTime = $scope.model.openedTime + 1;
+
+            $scope.iterationNum += 1;
+        }, refreshTime);
+
+        $rootScope.$on('setopenedTime', function(e, val) {
+            $scope.model.openedTime = val;
+        });
+    };
 })();
 
 (function() {
@@ -1257,7 +1265,7 @@
                                         name: $filter('translate')('TABCOFFEE')
                                 }));
                         } else {
-                                $scope.user.coffee.type.Set(coffeeType,true);
+                                $scope.user.coffee.type.Set(coffeeType,true); 
                                 $scope.addSelectedNameToEquipment('coffe', coffeeType);
                                 initializeCofeGame('all');
 

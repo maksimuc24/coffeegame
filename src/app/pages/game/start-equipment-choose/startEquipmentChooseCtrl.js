@@ -230,7 +230,7 @@
                                         name: $filter('translate')('TABCOFFEE')
                                 }));
                         } else {
-                                $scope.user.coffee.type.Set(coffeeType,true);
+                                $scope.user.coffee.type.Set(coffeeType,true); 
                                 $scope.addSelectedNameToEquipment('coffe', coffeeType);
                                 initializeCofeGame('all');
 
