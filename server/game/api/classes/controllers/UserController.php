@@ -25,6 +25,9 @@ class UserController extends AbstractController {
                         break;
                     case 'buy-kg-coffe':
                         return $this->buyKgCoffee();
+                        break; 
+                    case 'get-details':
+                        return $this->getDetails();
                         break;
 
                     default:
@@ -76,5 +79,9 @@ class UserController extends AbstractController {
     public function updateData($opened_months, $customers_in_queue,$total_coffe_kg,$total_drink,$balance){
             return $this->gameUserManager->updateData($opened_months, $customers_in_queue,$total_coffe_kg,$total_drink,$balance);
 
+    }
+
+    public function getDetails(){
+           return $this->gameUserManager->getDetails();
     }
 }

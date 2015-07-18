@@ -398,8 +398,12 @@
 
                 Service.resetData = function() {
                         return $http.get(urlBase + '/reset-balance');
+                };  
+
+                Service.userGetDetails = function() {
+                        return $http.get(urlBase + '/get-details');
                 }; 
-                
+
                 Service.buyKgCoffe = function() {
                         return $http.get(urlBase + '/buy-kg-coffe');
                 };
@@ -539,6 +543,47 @@
 
         angular
                 .module('coffeeGame')
+                .controller('HeartbeatCtrl', HeartbeatCtrl);
+
+        HeartbeatCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'userService'];
+
+        function HeartbeatCtrl($scope, $rootScope, $timeout, userService) {
+
+                var timer;
+
+                $rootScope.$on('userLogin', function() {
+                        startHeartbeat();
+                });
+
+                $rootScope.$on('userLogout', function() {
+                        stopHeartbeat();
+                });
+
+                function startHeartbeat() {
+                        if (!timer) {
+                                timer = $timeout(
+                                        function() {
+                                                userService.heartbeat();
+                                        },
+                                        5000);
+                        }
+                };
+
+                function stopHeartbeat() {
+                        if (timer) {
+                                $timeout.cancel(timer);
+                                timer = undefined;
+                        }
+                };
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('UserAuthCtrl', UserAuthCtrl);
 
         UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService'];
@@ -596,47 +641,6 @@
 })();
 
 (function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('HeartbeatCtrl', HeartbeatCtrl);
-
-        HeartbeatCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'userService'];
-
-        function HeartbeatCtrl($scope, $rootScope, $timeout, userService) {
-
-                var timer;
-
-                $rootScope.$on('userLogin', function() {
-                        startHeartbeat();
-                });
-
-                $rootScope.$on('userLogout', function() {
-                        stopHeartbeat();
-                });
-
-                function startHeartbeat() {
-                        if (!timer) {
-                                timer = $timeout(
-                                        function() {
-                                                userService.heartbeat();
-                                        },
-                                        5000);
-                        }
-                };
-
-                function stopHeartbeat() {
-                        if (timer) {
-                                $timeout.cancel(timer);
-                                timer = undefined;
-                        }
-                };
-        };
-})();
-
-(function() {
     'use strict'
 
 
@@ -644,38 +648,49 @@
         .module('coffeeGame')
         .controller('GameCtrl', GameCtrl);
 
-    GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService', 'gameSettingsService', 'userService', 'globalService'];
+    GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService', 'gameSettingsService', 'userService', 'globalService','growl','$filter'];
 
-    function GameCtrl($scope, $rootScope, User, authenticationService, gameSettingsService, userService, globalService) {
+    function GameCtrl($scope, $rootScope, User, authenticationService, gameSettingsService, userService, globalService,growl,$filter) {
         $scope.game = {};
         $scope.showGame = false;
         $scope.userBalance = 0;
 
 
         $scope.userSettigs = {
-            "customers_in_queue": 1,
-            "total_coffe_kg": 1,
-            "total_drink": 1
+            "customers_in_queue": 0,
+            "total_coffe_kg": 0,
+            "total_drink": 0
         };
-        
-        $scope.sellCoffe = function(){
-               var price = parseFloat($scope.user.coffee.price.price);
-               if($scope.userSettigs.customers_in_queue>=2){
-                   $scope.userSettigs.customers_in_queue-=1; 
-                   $scope.userSettigs.total_drink+=1; 
-                   $scope.userSettigs.customers_in_queue-=1;  
-                   $scope.user.balance = parseFloat($scope.user.balance) - price;
-                   $scope.userBalance = $scope.user.balance;
-               }else{
-                    $scope.userSettigs.customers_in_queue = Math.floor(Math.random() * (1 - 0 + 1)) + 0; 
-               }
-               $scope.userSettigs.total_drink+=1;   
-               $scope.user.balance = parseFloat($scope.user.balance) + price;
-               $scope.userBalance = $scope.user.balance;
 
-        }
-        //customers in queue 
-        $scope.customers_in_queue = function() { 
+        $scope.sellCoffe = function() {
+                var left_kg = $scope.userSettigs.total_coffe_kg - ($scope.userSettigs.total_drink * 0.0014);
+
+                if (left_kg < 0) {
+                    growl.warning($filter('translate')('NEED_BUY_KG_COFFE'));
+                    return;
+                }
+
+                var price = parseFloat($scope.user.coffee.price.price);
+                if ($scope.userSettigs.customers_in_queue >= 2) {
+                    $scope.userSettigs.customers_in_queue -= 1;
+                    $scope.userSettigs.total_drink += 1;
+                    $scope.userSettigs.customers_in_queue -= 1;
+                    $scope.user.balance = parseFloat($scope.user.balance) - price;
+                    $scope.userBalance = $scope.user.balance;
+                } else {
+                    $scope.userSettigs.customers_in_queue = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
+                }
+
+
+                $scope.userSettigs.total_drink += 1;
+                $scope.user.balance = parseFloat($scope.user.balance) + price;
+                $scope.userBalance = $scope.user.balance;
+
+                $scope.userSettigs.total_coffe_kg = $scope.userSettigs.total_coffe_kg - ($scope.userSettigs.total_drink * 0.0014);
+
+            }
+            //customers in queue 
+        $scope.customers_in_queue = function() {
             var place_quality = 0;
             var random = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
             var success = $scope.successBar;
@@ -684,22 +699,22 @@
                 if (val.name == "place") {
                     place_quality = val.quality;
                 }
-            }); 
-            var total; 
-            total = (10*place_quality)*random*(success/100) *(1-(success/100)*place_quality);
-            total = total.toFixed(); 
-            $scope.userSettigs.customers_in_queue = total; 
+            });
+            var total;
+            total = (10 * place_quality) * random * (success / 100) * (1 - (success / 100) * place_quality);
+            total = total.toFixed();
+            $scope.userSettigs.customers_in_queue = total;
         };
 
-        $rootScope.$on('openedTimeDisplay',function(e,time){ 
+        $rootScope.$on('openedTimeDisplay', function(e, time) {
 
             $scope.customers_in_queue();
-            globalService.updateData(time,$scope.userSettigs.customers_in_queue,$scope.userSettigs.total_coffe_kg,$scope.userSettigs.total_drink,$scope.userBalance);
+            globalService.updateData(time, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance);
         });
 
 
         //get total coffe kg
-        $scope.buyCoffee = function() {  
+        $scope.buyCoffee = function() {
             var price = parseFloat($scope.user.coffee.type.pricePerKg);
             var balance = parseFloat($scope.user.balance);
             if (price <= balance) {
@@ -714,8 +729,7 @@
             }
         };
 
-        $rootScope.$on('gameStartEvent', function() {
-            console.log('GameCtrl gameStartEvent');
+        $rootScope.$on('gameStartEvent', function() { 
             authenticationService.startPlay();
             $scope.game.equipmentChooseFinished = true;
             getSuccesStatus();
@@ -754,8 +768,20 @@
             });
             $scope.successBar = parseFloat(coffePrice) + parseFloat(coffeType) + parseFloat(employee) + parseFloat(place_machine_name);
             userBalance();
+            userGetDetails();
+
         };
 
+
+        function userGetDetails() {
+            globalService.userGetDetails()
+                .success(function(data) {
+                    $scope.userSettigs.customers_in_queue = parseInt(data.customers_in_queue);
+                    $scope.userSettigs.total_coffe_kg = parseFloat(data.total_coffe_kg);
+                    $scope.userSettigs.total_drink = parseInt(data.total_drink); 
+                    $rootScope.$broadcast('setopenedTime', parseFloat(data.opened_months));
+                });
+        };
 
         function setEquipment(type, data) {
             if (angular.isUndefined($scope.user)) {
@@ -797,9 +823,7 @@
 
                         });
 
-                    }
-                    console.log('<!---- end equipment --->');
-                    console.log($scope.user);
+                    } 
                     getSuccesStatus();
 
                 });
@@ -822,8 +846,7 @@
         function checkIfShowGame() {
             authenticationService.validate()
                 .success(function(data) {
-                    if (!angular.isUndefined(data.user_id)) {
-                        console.log('Login');
+                    if (!angular.isUndefined(data.user_id)) { 
                         $scope.showGame = true;
                         return;
                     }
@@ -949,6 +972,10 @@
                         $scope.model.openedTime = $scope.model.openedTime + 1; 
                         $scope.iterationNum+=1;
                 }, refreshTime);
+
+                $rootScope.$on('setopenedTime',function(e,val){
+                                $scope.model.openedTime = val; 
+                });
         };
 })();
 

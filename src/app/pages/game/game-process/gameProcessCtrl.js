@@ -28,5 +28,9 @@
                         $scope.model.openedTime = $scope.model.openedTime + 1; 
                         $scope.iterationNum+=1;
                 }, refreshTime);
+
+                $rootScope.$on('setopenedTime',function(e,val){
+                                $scope.model.openedTime = val; 
+                });
         };
 })();

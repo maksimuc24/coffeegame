@@ -259,4 +259,16 @@ class GameUserManager{
     	   								 WHERE user_id=$userId", $this->database->Connect()); 
 
     }
+
+    public function getDetails(){
+    	   $userId = $this->GetCurrentUserId();
+    	   $userData =  mysql_query("SELECT opened_months,
+    	   								 customers_in_queue,
+    	   								 total_coffe_kg, 
+    	   								 total_drink 
+    	   								 FROM users
+    	   								 WHERE user_id=$userId", $this->database->Connect()); 
+    	   $userRow   = mysql_fetch_assoc($userData ); 
+    	   return  $userRow;
+    }
 }

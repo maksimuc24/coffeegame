@@ -15,8 +15,12 @@
 
                 Service.resetData = function() {
                         return $http.get(urlBase + '/reset-balance');
+                };  
+
+                Service.userGetDetails = function() {
+                        return $http.get(urlBase + '/get-details');
                 }; 
-                
+
                 Service.buyKgCoffe = function() {
                         return $http.get(urlBase + '/buy-kg-coffe');
                 };
