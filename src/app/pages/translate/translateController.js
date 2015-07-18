@@ -1,22 +1,21 @@
 (function() {
-        'use strict'
+    'use strict'
 
-        angular
-                .module('coffeeGame')
-                .controller('TranslateCtrl', TranslateCtrl);
+    angular
+        .module('coffeeGame')
+        .controller('TranslateCtrl', TranslateCtrl);
 
-        TranslateCtrl.$inject = ['$scope', '$translate'];
+    TranslateCtrl.$inject = ['$scope', '$translate'];
 
-        function TranslateCtrl($scope, $translate) { 
-                //display modal window with language list
-                $('#myModalLanguage').modal();
+    function TranslateCtrl($scope, $translate) {
+        
 
-                //change lenguage
-                $scope.changeLanguage = function(langKey) {
-                        $translate.uses(langKey);   
-                }
- 
-        };
+        //change lenguage
+        $scope.changeLanguage = function(langKey) {
+            $translate.uses(langKey);
+        }
+
+    };
 
 
 

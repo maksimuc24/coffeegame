@@ -1,17 +1,7 @@
 <div ng-if="!showGame">
 		{{'SOME_HELLO_TEXT'|translate}}
 </div>
-<div ng-if="showGame"> 
-	<div class="alert alert-success" role="alert">
-		<div ng-bind-html="'WELCOME'|translate"></div>
-		<p></p>
-		<button type="button" class="btn btn-success" data-dismiss="alert">{{'DISMISS_MESSAGE'|translate}}</button>
-	</div>
-
-	<div ng-if="game.equipmentChooseFinished"> 
-		<div ng-controller="GameProcessCtrl" ng-include src="'app/pages/game/game-process/gameProcess.html'"></div>
-	</div>
-
+<div ng-if="showGame">   
 	<div>
 		<div ng-controller="StartEquipmentChooseCtrl" ng-include src="'app/pages/game/start-equipment-choose/startEquipmentChoose.html'"></div>
 	</div>

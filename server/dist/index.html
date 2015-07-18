@@ -4,242 +4,223 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 <html class="no-js">
-<!--<![endif]--> 
+<!--<![endif]-->
 
 <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Game</title>
-        <meta name="description" content="Cafe coffee game">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0 initial-scale=1,maximum-scale=1,user-scalable=no">
-        <link rel="shortcut icon" type="image/x-icon" href="favicon.png?v=1" />
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="css/bootflat.min.css">
-        <link rel="stylesheet" href="css/angular-growl.min.css">
-        <link rel="stylesheet" href="css/custom.css">
-
-        <!--[if lt IE 9]>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Game</title>
+    <meta name="description" content="Cafe coffee game">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0 initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.png?v=1" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootflat.min.css">
+    <link rel="stylesheet" href="css/angular-growl.min.css">
+    <link rel="stylesheet" href="css/custom.css">
+    <!--[if lt IE 9]>
             <script src="js/vendor/html5-3.6-respond-1.1.0.min.js"></script>
         <![endif]-->
 </head>
 
 <body ng-controller="GameCtrl">
-        <!--[if lt IE 7]>
+    <!--[if lt IE 7]>
           <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
-        <!-- Menu-->
-        <div class="navbar navbar-default" role="navigation">
-                <div class="container">
-                        <div class="navbar-header">
-                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                                        <span class="sr-only">Toggle navigation</span>
-                                        <span class="icon-bar"></span>  
-                                        <span class="icon-bar"></span> 
-                                        <span class="icon-bar"></span> 
-                                </button>
-                                <a class="navbar-brand"  href="#" ng-include src="'app/controls/user-auth/userAuth.html'"></a>   
-                        </div>
-                        <div class="collapse navbar-collapse" ng-controller="TranslateCtrl">
-                                <ul class="nav navbar-nav navbar-right">
-                                        <li><a href="#" data-toggle="modal" data-target="#myModalInfo"><i class="fa fa-info fa-lg fa-fw"></i> {{'INFO' | translate}}</a>
-                                        </li>
-                                        <li><a href="#" data-toggle="modal" data-target="#myModalLanguage"><i class="fa fa-language fa-lg fa-fw"></i> {{'LANGUAGE' | translate}}  </a>
-                                        </li>
-                                        <li><a href="#" data-toggle="modal" data-target="#myModalReset"><i class="fa fa-refresh fa-lg fa-fw"></i> {{'RESET' | translate}}</a>
-                                        </li>
-                                        <li><a href="#" data-toggle="modal" data-target="#myModalStats"><i class="fa fa-bar-chart fa-lg fa-fw"></i>  {{'STATS' | translate}}</a>
-                                        </li>
-                                </ul>
-                        </div>
-                </div>
-        </div>
-        <!-- /menu-->  
-
+    <!-- Menu-->
+    <div class="navbar navbar-default" role="navigation">
         <div class="container">
-                <div class="row">
-                        <div class="col-lg-7"> 
-                               <p ng-bind-html="'AFTER_REGISTRATION' | translate"></p> 
-                                <br>  
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#" ng-include src="'app/controls/user-auth/userAuth.html'"></a>
+            </div>
+            <div class="collapse navbar-collapse" ng-controller="TranslateCtrl">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" data-toggle="modal" data-target="#myModalInfo"><i class="fa fa-info fa-lg fa-fw"></i> {{'INFO' | translate}}</a>
+                    </li>
+                    <li><a href="#" data-toggle="modal" data-target="#myModalLanguage"><i class="fa fa-language fa-lg fa-fw"></i> {{'LANGUAGE' | translate}}  </a>
+                    </li>
+                    <li><a href="#" data-toggle="modal" data-target="#myModalReset"><i class="fa fa-refresh fa-lg fa-fw"></i> {{'RESET' | translate}}</a>
+                    </li>
+                    <li><a href="#" data-toggle="modal" data-target="#myModalStats"><i class="fa fa-bar-chart fa-lg fa-fw"></i>  {{'STATS' | translate}}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /menu-->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <p  ng-if="!showGame" ng-bind-html="'AFTER_REGISTRATION' | translate"></p>
+                <br>
+                <br>
+                <div ng-if="showGame">
+                    <div class="alert alert-success" role="alert">
+                        <div ng-bind-html="'WELCOME'|translate"></div>
+                        <p></p>
+                        <button type="button" class="btn btn-success" data-dismiss="alert">{{'DISMISS_MESSAGE'|translate}}</button>
+                    </div>
+                    <div ng-if="game.equipmentChooseFinished">
+                        <div ng-controller="GameProcessCtrl" ng-include src="'app/pages/game/game-process/gameProcess.html'"></div>
+                    </div>
+                    
+                </div>
+                <div style="position: relative; left: 0; top: 0;">
+                    <img src="2place.png" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
+                    <img src="1employees.gif" class="img-responsive img-rounded" style="position: absolute; top: 0px; left: 0px; ">
+                </div>
+            </div>
+            <div class="col-md-5" ng-view></div>
+        </div>
+    </div>
+    <div ng-controller="HeartbeatCtrl"></div>
+    <!-- Modals-->
+    <div class="modal fade" id="myModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"><i class="fa fa-info fa-lg fa-fw"></i> {{'INFO'| translate}}</div>
+                        <div class="panel-body">
+                            <div ng-bind-html="'INFO_GAME_ABOUT' | translate">
+                            </div>
+                            <div ng-bind-html="'INFO_GAME_AIM' | translate">
+                            </div>
+                            <div ng-bind-html="'INFO_GAME_UPGRADE' | translate">
+                            </div>
+                            <div ng-bind-html="'INFO_GAME_POPULARITY' | translate">
+                            </div>
+                            <p>
                                 <br>
-                                <div style="position: relative; left: 0; top: 0;">
-                                        <img src="2place.png" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
-                                        <img src="1employees.gif" class="img-responsive img-rounded" style="position: absolute; top: 0px; left: 0px; ">
-                                </div> 
-                        </div> 
-                        <div class="col-md-5"   ng-view></div> 
-                </div>
-        </div>
- 
-        <div ng-controller="HeartbeatCtrl"></div> 
- 
-        <!-- Modals--> 
-        <div class="modal fade" id="myModalInfo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg"> 
-                        <div class="modal-content"> 
-                                <div class="modal-body"> 
-                                        <div class="panel panel-primary">
-                                                <div class="panel-heading"><i class="fa fa-info fa-lg fa-fw"></i> {{'INFO'| translate}}</div>
-                                                <div class="panel-body">
-                                                                <div ng-bind-html="'INFO_GAME_ABOUT' | translate"> 
-                                                                </div>
-                                                                <div ng-bind-html="'INFO_GAME_AIM' | translate"> 
-                                                                </div> 
-                                                                <div ng-bind-html="'INFO_GAME_UPGRADE' | translate"> 
-                                                                </div>
-                                                                 <div ng-bind-html="'INFO_GAME_POPULARITY' | translate"> 
-                                                                </div>
-                                                         
-                                                        <p>
-                                                                <br>
-                                                                <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-lg fa-fw"></i> 
-                                                                {{'CLOSE' | translate}}</button>
-                                                        </p>
-                                                        <p class="text-right">&copy; <a href="http://jaknakavu.eu" target="_blank">{{'SITE' | translate}}</a>.  {{ 'GAME_VERSION' |translate}}</p>
-                                                </div>
-                                        </div>
-                                </div>
+                                <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-lg fa-fw"></i> {{'CLOSE' | translate}}</button>
+                            </p>
+                            <p class="text-right">&copy; <a href="http://jaknakavu.eu" target="_blank">{{'SITE' | translate}}</a>. {{ 'GAME_VERSION' |translate}}</p>
                         </div>
-                        <!-- /.modal-content -->
+                    </div>
                 </div>
-                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal -->
-
-        <div class="modal fade" id="myModalLanguage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                                <div class="modal-body">
-                                        <div class="panel panel-primary" ng-controller="TranslateCtrl">
-                                                <div class="panel-heading"><i class="fa fa-language fa-lg fa-fw"></i> {{'LANGUAGE' | translate}}</div>
-                                                <div class="panel-body">
-                                                        <p>
-                                                                <button type="button" 
-                                                                        class="btn btn-success btn-block"data-dismiss="modal" 
-                                                                        aria-hidden="true" 
-                                                                        ng-click="changeLanguage('cz')">
-                                                                        {{'BUTTON_LANG_CZ' | translate}}
-                                                                </button>
-                                                        </p>
-                                                        <p>
-                                                                <button type="button" 
-                                                                	    class="btn btn-success btn-block"data-dismiss="modal" 
-                                                                	    ng-click="changeLanguage('en')"
-                                                                	    aria-hidden="true">
-                                                                	    {{'BUTTON_LANG_EN' | translate}}
-                                                                </button>
-                                                        </p>
-                                                        <p>
-                                                                <button type="button" 
-                                                                		class="btn btn-success btn-block"data-dismiss="modal" 
-                                                                		ng-click="changeLanguage('ua')"
-                                                                		aria-hidden="true"> 
-                                                                        {{'BUTTON_LANG_UA' | translate}}
-                                                                </button>
-                                                        </p>
-                                                       		    <button type="button"
-                                                       		            class="btn btn-success btn-block"data-dismiss="modal" 
-                                                       		            ng-click="changeLanguage('ru')"
-                                                       		            aria-hidden="true">
-                                                       		            {{'BUTTON_LANG_RU' | translate}}
-                                                       		    </button>
-                                                </div>
-                                        </div>
-                                </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <div class="modal fade" id="myModalLanguage" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="panel panel-primary" ng-controller="TranslateCtrl">
+                        <div class="panel-heading"><i class="fa fa-language fa-lg fa-fw"></i> {{'LANGUAGE' | translate}}</div>
+                        <div class="panel-body">
+                            <p>
+                                <button type="button" class="btn btn-success btn-block" data-dismiss="modal" aria-hidden="true" ng-click="changeLanguage('cz')">
+                                    {{'BUTTON_LANG_CZ' | translate}}
+                                </button>
+                            </p>
+                            <p>
+                                <button type="button" class="btn btn-success btn-block" data-dismiss="modal" ng-click="changeLanguage('en')" aria-hidden="true">
+                                    {{'BUTTON_LANG_EN' | translate}}
+                                </button>
+                            </p>
+                            <p>
+                                <button type="button" class="btn btn-success btn-block" data-dismiss="modal" ng-click="changeLanguage('ua')" aria-hidden="true">
+                                    {{'BUTTON_LANG_UA' | translate}}
+                                </button>
+                            </p>
+                            <button type="button" class="btn btn-success btn-block" data-dismiss="modal" ng-click="changeLanguage('ru')" aria-hidden="true">
+                                {{'BUTTON_LANG_RU' | translate}}
+                            </button>
                         </div>
-                        <!-- /.modal-content -->
+                    </div>
                 </div>
-                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal -->
-
-        <div class="modal fade" id="myModalReset" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-sm">
-                        <div class="modal-content">
-                                <div class="modal-body" ng-controller="globalSettingsCtrl">
-                                        <div class="panel panel-primary">
-                                                <div class="panel-heading"><i class="fa fa-refresh fa-lg fa-fw"></i>{{'RESET'|translate}}</div>
-                                                <div class="panel-body">
-                                                        <p> {{'RESET_QUESTION'|translate}}</p>
-                                                        <p>
-                                                                <button type="button" ng-click="globalReset()" class="btn btn-danger btn-block" data-dismiss="modal" aria-hidden="true"><i class="fa fa-refresh fa-fw fa-lg"></i> {{'RESET_OK'|translate}}</button>
-                                                        </p>
-                                                        <button type="button" class="btn btn-success btn-block" data-dismiss="modal" aria-hidden="true"><i class="fa fa-reply fa-fw fa-lg"></i> {{'RESET_BACK'|translate}}</button>
-                                                </div>
-                                        </div>
-                                </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <div class="modal fade" id="myModalReset" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-body" ng-controller="globalSettingsCtrl">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"><i class="fa fa-refresh fa-lg fa-fw"></i>{{'RESET'|translate}}</div>
+                        <div class="panel-body">
+                            <p> {{'RESET_QUESTION'|translate}}</p>
+                            <p>
+                                <button type="button" ng-click="globalReset()" class="btn btn-danger btn-block" data-dismiss="modal" aria-hidden="true"><i class="fa fa-refresh fa-fw fa-lg"></i> {{'RESET_OK'|translate}}</button>
+                            </p>
+                            <button type="button" class="btn btn-success btn-block" data-dismiss="modal" aria-hidden="true"><i class="fa fa-reply fa-fw fa-lg"></i> {{'RESET_BACK'|translate}}</button>
                         </div>
-                        <!-- /.modal-content -->
+                    </div>
                 </div>
-                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal -->
-
-        <div class="modal fade" id="myModalStats" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                        <div class="modal-content">
-                                <div class="modal-body">
-                                        <div class="panel panel-primary">
-                                                <div class="panel-heading"><i class="fa fa-bar-chart fa-lg fa-fw"></i> {{'STATS'|translate}}</div>
-                                                <div class="panel-body">
-                                                        <p> {{'STATS_TOP'|translate}}</p>
-                                                        <br>
-                                                        <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-lg fa-fw"></i>  {{'CLOSE'|translate}}</button>
-                                                </div>
-                                        </div>
-                                </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <div class="modal fade" id="myModalStats" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"><i class="fa fa-bar-chart fa-lg fa-fw"></i> {{'STATS'|translate}}</div>
+                        <div class="panel-body">
+                            <p> {{'STATS_TOP'|translate}}</p>
+                            <br>
+                            <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-lg fa-fw"></i> {{'CLOSE'|translate}}</button>
                         </div>
-                        <!-- /.modal-content -->
+                    </div>
                 </div>
-                <!-- /.modal-dialog -->
+            </div>
+            <!-- /.modal-content -->
         </div>
-        <!-- /.modal -->
-        <!-- /modals -->
-
-        <div growl></div>
-
-        <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
-        
-        <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
-
-        <script type="text/javascript" src="js/vendor/angular.js"></script>
-        <script type="text/javascript" src="js/vendor/angular-route.js"></script>
-        <script type="text/javascript" src="js/vendor/angular-cookies.js"></script>
-        <script type="text/javascript" src="js/vendor/angular-sanitize.js"></script>
-        <script type="text/javascript" src="js/vendor/fastclick.js"></script>
-        <script type="text/javascript" src="js/vendor/ui-bootstrap.js"></script>
-        <script type="text/javascript" src="js/vendor/ui-bootstrap-tpls.js"></script>
-
-        <script type="text/javascript" src="lang/cz.js"></script>
-        <script type="text/javascript" src="lang/eng.js"></script>
-        <script type="text/javascript" src="lang/ru.js"></script>
-        <script type="text/javascript" src="lang/ua.js"></script>
-
-        <script type="text/javascript" src="js/vendor/angular-growl.min.js"></script>
-        <script type="text/javascript" src="js/vendor/angular-translate.min.js"></script>
-        <script type="text/javascript" src="js/vendor/angular-translate-storage-cookie.min.js"></script>
-        <script type="text/javascript" src="js/vendor/angular-translate-storage-local.min.js"></script>
-
-        <script type="text/javascript" src="js/production/main-src.js"></script>
-
-        <!-- Google Analytics code start -->
-        <script>
-        (function(i, s, o, g, r, a, m) {
-                i['GoogleAnalyticsObject'] = r;
-                i[r] = i[r] || function() {
-                        (i[r].q = i[r].q || []).push(arguments)
-                }, i[r].l = 1 * new Date();
-                a = s.createElement(o),
-                        m = s.getElementsByTagName(o)[0];
-                a.async = 1;
-                a.src = g;
-                m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
-        ga('create', 'UA-8822383-15', 'jaknakavu.eu');
-        ga('send', 'pageview');
-        </script>
-        <!-- Google Analytics code end -->
-
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!-- /modals -->
+    <div growl></div>
+    <script type="text/javascript" src="js/vendor/jquery.min.js"></script>
+    <script type="text/javascript" src="js/vendor/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/vendor/angular.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-route.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-cookies.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-sanitize.js"></script>
+    <script type="text/javascript" src="js/vendor/fastclick.js"></script>
+    <script type="text/javascript" src="js/vendor/ui-bootstrap.js"></script>
+    <script type="text/javascript" src="js/vendor/ui-bootstrap-tpls.js"></script>
+    <script type="text/javascript" src="lang/cz.js"></script>
+    <script type="text/javascript" src="lang/eng.js"></script>
+    <script type="text/javascript" src="lang/ru.js"></script>
+    <script type="text/javascript" src="lang/ua.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-growl.min.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-translate.min.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-translate-storage-cookie.min.js"></script>
+    <script type="text/javascript" src="js/vendor/angular-translate-storage-local.min.js"></script>
+    <script type="text/javascript" src="js/production/main-src.js"></script>
+    <!-- Google Analytics code start -->
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-8822383-15', 'jaknakavu.eu');
+    ga('send', 'pageview');
+    </script>
+    <!-- Google Analytics code end -->
 </body>
 
 </html>

@@ -46,8 +46,7 @@
                 function checkBalance(){
                         userService.getBalance()
                                 .success(function(data) {
-                                        $scope.balance = parseFloat(data);
-                                        console.log($scope.balance);
+                                        $scope.balance = parseFloat(data); 
                        });
                 }
                 checkBalance();
@@ -79,6 +78,9 @@
                         checkBalance();
                 }
                 initializeCofeGame('all');
+                $rootScope.$on('reload',function(){
+                    initializeCofeGame('all');  
+                });
 
                 function getUserEquipment() {
                         gameSettingsService.getUserEquipment()
@@ -255,10 +257,7 @@
                 };
 
                 function checkEquipmentFinish() { 
-                        growl.success($filter('translate')('THANKS_YOU_FINISHED'));
-
-                        $rootScope.$emit('gameStartEvent');
-                        $rootScope.$broadcast('buyEquipment');
+                         $rootScope.$broadcast('checkEquipmentFinish'); 
                 };
         };
 })();

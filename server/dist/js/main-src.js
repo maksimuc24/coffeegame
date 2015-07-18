@@ -641,34 +641,6 @@
 })();
 
 (function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('LoginCtrl', LoginCtrl);
-
-        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
-
-        function LoginCtrl($scope, authenticationService, $location) {
-                $scope.model = {
-                        cafeName: '',
-                        password: ''
-                };
-
-                $scope.login = function() {
-                        authenticationService.login({
-                                'cafeName': $scope.model.cafeName,
-                                'password': $scope.model.password,
-                                'submit': 'submit'
-                        }).success(function(result) {
-                                $location.path('/'); 
-                        });
-                }
-        };
-})();
-
-(function() {
     'use strict'
 
 
@@ -676,9 +648,9 @@
         .module('coffeeGame')
         .controller('GameCtrl', GameCtrl);
 
-    GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService', 'gameSettingsService', 'userService', 'globalService','growl','$filter'];
+    GameCtrl.$inject = ['$scope', '$rootScope', 'User', 'authenticationService', 'gameSettingsService', 'userService', 'globalService', 'growl', '$filter'];
 
-    function GameCtrl($scope, $rootScope, User, authenticationService, gameSettingsService, userService, globalService,growl,$filter) {
+    function GameCtrl($scope, $rootScope, User, authenticationService, gameSettingsService, userService, globalService, growl, $filter) {
         $scope.game = {};
         $scope.showGame = false;
         $scope.userBalance = 0;
@@ -691,31 +663,31 @@
         };
 
         $scope.sellCoffe = function() {
-                var left_kg = $scope.userSettigs.total_coffe_kg - ($scope.userSettigs.total_drink * 0.0014);
+            var left_kg = $scope.userSettigs.total_coffe_kg - 0.014;
 
-                if (left_kg < 0) {
-                    growl.warning($filter('translate')('NEED_BUY_KG_COFFE'));
-                    return;
-                }
-
-                var price = parseFloat($scope.user.coffee.price.price);
-                if ($scope.userSettigs.customers_in_queue >= 2) {
-                    $scope.userSettigs.customers_in_queue -= 1; 
-                    $scope.user.balance = parseFloat($scope.user.balance) - price;
-                    $scope.userBalance = $scope.user.balance;
-                } else {
-                    $scope.userSettigs.customers_in_queue = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
-                }
-
-
-                $scope.userSettigs.total_drink += 1;
-                $scope.user.balance = parseFloat($scope.user.balance) + price;
-                $scope.userBalance = $scope.user.balance;
-
-                $scope.userSettigs.total_coffe_kg = $scope.userSettigs.total_coffe_kg - ($scope.userSettigs.total_drink * 0.0014);
-
+            if (left_kg < 0) {
+                growl.warning($filter('translate')('NEED_BUY_KG_COFFE'));
+                return;
             }
-            //customers in queue 
+
+            var price = parseFloat($scope.user.coffee.price.price);
+            if ($scope.userSettigs.customers_in_queue >= 2) {
+                $scope.userSettigs.customers_in_queue -= 1;
+                $scope.user.balance = parseFloat($scope.user.balance) - price;
+                $scope.userBalance = $scope.user.balance;
+            } else {
+                $scope.userSettigs.customers_in_queue = Math.floor(Math.random() * (1 - 0 + 1)) + 0;
+            }
+
+
+            $scope.userSettigs.total_drink += 1;
+            $scope.user.balance = parseFloat($scope.user.balance) + price;
+            $scope.userBalance = $scope.user.balance;
+
+            $scope.userSettigs.total_coffe_kg = $scope.userSettigs.total_coffe_kg - 0.014;
+
+        };
+        //customers in queue 
         $scope.customers_in_queue = function() {
             var place_quality = 0;
             var random = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
@@ -729,16 +701,31 @@
             var total;
             total = (10 * place_quality) * random * (success / 100) * (1 - (success / 100) * place_quality);
             total = total.toFixed();
-            
-            if(total>=0){
+
+            if (total >= 0) {
                 $scope.userSettigs.customers_in_queue = total;
             }
         };
 
         $rootScope.$on('openedTimeDisplay', function(e, time) {
+            $rootScope.$broadcast('reload');
+            var month = time;
+            time = time / (30 * 24 * 60 * 60 / 1000);
+            //pay pear month
+            if (parseInt(time) == time && time > 0) {
+                var place, employee;
+                angular.forEach($scope.user.equipment.items, function(val, key) {
+                    if (val.name == "place") {
+                        place = val.price;
+                    }
+                });
+                employee = parseFloat($scope.user.employee.pricePerMonth);
 
+                $scope.user.balance = parseFloat($scope.user.balance) - employee - place;
+                $scope.userBalance = $scope.user.balance;
+            }
             $scope.customers_in_queue();
-            globalService.updateData(time, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance);
+            globalService.updateData(month, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance);
         });
 
 
@@ -758,7 +745,17 @@
             }
         };
 
-        $rootScope.$on('gameStartEvent', function() { 
+        $rootScope.$on('checkEquipmentFinish', function() {
+            if (!$scope.game.equipmentChooseFinished) {
+                growl.success($filter('translate')('THANKS_YOU_FINISHED'));
+            }
+
+
+            $rootScope.$emit('gameStartEvent');
+            $rootScope.$broadcast('buyEquipment');
+        });
+
+        $rootScope.$on('gameStartEvent', function() {
             authenticationService.startPlay();
             $scope.game.equipmentChooseFinished = true;
             getSuccesStatus();
@@ -781,7 +778,7 @@
                 .success(function(data) {
                     $scope.userBalance = data;
                 });
-        }
+        };
 
         function getSuccesStatus() {
             if (angular.isUndefined($scope.user)) {
@@ -807,7 +804,7 @@
                 .success(function(data) {
                     $scope.userSettigs.customers_in_queue = parseInt(data.customers_in_queue);
                     $scope.userSettigs.total_coffe_kg = parseFloat(data.total_coffe_kg);
-                    $scope.userSettigs.total_drink = parseInt(data.total_drink); 
+                    $scope.userSettigs.total_drink = parseInt(data.total_drink);
                     $rootScope.$broadcast('setopenedTime', parseFloat(data.opened_months));
                 });
         };
@@ -852,7 +849,7 @@
 
                         });
 
-                    } 
+                    }
                     getSuccesStatus();
 
                 });
@@ -875,7 +872,7 @@
         function checkIfShowGame() {
             authenticationService.validate()
                 .success(function(data) {
-                    if (!angular.isUndefined(data.user_id)) { 
+                    if (!angular.isUndefined(data.user_id)) {
                         $scope.showGame = true;
                         return;
                     }
@@ -890,6 +887,21 @@
         $scope.$on('userLogin', function() {
             checkIfShowGame();
         });
+
+
+        //display modal window with language list
+        function checkCookie() {
+            console.log($scope.showGam)
+            setTimeout(function() {
+                console.log('sdasd ',$scope.showGame)
+                if (!$scope.showGame) {
+                    $('#myModalLanguage').modal();
+                }
+            }, 2000)
+
+            console.log('sssssss')
+        }
+        checkCookie();
     };
 })();
 
@@ -904,9 +916,7 @@
         globalSettingsCtrl.$inject = ['$scope', '$rootScope', 'User','$window','globalService'];
 
         function globalSettingsCtrl($scope, $rootScope, User,$window,globalService) { 
-
-                console.log('globalSettingsCtrl');
-
+ 
 
                 //reset all information for user
                 $scope.globalReset = function(){ 
@@ -921,22 +931,49 @@
 (function() {
         'use strict'
 
+
         angular
                 .module('coffeeGame')
-                .controller('TranslateCtrl', TranslateCtrl);
+                .controller('LoginCtrl', LoginCtrl);
 
-        TranslateCtrl.$inject = ['$scope', '$translate'];
+        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
 
-        function TranslateCtrl($scope, $translate) { 
-                //display modal window with language list
-                $('#myModalLanguage').modal();
+        function LoginCtrl($scope, authenticationService, $location) {
+                $scope.model = {
+                        cafeName: '',
+                        password: ''
+                };
 
-                //change lenguage
-                $scope.changeLanguage = function(langKey) {
-                        $translate.uses(langKey);   
+                $scope.login = function() {
+                        authenticationService.login({
+                                'cafeName': $scope.model.cafeName,
+                                'password': $scope.model.password,
+                                'submit': 'submit'
+                        }).success(function(result) {
+                                $location.path('/'); 
+                        });
                 }
- 
         };
+})();
+
+(function() {
+    'use strict'
+
+    angular
+        .module('coffeeGame')
+        .controller('TranslateCtrl', TranslateCtrl);
+
+    TranslateCtrl.$inject = ['$scope', '$translate'];
+
+    function TranslateCtrl($scope, $translate) {
+        
+
+        //change lenguage
+        $scope.changeLanguage = function(langKey) {
+            $translate.uses(langKey);
+        }
+
+    };
 
 
 
@@ -1028,8 +1065,7 @@
                 function checkBalance(){
                         userService.getBalance()
                                 .success(function(data) {
-                                        $scope.balance = parseFloat(data);
-                                        console.log($scope.balance);
+                                        $scope.balance = parseFloat(data); 
                        });
                 }
                 checkBalance();
@@ -1061,6 +1097,9 @@
                         checkBalance();
                 }
                 initializeCofeGame('all');
+                $rootScope.$on('reload',function(){
+                    initializeCofeGame('all');  
+                });
 
                 function getUserEquipment() {
                         gameSettingsService.getUserEquipment()
@@ -1237,10 +1276,7 @@
                 };
 
                 function checkEquipmentFinish() { 
-                        growl.success($filter('translate')('THANKS_YOU_FINISHED'));
-
-                        $rootScope.$emit('gameStartEvent');
-                        $rootScope.$broadcast('buyEquipment');
+                         $rootScope.$broadcast('checkEquipmentFinish'); 
                 };
         };
 })();

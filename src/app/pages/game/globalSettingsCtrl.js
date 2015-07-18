@@ -9,9 +9,7 @@
         globalSettingsCtrl.$inject = ['$scope', '$rootScope', 'User','$window','globalService'];
 
         function globalSettingsCtrl($scope, $rootScope, User,$window,globalService) { 
-
-                console.log('globalSettingsCtrl');
-
+ 
 
                 //reset all information for user
                 $scope.globalReset = function(){ 
