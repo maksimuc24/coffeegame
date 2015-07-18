@@ -408,7 +408,7 @@
                         return $http.get(urlBase + '/buy-kg-coffe');
                 };
 
-                Service.updateData = function(opened_months,customers_in_queue,total_coffe_kg,total_drink,balance) {
+                Service.updateData = function(opened_months,customers_in_queue,total_coffe_kg,total_drink,balance,buy_total_coffe_kg) {
                         return $http({
                                 'url': urlBase + '/update-data',
                                 'method': 'POST',
@@ -420,7 +420,8 @@
                                         'customers_in_queue': customers_in_queue,
                                         'total_coffe_kg':total_coffe_kg,
                                         'total_drink':total_drink,
-                                        'balance':balance
+                                        'balance':balance,
+                                        "buy_total_coffe_kg":buy_total_coffe_kg
                                 })
                         });
                 };
@@ -586,9 +587,9 @@
                 .module('coffeeGame')
                 .controller('UserAuthCtrl', UserAuthCtrl);
 
-        UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService'];
+        UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService','$window'];
 
-        function UserAuthCtrl($scope, $rootScope, authenticationService) {
+        function UserAuthCtrl($scope, $rootScope, authenticationService,$window) {
 
                 $scope.user = {
                         authorized: false
@@ -603,6 +604,7 @@
                 $scope.logout = function() {
                         authenticationService.logout();
                         $rootScope.$broadcast('userLogout');
+                        $window.location.reload()
                 };
 
                 function validateUser() {
@@ -659,7 +661,8 @@
         $scope.userSettigs = {
             "customers_in_queue": 0,
             "total_coffe_kg": 0,
-            "total_drink": 0
+            "total_drink": 0,
+            "buy_total_coffe_kg":0
         };
 
         $scope.sellCoffe = function() {
@@ -725,7 +728,7 @@
                 $scope.userBalance = $scope.user.balance;
             }
             $scope.customers_in_queue();
-            globalService.updateData(month, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance);
+            globalService.updateData(month, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance,$scope.userSettigs.buy_total_coffe_kg);
         });
 
 
@@ -734,6 +737,7 @@
             var price = parseFloat($scope.user.coffee.type.pricePerKg);
             var balance = parseFloat($scope.user.balance);
             if (price <= balance) {
+                $scope.userSettigs.buy_total_coffe_kg+=1;
                 $scope.user.balance = parseFloat($scope.user.balance) - price;
                 $scope.userBalance = $scope.user.balance;
                 $scope.userSettigs.total_coffe_kg += 1;
@@ -805,6 +809,7 @@
                     $scope.userSettigs.customers_in_queue = parseInt(data.customers_in_queue);
                     $scope.userSettigs.total_coffe_kg = parseFloat(data.total_coffe_kg);
                     $scope.userSettigs.total_drink = parseInt(data.total_drink);
+                    $scope.userSettigs.buy_total_coffe_kg = parseInt(data.buy_total_coffe_kg); 
                     $rootScope.$broadcast('setopenedTime', parseFloat(data.opened_months));
                 });
         };

@@ -6,9 +6,9 @@
                 .module('coffeeGame')
                 .controller('UserAuthCtrl', UserAuthCtrl);
 
-        UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService'];
+        UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService','$window'];
 
-        function UserAuthCtrl($scope, $rootScope, authenticationService) {
+        function UserAuthCtrl($scope, $rootScope, authenticationService,$window) {
 
                 $scope.user = {
                         authorized: false
@@ -23,6 +23,7 @@
                 $scope.logout = function() {
                         authenticationService.logout();
                         $rootScope.$broadcast('userLogout');
+                        $window.location.reload()
                 };
 
                 function validateUser() {

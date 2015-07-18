@@ -47,7 +47,7 @@ class UserController extends AbstractController {
 
             switch ($settingName) {
                     case 'update-data': 
-                        return $this->updateData($request->parameters['opened_months'], $request->parameters['customers_in_queue'],$request->parameters['total_coffe_kg'],$request->parameters['total_drink'],$request->parameters['balance']);
+                        return $this->updateData($request->parameters['opened_months'], $request->parameters['customers_in_queue'],$request->parameters['total_coffe_kg'],$request->parameters['total_drink'],$request->parameters['balance'],$request->parameters['buy_total_coffe_kg']);
                         break;
 
                     default:
@@ -76,8 +76,8 @@ class UserController extends AbstractController {
         return $this->gameUserManager->buyKgCoffee();
     }
 
-    public function updateData($opened_months, $customers_in_queue,$total_coffe_kg,$total_drink,$balance){
-            return $this->gameUserManager->updateData($opened_months, $customers_in_queue,$total_coffe_kg,$total_drink,$balance);
+    public function updateData($opened_months, $customers_in_queue,$total_coffe_kg,$total_drink,$balance,$buy_total_coffe_kg){
+            return $this->gameUserManager->updateData($opened_months, $customers_in_queue,$total_coffe_kg,$total_drink,$balance,$buy_total_coffe_kg);
 
     }
 

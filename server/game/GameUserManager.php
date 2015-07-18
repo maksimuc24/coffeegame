@@ -116,7 +116,7 @@ class GameUserManager{
 	*/
 	public function globalReset(){ 
 		   $userId = $this->GetCurrentUserId();
-		   mysql_query("UPDATE users SET balance=55000,is_play=0,total_drink=0,customers_in_queue=0,total_coffe_kg=0,opened_months=0 WHERE user_id = $userId", $this->database->Connect());
+		   mysql_query("UPDATE users SET balance=55000,is_play=0,total_drink=0,customers_in_queue=0,total_coffe_kg=0,opened_months=0,buy_total_coffe_kg=0 WHERE user_id = $userId", $this->database->Connect());
 		   mysql_query("DELETE FROM userequipment  WHERE user_id = $userId", $this->database->Connect());
 		   return 'ok';
 	}
@@ -248,13 +248,14 @@ class GameUserManager{
     /**
     * Update all data
     */
-    public function updateData($opened_months, $customers_in_queue,$total_coffe_kg,$total_drink,$balance){
+    public function updateData($opened_months, $customers_in_queue,$total_coffe_kg,$total_drink,$balance,$buy_total_coffe_kg){
     	    $userId = $this->GetCurrentUserId();
     	   mysql_query("UPDATE users SET opened_months=$opened_months,
     	   								 customers_in_queue = $customers_in_queue,
     	   								 total_coffe_kg = $total_coffe_kg, 
     	   								 total_drink = $total_drink,
-    	   								 balance=$balance 
+    	   								 balance=$balance,
+    	   								 buy_total_coffe_kg=$buy_total_coffe_kg 
  
     	   								 WHERE user_id=$userId", $this->database->Connect()); 
 
@@ -265,7 +266,8 @@ class GameUserManager{
     	   $userData =  mysql_query("SELECT opened_months,
     	   								 customers_in_queue,
     	   								 total_coffe_kg, 
-    	   								 total_drink 
+    	   								 total_drink,
+    	   								 buy_total_coffe_kg 
     	   								 FROM users
     	   								 WHERE user_id=$userId", $this->database->Connect()); 
     	   $userRow   = mysql_fetch_assoc($userData ); 

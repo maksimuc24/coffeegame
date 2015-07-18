@@ -25,7 +25,7 @@
                         return $http.get(urlBase + '/buy-kg-coffe');
                 };
 
-                Service.updateData = function(opened_months,customers_in_queue,total_coffe_kg,total_drink,balance) {
+                Service.updateData = function(opened_months,customers_in_queue,total_coffe_kg,total_drink,balance,buy_total_coffe_kg) {
                         return $http({
                                 'url': urlBase + '/update-data',
                                 'method': 'POST',
@@ -37,7 +37,8 @@
                                         'customers_in_queue': customers_in_queue,
                                         'total_coffe_kg':total_coffe_kg,
                                         'total_drink':total_drink,
-                                        'balance':balance
+                                        'balance':balance,
+                                        "buy_total_coffe_kg":buy_total_coffe_kg
                                 })
                         });
                 };
