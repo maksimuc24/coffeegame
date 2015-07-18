@@ -22,10 +22,10 @@
         };
 
         $scope.sellCoffe = function() {
-            if($scope.userSettigs.customers_in_queue == 0){
+            if($scope.userSettigs.customers_in_queue <= 0){
                 return;
             }
-            
+
             var left_kg = $scope.userSettigs.total_coffe_kg - 0.014;
 
             if (left_kg < 0) {
@@ -52,22 +52,21 @@
         };
         //customers in queue 
         $scope.customers_in_queue = function() {
-            var place_quality = 0;
-            var random = Math.floor(Math.random() * (10 - 1 + 1)) + 1;
+            var drink_quality = $scope.user.coffee.price.quality;
+            var random = Math.floor(Math.random() * (1000 - 1 + 1)) + 1;
             var success = $scope.successBar;
-
-            angular.forEach($scope.user.equipment.items, function(val, key) {
-                if (val.name == "place") {
-                    place_quality = val.quality;
-                }
-            });
             var total;
-            total = (10 * place_quality) * random * (success / 100) * (1 - (success / 100) * place_quality);
+
+          
+             
+            total = (10 * drink_quality) * random * (success/100) * Math.abs((1 - success * drink_quality));
             total = total.toFixed();
 
             if (total >= 0) {
                 $scope.userSettigs.customers_in_queue = total;
             }
+            console.log(Math.abs(1 - success * drink_quality))
+            console.log((10 * drink_quality) * random * (success / 100))
         };
 
         $rootScope.$on('openedTimeDisplay', function(e, time) {
