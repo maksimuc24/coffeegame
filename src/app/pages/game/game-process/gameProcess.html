@@ -4,11 +4,11 @@
 			<!-- Start left column stats + animation -->
 			<div class="col-xs-7">
 			   <p>
-				   {{'DRINKPRICE'|translate}} <strong>{{user.coffee.price.price}} {{'CURRENCY'|translate}}</strong><br>
-				   {{'CUSTOMERSINQUEUE'|translate}}: {{userSettigs.customers_in_queue}}<br>
+				   {{'DRINKPRICE'|translate}} <strong>{{user.coffee.price.price |number:0}} {{'CURRENCY'|translate}}</strong><br>
+				   {{'CUSTOMERSINQUEUE'|translate}} {{userSettigs.customers_in_queue}}<br>
 				   <span ng-include src="'app/controls/user-balance/userBalance.html'"></span><br />
 				   {{'OPENEDMONTHS'|translate}} {{model.openedTimeDisplay() | number:3}}<br>
-				   {{'TOTALKGS'|translate}} {{userSettigs.total_coffe_kg |number:3}}<br>
+				   {{'TOTALKGS'|translate}} {{userSettigs.total_coffe_kg}}<br>
 				   {{'TOTALDRINKS'|translate}} {{userSettigs.total_drink}}
 			   </p>
 			   
