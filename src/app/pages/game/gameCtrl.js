@@ -22,6 +22,10 @@
         };
 
         $scope.sellCoffe = function() {
+            if($scope.userSettigs.customers_in_queue == 0){
+                return;
+            }
+            
             var left_kg = $scope.userSettigs.total_coffe_kg - 0.014;
 
             if (left_kg < 0) {
