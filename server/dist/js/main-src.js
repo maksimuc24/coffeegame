@@ -585,6 +585,21 @@
 
         angular
                 .module('coffeeGame')
+                .controller('UserBalanceCtrl', UserBalanceCtrl)
+
+        UserBalanceCtrl.$inject = ['$scope'];
+
+        function UserBalanceCtrl($scope) {
+
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('UserAuthCtrl', UserAuthCtrl);
 
         UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService','$window'];
@@ -624,21 +639,6 @@
                                         }
                                 });
                 };
-        };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('UserBalanceCtrl', UserBalanceCtrl)
-
-        UserBalanceCtrl.$inject = ['$scope'];
-
-        function UserBalanceCtrl($scope) {
-
         };
 })();
 
@@ -696,12 +696,12 @@
             }
 
             var price = parseFloat($scope.user.coffee.price.price);
-            $scope.userSettigs.customers_in_queue >= 1;
-            $scope.userSettigs.customers_in_queue -= 1;
-            $scope.user.balance = parseFloat($scope.user.balance) + price;
-            $scope.userBalance = $scope.user.balance;
+           
+            $scope.userSettigs.customers_in_queue -= 1;  
+            $scope.userBalance = parseFloat($scope.userBalance)+price;
+            $scope.user.balance = $scope.userBalance; 
             $scope.userSettigs.total_drink += 1;
-            $scope.userBalance = $scope.user.balance;
+
 
             $scope.userSettigs.total_coffe_kg = $scope.userSettigs.total_coffe_kg - 0.014;
 
@@ -753,8 +753,8 @@
             var balance = parseFloat($scope.user.balance);
             if (price <= balance) {
                 $scope.userSettigs.buy_total_coffe_kg += 1;
-                $scope.user.balance = parseFloat($scope.user.balance) - price;
-                $scope.userBalance = $scope.user.balance;
+                $scope.userBalance = parseFloat($scope.userBalance)-price;
+                $scope.user.balance = $scope.userBalance;  
                 $scope.userSettigs.total_coffe_kg += 1;
                 globalService.buyKgCoffe();
             } else {
