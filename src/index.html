@@ -45,7 +45,7 @@
                     </li>
                     <li><a href="#" data-toggle="modal" data-target="#myModalLanguage"><i class="fa fa-language fa-lg fa-fw"></i> {{'LANGUAGE' | translate}}  </a>
                     </li>
-                    <li><a href="#" data-toggle="modal" data-target="#myModalReset"><i class="fa fa-refresh fa-lg fa-fw"></i> {{'RESET' | translate}}</a>
+                    <li ng-if="!showMainImg()"><a href="#" data-toggle="modal" data-target="#myModalReset"><i class="fa fa-refresh fa-lg fa-fw"></i> {{'RESET' | translate}}</a>
                     </li>
                     <li><a href="#" data-toggle="modal" data-target="#myModalStats"><i class="fa fa-bar-chart fa-lg fa-fw"></i>  {{'STATS' | translate}}</a>
                     </li>
@@ -211,7 +211,7 @@
     <script type="text/javascript" src="js/vendor/angular-translate.min.js"></script>
     <script type="text/javascript" src="js/vendor/angular-translate-storage-cookie.min.js"></script>
     <script type="text/javascript" src="js/vendor/angular-translate-storage-local.min.js"></script>
-    <script type="text/javascript" src="js/main-src.js?v=0.1"></script>
+    <script type="text/javascript" src="js/main-src.js?v=0.2"></script>
     <!-- Google Analytics code start -->
     <script>
     (function(i, s, o, g, r, a, m) {

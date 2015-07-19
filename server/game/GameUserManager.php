@@ -116,9 +116,19 @@ class GameUserManager{
 	*/
 	public function globalReset(){ 
 		   $userId = $this->GetCurrentUserId();
-		   mysql_query("UPDATE users SET balance=55000,is_play=0,total_drink=0,customers_in_queue=0,total_coffe_kg=0,opened_months=0,buy_total_coffe_kg=0 WHERE user_id = $userId", $this->database->Connect());
+		   mysql_query("UPDATE users SET balance=55000,
+		   	                             is_play=0,
+		   	                             total_drink=0,
+		   	                             customers_in_queue=0,
+		   	                             total_coffe_kg=0,
+		   	                             opened_months=0,
+		   	                             buy_total_coffe_kg=0
+
+		   	                             WHERE user_id = $userId",
+		   	                              $this->database->Connect());
 		   mysql_query("DELETE FROM userequipment  WHERE user_id = $userId", $this->database->Connect());
-		   return 'ok';
+ 
+		   return 'ok'; 
 	}
 
 	/**
@@ -257,7 +267,7 @@ class GameUserManager{
     	   								 balance=$balance,
     	   								 buy_total_coffe_kg=$buy_total_coffe_kg 
  
-    	   								 WHERE user_id=$userId", $this->database->Connect()); 
+    	   								 WHERE user_id=$userId and is_play=1", $this->database->Connect()); 
 
     }
 
