@@ -59,20 +59,30 @@
             <div class="col-lg-7">
                 <p  ng-if="!showGame" ng-bind-html="'SOME_HELLO_TEXT' | translate"></p>
                 <div ng-if="showGame">
-                    <div class="alert alert-success" role="alert">
-                        <div ng-bind-html="'WELCOME'|translate"></div>
-                        <p></p>
-                        <button type="button" class="btn btn-success" data-dismiss="alert">{{'DISMISS_MESSAGE'|translate}}</button>
-                    </div>
+                     
                     <div ng-if="game.equipmentChooseFinished">
                         <div ng-controller="GameProcessCtrl" ng-include src="'app/pages/game/game-process/gameProcess.html'"></div>
                     </div>
                     
                 </div>
-                <div style="position: relative; left: 0; top: 0;">
+                <!--Main image -->
+                <div style="position: relative; left: 0; top: 0;" ng-if="showMainImg()">
+                    <img src="1employees.gif" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
+                    <img src="x-1back.gif" class="img-responsive img-rounded" style="position: absolute; top: 0px; left: 0px; ">
+                </div>
+                <!--Main image end-->
+                <!--select image -->
+                <div style="position: relative; left: 0; top: 0;" ng-if="showSelect() && !showMainImg()">
+                    <img src="1employees.gif" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
+                    <img src="x-0people.gif" class="img-responsive img-rounded" style="position: absolute; top: 0px; left: 0px; ">
+                </div>
+                <!--select image end-->
+                <!--Bar image -->
+                <div style="position: relative; left: 0; top: 0;" ng-if="showBar()">
                     <img src="2place.png" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
                     <img src="1employees.gif" class="img-responsive img-rounded" style="position: absolute; top: 0px; left: 0px; ">
                 </div>
+                <!--Bar image end-->
             </div>
             <div class="col-md-5" ng-view></div>
         </div>

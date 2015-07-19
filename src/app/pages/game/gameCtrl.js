@@ -14,12 +14,30 @@
         $scope.userBalance = 0;
 
 
+
         $scope.userSettigs = {
             "customers_in_queue": 0,
             "total_coffe_kg": 0,
             "total_drink": 0,
             "buy_total_coffe_kg": 0
         };
+
+
+        $scope.showMainImg = function(){ 
+             var status = false;
+             if(angular.isUndefined($scope.user)){
+                 var status = true; 
+             } 
+             return status; 
+        }
+
+        $scope.showSelect = function(){ 
+             return !$scope.game.equipmentChooseFinished;
+        }
+
+        $scope.showBar = function(){ 
+             return $scope.game.equipmentChooseFinished;
+        }
 
         $scope.sellCoffe = function() {
             if ($scope.userSettigs.customers_in_queue <= 0) {
