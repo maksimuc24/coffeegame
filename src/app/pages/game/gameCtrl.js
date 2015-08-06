@@ -97,11 +97,12 @@
             }
 
 
-            //if (data.iterationNum == 2) {
-                $rootScope.$broadcast('reload');  
-                globalService.updateData(month, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance, $scope.userSettigs.buy_total_coffe_kg);
-                $scope.customers_in_queue();
-           // }
+            if (data.iterationNum == 2) {
+                  $scope.customers_in_queue();
+            }
+            $rootScope.$broadcast('reload');  
+            globalService.updateData(month, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance, $scope.userSettigs.buy_total_coffe_kg);
+              
         });
 
 
