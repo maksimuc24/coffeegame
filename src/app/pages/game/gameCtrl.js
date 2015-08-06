@@ -41,6 +41,8 @@
 
         $scope.sellCoffe = function() {
             if ($scope.userSettigs.customers_in_queue <= 0) {
+                $scope.userSettigs.total_coffe_kg = $scope.userSettigs.total_coffe_kg - 0.014;
+                $scope.userSettigs.total_drink += 1;
                 return;
             }
 
