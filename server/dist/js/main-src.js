@@ -744,8 +744,7 @@
             if (data.iterationNum == 2) {
                   $scope.customers_in_queue();
             }
-            $rootScope.$broadcast('reload');  
-            console.log($scope.userSettigs.buy_total_coffe_kg);
+            $rootScope.$broadcast('reload');   
             globalService.updateData(month, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance, $scope.userSettigs.buy_total_coffe_kg);
               
         });
@@ -815,9 +814,7 @@
 
             angular.forEach($scope.user.equipment.items, function(val, key) {
                 place_machine_name = place_machine_name + parseFloat(val.quality);
-            });
-            console.log('getSuccesStatus');
-            console.log('getSuccesStatus',$scope.userSettigs);
+            }); 
             $scope.successBar = parseFloat(coffePrice) + parseFloat(coffeType) + parseFloat(employee) + parseFloat(place_machine_name);
             userBalance();
             userGetDetails();
@@ -832,10 +829,7 @@
                     $scope.userSettigs.total_coffe_kg = parseFloat(data.total_coffe_kg);
                     $scope.userSettigs.total_drink = parseInt(data.total_drink);
                     $scope.userSettigs.buy_total_coffe_kg = parseFloat(data.buy_total_coffe_kg);
-                    $rootScope.$broadcast('setopenedTime', parseFloat(data.opened_months));
-                    console.log('userGetDetails');
-                    console.log(data);
-                    console.log('buy_total_coffe_kg',$scope.userSettigs.buy_total_coffe_kg);
+                    $rootScope.$broadcast('setopenedTime', parseFloat(data.opened_months)); 
                 });
         };
 
@@ -920,16 +914,13 @@
 
 
         //display modal window with language list
-        function checkCookie() {
-            console.log($scope.showGam)
-            setTimeout(function() {
-                console.log('sdasd ', $scope.showGame)
+        function checkCookie() { 
+            setTimeout(function() { 
                 if (!$scope.showGame) {
                     $('#myModalLanguage').modal();
                 }
             }, 2000)
-
-            console.log('sssssss')
+ 
         }
         checkCookie();
     };
