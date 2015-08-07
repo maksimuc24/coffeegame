@@ -41,12 +41,12 @@
 
         $scope.sellCoffe = function() {
             if ($scope.userSettigs.customers_in_queue <= 0) {
-                $scope.userSettigs.total_coffe_kg = $scope.userSettigs.total_coffe_kg - 0.014;
+                $scope.userSettigs.buy_total_coffe_kg = $scope.userSettigs.buy_total_coffe_kg - 0.014;
                 $scope.userSettigs.total_drink += 1;
                 return;
             }
 
-            var left_kg = $scope.userSettigs.total_coffe_kg - 0.014;
+            var left_kg = $scope.userSettigs.buy_total_coffe_kg - 0.014;
 
             if (left_kg < 0) {
                 growl.warning($filter('translate')('NEED_BUY_KG_COFFE'));
@@ -61,7 +61,7 @@
             $scope.userSettigs.total_drink += 1;
 
 
-            $scope.userSettigs.total_coffe_kg = $scope.userSettigs.total_coffe_kg - 0.014;
+            $scope.userSettigs.buy_total_coffe_kg = $scope.userSettigs.buy_total_coffe_kg - 0.014;
 
         };
         //customers in queue 
@@ -101,6 +101,7 @@
                   $scope.customers_in_queue();
             }
             $rootScope.$broadcast('reload');  
+            console.log($scope.userSettigs.buy_total_coffe_kg);
             globalService.updateData(month, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance, $scope.userSettigs.buy_total_coffe_kg);
               
         });
@@ -171,6 +172,8 @@
             angular.forEach($scope.user.equipment.items, function(val, key) {
                 place_machine_name = place_machine_name + parseFloat(val.quality);
             });
+            console.log('getSuccesStatus');
+            console.log('getSuccesStatus',$scope.userSettigs);
             $scope.successBar = parseFloat(coffePrice) + parseFloat(coffeType) + parseFloat(employee) + parseFloat(place_machine_name);
             userBalance();
             userGetDetails();
@@ -184,8 +187,11 @@
                     $scope.userSettigs.customers_in_queue = parseInt(data.customers_in_queue);
                     $scope.userSettigs.total_coffe_kg = parseFloat(data.total_coffe_kg);
                     $scope.userSettigs.total_drink = parseInt(data.total_drink);
-                    $scope.userSettigs.buy_total_coffe_kg = parseInt(data.buy_total_coffe_kg);
+                    $scope.userSettigs.buy_total_coffe_kg = parseFloat(data.buy_total_coffe_kg);
                     $rootScope.$broadcast('setopenedTime', parseFloat(data.opened_months));
+                    console.log('userGetDetails');
+                    console.log(data);
+                    console.log('buy_total_coffe_kg',$scope.userSettigs.buy_total_coffe_kg);
                 });
         };
 
