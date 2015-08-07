@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50624
 File Encoding         : 65001
 
-Date: 2015-07-19 02:58:55
+Date: 2015-08-07 15:22:08
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -275,7 +275,7 @@ PRIMARY KEY (`userEquipment_id`)
 )
 ENGINE=MyISAM
 DEFAULT CHARACTER SET=utf8 COLLATE=utf8_general_ci
-AUTO_INCREMENT=230
+AUTO_INCREMENT=302
 
 ;
 
@@ -283,7 +283,7 @@ AUTO_INCREMENT=230
 -- Records of userequipment
 -- ----------------------------
 BEGIN;
-INSERT INTO `userequipment` VALUES ('229', '2', '1', '6', '2015-07-19 02:52:40'), ('228', '2', '1', '4', '2015-07-19 02:52:39'), ('227', '2', '1', '5', '2015-07-19 02:52:38'), ('226', '2', '1', '3', '2015-07-19 02:52:37'), ('225', '2', '1', '2', '2015-07-19 02:52:37'), ('224', '2', '1', '1', '2015-07-19 02:52:36');
+INSERT INTO `userequipment` VALUES ('301', '2', '1', '6', '2015-08-07 15:19:42'), ('300', '2', '1', '4', '2015-08-07 14:57:51'), ('299', '2', '1', '5', '2015-08-07 14:57:50'), ('298', '2', '1', '3', '2015-08-07 14:57:49'), ('297', '2', '1', '2', '2015-08-07 14:57:48'), ('296', '2', '1', '1', '2015-08-07 15:19:50');
 COMMIT;
 
 -- ----------------------------
@@ -302,7 +302,7 @@ CREATE TABLE `users` (
 `customers_in_queue`  float(8,0) NOT NULL DEFAULT 0 ,
 `total_coffe_kg`  float(8,0) NOT NULL DEFAULT 0 ,
 `opened_months`  float(8,0) NOT NULL DEFAULT 0 ,
-`buy_total_coffe_kg`  float(8,0) NOT NULL DEFAULT 0 ,
+`buy_total_coffe_kg`  double(8,4) NOT NULL DEFAULT 0.0000 ,
 PRIMARY KEY (`user_id`)
 )
 ENGINE=MyISAM
@@ -315,7 +315,7 @@ AUTO_INCREMENT=7
 -- Records of users
 -- ----------------------------
 BEGIN;
-INSERT INTO `users` VALUES ('1', 'Cafe1', '36759e3c012ba75562fe2e31d144c483', '', '0', '55000.00', '0', '0', '0', '0', '0', '0'), ('2', 'Barry Lyndon', '39a664ecbd7d66ea6f075021cbb8117f', '940078d352cca453adbec969ab194c0b', '0', '5740.00', '1', '125', '2', '11', '3930', '12'), ('3', 'illy', 'e08a7c49d96c2b475656cc8fe18cee8e', '6a25f15df607e95df221fd5902318031', '0', '55000.00', '0', '0', '0', '0', '0', '0'), ('4', 'shopmania', '474e45c3f259290616d4189b25f71421', '25c6dcb26503d38c8167a49d45d6022a', '0', '55000.00', '0', '0', '0', '0', '0', '0'), ('5', 'sergey_onix', 'c290a3d21ccbbbd136c20d9202dcf6df', 'c6cd3ec60b2412ddb53dd7cebc2ad57e', '0', '55000.00', '0', '0', '0', '0', '0', '0'), ('6', 'test', 'fb469d7ef430b0baf0cab6c436e70375', '', '0', '55000.00', '0', '0', '0', '0', '0', '0');
+INSERT INTO `users` VALUES ('1', 'Cafe1', '36759e3c012ba75562fe2e31d144c483', '', '0', '55000.00', '0', '0', '0', '0', '0', '0.0000'), ('2', 'Barry Lyndon', '39a664ecbd7d66ea6f075021cbb8117f', 'da608a67a7876d31f9958d8a3c7a768b', '0', '39335.00', '1', '137', '12', '25', '1304', '24.4960'), ('3', 'illy', 'e08a7c49d96c2b475656cc8fe18cee8e', '6a25f15df607e95df221fd5902318031', '0', '55000.00', '0', '0', '0', '0', '0', '0.0000'), ('4', 'shopmania', '474e45c3f259290616d4189b25f71421', '25c6dcb26503d38c8167a49d45d6022a', '0', '55000.00', '0', '0', '0', '0', '0', '0.0000'), ('5', 'sergey_onix', 'c290a3d21ccbbbd136c20d9202dcf6df', 'c6cd3ec60b2412ddb53dd7cebc2ad57e', '0', '55000.00', '0', '0', '0', '0', '0', '0.0000'), ('6', 'test', 'fb469d7ef430b0baf0cab6c436e70375', '', '0', '55000.00', '0', '0', '0', '0', '0', '0.0000');
 COMMIT;
 
 -- ----------------------------
@@ -393,7 +393,7 @@ ALTER TABLE `timeperiods` AUTO_INCREMENT=2;
 -- ----------------------------
 -- Auto increment value for `userequipment`
 -- ----------------------------
-ALTER TABLE `userequipment` AUTO_INCREMENT=230;
+ALTER TABLE `userequipment` AUTO_INCREMENT=302;
 
 -- ----------------------------
 -- Auto increment value for `users`
