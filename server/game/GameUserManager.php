@@ -31,22 +31,66 @@ class GameUserManager{
 	}
     
     /**
+    * Get equipment price
+    * @param userEquipment_id
+    */
+    public function getEquipmentPrice($equipment_id,$equipment_type_id){ 
+    	    $table = '';
+    	    $row   = ''; 
+    	    if($equipment_type_id == 0) return;
+    		switch ($equipment_type_id) {
+		    	case 1:
+		    		$table = "coffeegrinders";
+		    		$row   = 'coffeeGrinder_id';
+		    		break;
+		    	case 2: 
+		    		$table = "coffeemachines";
+		    		$row   = 'coffeeMachine_id';
+		    		break;
+		    	case 3:
+		    		$table = "coffeeplaces";
+		    		$row   = 'coffeePlace_id';
+		    		break;
+		    	case 4:
+		    		$table = "coffeetypes";
+		    		$row   = 'coffeeType_id';
+		    		break; 
+		    	case 5:
+		    		$table = "coffeeemployees";
+		    		$row   = 'coffeeEmployee_id';
+		    		break; 
+		    	case 6:
+		    		$table = "coffeedrinkprices";
+		    		$row   = 'coffeeDrinkPrice_id';
+		    		break;
+		    }  
+
+		    $query  = mysql_query("SELECT price FROM $table WHERE $row = $equipment_id", $this->database->Connect());
+		    $result = mysql_fetch_array($query);
+		    $price = (float)$result[0];
+		    $this->updateUserBalance($price,"add");
+
+     
+    }
+    /**
     * Set user equipment for user
     */
 	public function SetUserEquipment ($equipmentId, $equipmentTypeId,$equipmentPrice){
 		$userId = $this->GetCurrentUserId(); 
 
-        $result = mysql_query("SELECT equipment_id,userEquipment_id FROM userequipment 
+        $result = mysql_query("SELECT equipment_id,userEquipment_id,equipment_type_id FROM userequipment 
         		               WHERE user_id='".$userId."' AND equipment_type_id='".$equipmentTypeId."' 
         		               ORDER BY created DESC 
         		               LIMIT 1", $this->database->Connect());
 
         $row = mysql_fetch_array($result); 
-        if(is_array($row)){
-        	 $id = $row['userEquipment_id'];  
+        if(is_array($row)){ 
+        	 $id = $row['userEquipment_id']; 
+        	 //return price to balance  
+        	 $this->getEquipmentPrice($row['equipment_id'],$row['equipment_type_id']);
         	 mysql_query("UPDATE userequipment 
         		         SET  equipment_id=$equipmentId, equipment_type_id=$equipmentTypeId WHERE userEquipment_id = $id", $this->database->Connect());
-        	$this->updateUserBalance($equipmentPrice);
+        	 $this->updateUserBalance($equipmentPrice);
         	
         }else{
         	mysql_query("INSERT INTO userequipment 
@@ -59,7 +103,7 @@ class GameUserManager{
 	/**
 	* Update user balance
 	*/
-	public function updateUserBalance($price){
+	public function updateUserBalance($price,$type = "minus"){
 		$userId = $this->GetCurrentUserId(); 
 	    $result = mysql_query("SELECT balance FROM users
         		               WHERE user_id=$userId", $this->database->Connect());
@@ -71,7 +115,12 @@ class GameUserManager{
 	    }
 
 	    $balance     = $row['balance'];
-	    $new_balance = (float)$balance-(float)$price;
+	    if($type == "add"){
+	    	$new_balance = (float)$balance + (float)$price;
+	    }else{
+	    	$new_balance = (float)$balance - (float)$price;
+	    }
+	     
 	    $result = mysql_query("UPDATE users SET balance=$new_balance
         		               WHERE user_id=$userId", $this->database->Connect());
 	}
