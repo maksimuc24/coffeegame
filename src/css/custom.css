@@ -1,3 +1,48 @@
+.plus-one-coffe{
+	float: right;
+    margin-right: 55px;
+    font-size: 22px;
+    color: #729A46;  
+    margin-top: 20px;
+    opacity: 0;
+}
+
+
+
+
+.plus-coffe-progress { 
+    animation: go-bottom-top 1s;
+    -webkit-animation: go-bottom-top 1s; 
+    position: relative;  
+}
+
+/* Современные браузеры, кроме Chrome, Opera, Safari */
+@keyframes go-bottom-top {   /* назовём анимацию: "go-left-right" */
+    from {
+      opacity: 1;
+      margin-top: 20px;            /* от: left: 0px */
+    }
+    to {
+      opacity: 0; /* до: left: 100%-50px */
+      margin-top: -20px;
+    }
+}
+
+/* Префикс для Chrome, Opera, Safari */
+@-webkit-keyframes go-bottom-top {
+    from {
+       opacity: 1;
+       margin-top: 20px; 
+    }
+    to {
+       opacity: 0;
+       margin-top: -20px; 
+    }
+}
+
+
+
+
 body {background-color: #f1f2f6;line-height: 1.52857;}
 h3 {margin-top: 0px;color: #006bb0;}
 a {color: #006bb0; text-decoration: none;}

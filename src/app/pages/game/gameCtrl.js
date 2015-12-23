@@ -39,10 +39,21 @@
              return $scope.game.equipmentChooseFinished;
         }
 
+
+        function sellCoffeAnimation(){ 
+            $('div.plus-one-coffe').addClass("plus-coffe-progress")
+            setTimeout(function(){
+                $('div.plus-one-coffe').removeClass("plus-coffe-progress")
+            }, 400) 
+        }
+
+
         $scope.sellCoffe = function() {
+             
             if ($scope.userSettigs.customers_in_queue <= 0) {
                 $scope.userSettigs.buy_total_coffe_kg = $scope.userSettigs.buy_total_coffe_kg - 0.014;
                 $scope.userSettigs.total_drink += 1;
+                sellCoffeAnimation();
                 return;
             }
 
@@ -61,7 +72,8 @@
             $scope.userSettigs.total_drink += 1;
 
 
-            $scope.userSettigs.buy_total_coffe_kg = $scope.userSettigs.buy_total_coffe_kg - 0.014;
+            $scope.userSettigs.buy_total_coffe_kg = $scope.userSettigs.buy_total_coffe_kg - 0.014; 
+            sellCoffeAnimation()
 
         };
         //customers in queue 

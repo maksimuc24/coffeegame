@@ -11,13 +11,6 @@
                         'ngSanitize'
                 ]);
 
-
-        angular
-                .element(document)
-                .ready(function() {
-                        angular.bootstrap(document, ['coffeeGame']);
-                });
-
         angular
                 .module('coffeeGame')
                 .run(function() {
