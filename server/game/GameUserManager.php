@@ -223,6 +223,20 @@ class GameUserManager{
 		    return $row["equipment_id"];
 	}
 
+	/**
+	* Get top 10 sers for stats
+	*/
+	public function getTopStats(){
+		$result = mysql_query("SELECT user_id AS id,cafeName,balance,opened_months  FROM `users` ORDER BY balance DESC LIMIT 10", $this->database->Connect()); 
+			
+
+		$data = array();
+		while($row = mysql_fetch_assoc($result)){
+		    array_push($data, $row);
+		}
+		 
+		return $data;
+	}
     
     /**
     * Get equipmetn by table

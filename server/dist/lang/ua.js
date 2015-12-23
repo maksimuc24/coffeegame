@@ -1,4 +1,8 @@
 var translationsUA = {
+        STATS_NAME:"Name",
+        STATS_GAME_TIME:"Game time",
+        STATS_MONEY:"Money",
+
         SOME_HELLO_TEXT:"SOME_HELLO_TEXT UA.js",
         NEED_BUY_KG_COFFE:"NEED_BUY_KG_COFFE",
 //top menus and modals

@@ -25,6 +25,10 @@
                         return $http.get(urlBase + '/buy-kg-coffe');
                 };
 
+                Service.getTopStats = function() {
+                        return $http.get(urlBase + '/get-top-stats');
+                };
+
                 Service.updateData = function(opened_months,customers_in_queue,total_coffe_kg,total_drink,balance,buy_total_coffe_kg) {
                         return $http({
                                 'url': urlBase + '/update-data',

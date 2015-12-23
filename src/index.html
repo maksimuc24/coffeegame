@@ -174,7 +174,8 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
-    <div class="modal fade" id="myModalStats" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     
+    <div class="modal fade" id="myModalStats" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" ng-controller="globalSettingsCtrl">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
@@ -182,6 +183,20 @@
                         <div class="panel-heading"><i class="fa fa-bar-chart fa-lg fa-fw"></i> {{'STATS'|translate}}</div>
                         <div class="panel-body">
                             <p> {{'STATS_TOP'|translate}}</p>
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>№</th>
+                                    <th>{{'STATS_NAME'|translate}}</th>
+                                    <th>{{'STATS_GAME_TIME'|translate}}</th>
+                                    <th>{{'STATS_MONEY'|translate}}</th>
+                                </tr> 
+                                <tr ng-repeat="stat in statsData">
+                                    <td>{{$index+1}}</td>
+                                    <td>{{ stat.cafeName}}</td>
+                                    <td>{{ stat.opened_months / (30 * 24 * 60 * 60 / 1000) | number:3}}</td>
+                                    <td>{{ stat.balance}}</td>
+                                </tr>
+                            </table>
                             <br>
                             <button type="button" class="btn btn-success" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times fa-lg fa-fw"></i> {{'CLOSE'|translate}}</button>
                         </div>

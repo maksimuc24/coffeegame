@@ -29,6 +29,9 @@ class UserController extends AbstractController {
                     case 'get-details':
                         return $this->getDetails();
                         break;
+                    case 'get-top-stats':
+                        return $this->getTopStats();
+                        break;
 
                     default:
                         return;
@@ -83,5 +86,9 @@ class UserController extends AbstractController {
 
     public function getDetails(){
            return $this->gameUserManager->getDetails();
+    }
+
+    public function getTopStats(){
+        return $this->gameUserManager->getTopStats();
     }
 }
