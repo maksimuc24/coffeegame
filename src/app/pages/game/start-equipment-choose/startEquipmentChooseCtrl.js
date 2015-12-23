@@ -133,10 +133,7 @@
                 };
 
 
-                $scope.openAccordion = function(num) {
-                        var id = "#accordion-" + num;
-                        $(id).click();
-                };
+                
                 /**
                  * Update name to the equipment
                  */
@@ -153,9 +150,7 @@
                                 $scope.user.equipment.Add('grinder', coffeeGrinder,true);
                                 $scope.addSelectedNameToEquipment('grinder', coffeeGrinder);
                                 initializeCofeGame('all');
-
-
-                                $scope.openAccordion(2);
+ 
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABGRINDER')
                                 }));
@@ -174,8 +169,7 @@
                                 $scope.user.equipment.Add('machine', coffeeMachine,true);
                                 $scope.addSelectedNameToEquipment('machine', coffeeMachine);
                                 initializeCofeGame('all');
-
-                                $scope.openAccordion(3);
+ 
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABMACHINE')
                                 }));
@@ -195,8 +189,7 @@
                                 $scope.user.equipment.Add('place', coffeePlace,true);
                                 $scope.addSelectedNameToEquipment('place', coffeePlace);
                                 initializeCofeGame('all');
-
-                                $scope.openAccordion(4);
+ 
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABPLACE')
                                 }));
@@ -214,8 +207,7 @@
                                 $scope.user.employee.Set(coffeeEmployee,true);
                                 $scope.addSelectedNameToEquipment('employee', coffeeEmployee);
                                 initializeCofeGame('all');
-
-                                $scope.openAccordion(5);
+ 
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABEMPLOYEES')
                                 }));
@@ -233,8 +225,7 @@
                                 $scope.user.coffee.type.Set(coffeeType,true); 
                                 $scope.addSelectedNameToEquipment('coffe', coffeeType);
                                 initializeCofeGame('all');
-
-                                $scope.openAccordion(6);
+ 
                                 growl.success($filter('translate')('THANKS_YOU_CHOSEN', {
                                         name: $filter('translate')('TABCOFFEE')
                                 }));
