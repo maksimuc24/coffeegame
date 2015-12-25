@@ -1,9 +1,9 @@
 var translationsCZ = {
-        STATS_NAME:"Name",
-        STATS_GAME_TIME:"Game time",
-        STATS_MONEY:"Money",
+        STATS_NAME:"Jméno kavárny",
+        STATS_GAME_TIME:"Odehraný čas",
+        STATS_MONEY:"Kč v pokladně",
 
-        SOME_HELLO_TEXT:"SOME_HELLO_TEXT CZ.js",
+        SOME_HELLO_TEXT:"SOME_HELLO_TEXT CZ",
         NEED_BUY_KG_COFFE:"NEED_BUY_KG_COFFE",
 //top menus and modals
         SING_IN:'Přihlášení/Registrace',
@@ -23,7 +23,7 @@ var translationsCZ = {
         INFO_GAME_AIM:'<p><strong>Co je cílem hry</strong><br></p>',
         INFO_GAME_UPGRADE:'<p><strong>Co přinaši pořízení dražších voleb v sekcích</strong><br>Zvyšuje se procento popularity a yvzšuje se počet prodaných nápojů za danou cenu.</p>',
         INFO_GAME_POPULARITY:'<p><strong>Co poskytuje vyšší procento popularity</strong><br>Vyšší procento popularity vám dovolí buď prodat více nápojů za danou cenu nebo zvýšit tuto cenu, aniž by zákazníci opustili frontu. Vše jak i v reálném žívotě.</p>',
-        GAME_VERSION: 'Verze hry: 0.1',
+        GAME_VERSION: 'Verze hry: 0.2',
         SITE: 'jaknakavu.eu',
         CLOSE: 'Zavřít',
         LANGUAGE: 'Jazyk',
@@ -36,7 +36,7 @@ var translationsCZ = {
         RESET_OK:'Ano, chci začít znovu',
         RESET_BACK:'Ne, chci se vrátit zpět do hry', 
         STATS: 'Statistika',
-        STATS_TOP:'Statistiky 20 nejlepších hráčů. Odehraný čas a získané peníze.',
+        STATS_TOP:'Statistiky 10 nejlepších hráčů. Odehraný čas a získané peníze.',
         WELCOME:"<p><strong>Vítejte!</strong><br>Hra byla vytvořena na základě znalostí fungování kavárny. Hra také používá ceny z&nbsp;reálného života a&nbsp;každé vaše rozhodnutí má vliv na návštěvnost a&nbsp;tržby. Takže, můžeme začít… Na rozjezd vaší kavárny máte 55&nbsp;000&nbsp;Kč. Vyberte jednu variantu v&nbsp;každé z&nbsp;šesti níže uvedených sekcí.</p>",
         DISMISS_MESSAGE:"Zavřít sdělení",
        
@@ -54,12 +54,6 @@ var translationsCZ = {
         SUCCESS: 'Úspěch:',
         OFSUCCESS: 'úspěch',
         CHOICES: 'Volby',
-        CHOICESMISSING: ' a pro otevreni podniku potrebujete zvolit varianty v sekcich nize. Jeste zbyva zvolit:',
-        UPGRADESEXPLANATION1: 'You serve',
-        UPGRADESEXPLANATION2: 'coffee ground with',
-        UPGRADESEXPLANATION3: 'and prepared in',
-        UPGRADESEXPLANATION4: 'You employ',
-        UPGRADESEXPLANATION5: 'and your business is situated in a',
         ACHIEVEMENTS: 'Úspěchy',
         ACHIEVEMENTSEXPLANATION: 'The list of achievements that are automatically unlocked when you reach specific milestones of the game.',
 
@@ -138,7 +132,7 @@ var translationsCZ = {
         THANKS_YOU_CHOSEN:"{{name}} vybrán.",
         THANKS_YOU_FINISHED:"Vše potřebné je vybráno, začínáme! <br><br>♫ This was a triumph.<br>♫ I'm making a note here: HUGE SUCCESS.<br>♫ It's hard to overstate my satisfaction.",
 
-//to be deleted later
+//not-used yet to be deleted later
 		NOT_ENOUGTH_BALANCE_FOR:"DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE DELETE It is not enough your balance to choose this {{name}}.",
 		AFTER_REGISTRATION: 'Here <strong>after registration and login</strong> will be stats, cup animation, buttons for drink preparation and coffee buying, alerts.',
         INITIAL_BUDGET:'<p>Na rozjezd vaší kavárny máte 55,000 Kč. Vyberte jednu variantu v každé z šesti níže uvedených sekcí. Momentálně máte: [[aktualnoje kol-vo monet v zavisimosti ot togo chto vybrali]] Kč.</p>',
@@ -149,5 +143,11 @@ var translationsCZ = {
         EMPLOY_MORE_PEOPLE:"",
         MORE_EXPENSIVE_GRINDERS:"",
         BETTER_MACHINES:"",
+        CHOICESMISSING: ' a pro otevreni podniku potrebujete zvolit varianty v sekcich nize. Jeste zbyva zvolit:',
+        UPGRADESEXPLANATION1: 'You serve',
+        UPGRADESEXPLANATION2: 'coffee ground with',
+        UPGRADESEXPLANATION3: 'and prepared in',
+        UPGRADESEXPLANATION4: 'You employ',
+        UPGRADESEXPLANATION5: 'and your business is situated in a',
         FROM_SUPERMARKET:""
 };
