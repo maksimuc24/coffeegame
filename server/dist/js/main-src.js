@@ -542,6 +542,47 @@
 
         angular
                 .module('coffeeGame')
+                .controller('HeartbeatCtrl', HeartbeatCtrl);
+
+        HeartbeatCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'userService'];
+
+        function HeartbeatCtrl($scope, $rootScope, $timeout, userService) {
+
+                var timer;
+
+                $rootScope.$on('userLogin', function() {
+                        startHeartbeat();
+                });
+
+                $rootScope.$on('userLogout', function() {
+                        stopHeartbeat();
+                });
+
+                function startHeartbeat() {
+                        if (!timer) {
+                                timer = $timeout(
+                                        function() {
+                                                userService.heartbeat();
+                                        },
+                                        5000);
+                        }
+                };
+
+                function stopHeartbeat() {
+                        if (timer) {
+                                $timeout.cancel(timer);
+                                timer = undefined;
+                        }
+                };
+        };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
                 .controller('UserAuthCtrl', UserAuthCtrl);
 
         UserAuthCtrl.$inject = ['$scope', '$rootScope', 'authenticationService','$window'];
@@ -590,38 +631,12 @@
 
         angular
                 .module('coffeeGame')
-                .controller('HeartbeatCtrl', HeartbeatCtrl);
+                .controller('UserBalanceCtrl', UserBalanceCtrl)
 
-        HeartbeatCtrl.$inject = ['$scope', '$rootScope', '$timeout', 'userService'];
+        UserBalanceCtrl.$inject = ['$scope'];
 
-        function HeartbeatCtrl($scope, $rootScope, $timeout, userService) {
+        function UserBalanceCtrl($scope) {
 
-                var timer;
-
-                $rootScope.$on('userLogin', function() {
-                        startHeartbeat();
-                });
-
-                $rootScope.$on('userLogout', function() {
-                        stopHeartbeat();
-                });
-
-                function startHeartbeat() {
-                        if (!timer) {
-                                timer = $timeout(
-                                        function() {
-                                                userService.heartbeat();
-                                        },
-                                        5000);
-                        }
-                };
-
-                function stopHeartbeat() {
-                        if (timer) {
-                                $timeout.cancel(timer);
-                                timer = undefined;
-                        }
-                };
         };
 })();
 
@@ -631,12 +646,25 @@
 
         angular
                 .module('coffeeGame')
-                .controller('UserBalanceCtrl', UserBalanceCtrl)
+                .controller('LoginCtrl', LoginCtrl);
 
-        UserBalanceCtrl.$inject = ['$scope'];
+        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
 
-        function UserBalanceCtrl($scope) {
+        function LoginCtrl($scope, authenticationService, $location) {
+                $scope.model = {
+                        cafeName: '',
+                        password: ''
+                };
 
+                $scope.login = function() {
+                        authenticationService.login({
+                                'cafeName': $scope.model.cafeName,
+                                'password': $scope.model.password,
+                                'submit': 'submit'
+                        }).success(function(result) {
+                                $location.path('/'); 
+                        });
+                }
         };
 })();
 
@@ -988,34 +1016,6 @@
         }, 360000)
 
     };
-})();
-
-(function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('LoginCtrl', LoginCtrl);
-
-        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
-
-        function LoginCtrl($scope, authenticationService, $location) {
-                $scope.model = {
-                        cafeName: '',
-                        password: ''
-                };
-
-                $scope.login = function() {
-                        authenticationService.login({
-                                'cafeName': $scope.model.cafeName,
-                                'password': $scope.model.password,
-                                'submit': 'submit'
-                        }).success(function(result) {
-                                $location.path('/'); 
-                        });
-                }
-        };
 })();
 
 (function() {

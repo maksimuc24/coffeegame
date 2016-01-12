@@ -257,7 +257,8 @@ gulp.task('build-production', function (done) {
 
 gulp.task('server', function (done) {
     runSequence(
-        'clean', ['copy', 'scripts', 'express','watch'],
+        //'clean', 
+        ['copy', 'scripts', 'express','watch'],
     done);
 });
 

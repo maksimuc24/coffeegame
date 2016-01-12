@@ -11,7 +11,7 @@ var translationsUA = {
         LOGIN:'Увійти',
         SING_IN_PLAING:'Увійти та продовжувати грати',
         OR:' або ' ,
-        REGISTER_SHOP:'зареєструвати нову кав'ярню',
+        REGISTER_SHOP:'зареєструвати нову кав\'ярню',
         REGISTER:"Зареєструватися",
         REGISTER_PLAYING:'Зареєструйтеся, щоб почати грати',
         DESIRED_SHOP_NAME:"Hазва кав'ярні",
