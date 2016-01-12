@@ -1,7 +1,7 @@
 var translationsEN = {
-        STATS_NAME:"Name",
-        STATS_GAME_TIME:"Game time",
-        STATS_MONEY:"Money",
+        STATS_NAME:"Name of the cafe",
+        STATS_GAME_TIME:"Time played",
+        STATS_MONEY:"Coins gained",
 
         SOME_HELLO_TEXT:"Have you ever dreamt about your own cafe? Do you want to try it yourself? Here is your chance to experience the rush! The game was created using the extensive knowledge of the inner workings of a coffee shop. Also, it mimics real-life prices and crowd mechanics (in a way).",
         NEED_BUY_KG_COFFE:"NEED_BUY_KG_COFFE",
@@ -36,7 +36,7 @@ var translationsEN = {
         RESET_OK:'Yes, I want to start over',
         RESET_BACK:'No, go back to my game',
         STATS: 'Stats',
-        STATS_TOP:'Stats of top 20 players. Time played and money gained.',
+        STATS_TOP:'Stats of top 10 players. Time played and coins gained.',
         WELCOME:"<p><strong>Welcome!</strong><br>The game was created using the extensive knowledge of the inner workings of a coffee shop. Also, it mimics real-life prices and crowd mechanics. So, let the simulation begin… Your initial budget is 55,000 coins. To start your business you need to make choices in all of the six sections below.</p>",
         DISMISS_MESSAGE:"Dismiss this message",
 
@@ -54,12 +54,6 @@ var translationsEN = {
         SUCCESS: 'Success:',
         OFSUCCESS: 'of success',
         CHOICES: 'Choices',
-        CHOICESMISSING: 'later  and to start your business you need to make some choices in the following sections below:',
-        UPGRADESEXPLANATION1: 'later Choosing better alternatives increases the attractiveness of your business. This, in turn, allows you either to sell more drinks per month or to increase the price of the drink without customers leaving the queue. You find the right balance between the price and the Popularity % in order to maximize your profit.',
-        UPGRADESEXPLANATION2: 'later You serve 100% Robusta coffee ground with Rancilio Rocky and prepared in French press. You employ 2 part-time workers and your business is situated in a good place.',
-        UPGRADESEXPLANATION3: 'later and prepared in',
-        UPGRADESEXPLANATION4: 'later You employ',
-        UPGRADESEXPLANATION5: 'later and your business is situated in a',
         ACHIEVEMENTS: 'later Achievements',
         ACHIEVEMENTSEXPLANATION: 'later The list of achievements that are automatically unlocked when you reach specific milestones of the game.',
         
@@ -135,11 +129,17 @@ var translationsEN = {
         PER_MONTH: 'monthly',
         PER:"per",
         PER_CUP:"a cup",
-        NOT_ENOUGTH_BALANCE_FOR:"It is not enought your balance to choose this {{name}}.",
+        NOT_ENOUGTH_BALANCE_FOR:"You do not have enough coins to purchase this {{name}}.",
         THANKS_YOU_CHOSEN:"{{name}} chosen.",
         THANKS_YOU_FINISHED:"Thank you! You've finished choosing equipment! <br><br>♫ This was a triumph.<br>♫ I'm making a note here: HUGE SUCCESS.<br>♫ It's hard to overstate my satisfaction.",
         
-//to be deleted later
+//not-yet used and maybe to be deleted later
+        CHOICESMISSING: 'later  and to start your business you need to make some choices in the following sections below:',
+        UPGRADESEXPLANATION1: 'later Choosing better alternatives increases the attractiveness of your business. This, in turn, allows you either to sell more drinks per month or to increase the price of the drink without customers leaving the queue. You find the right balance between the price and the Popularity % in order to maximize your profit.',
+        UPGRADESEXPLANATION2: 'later You serve 100% Robusta coffee ground with Rancilio Rocky and prepared in French press. You employ 2 part-time workers and your business is situated in a good place.',
+        UPGRADESEXPLANATION3: 'later and prepared in',
+        UPGRADESEXPLANATION4: 'later You employ',
+        UPGRADESEXPLANATION5: 'later and your business is situated in a',
         AFTER_REGISTRATION: 'Here <strong>after registration and login</strong> will be stats, cup animation, buttons for drink preparation and coffee buying, alerts.',
         INITIAL_BUDGET:'<p> Right now you have left to spend: [[aktualnoje kol-vo monet v zavisimosti ot togo chto vybrali]].</p>',
         BETTER_PLACE:"Better place attracts more customers to your business, thus resulting in better sales.",

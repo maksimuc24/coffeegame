@@ -124,7 +124,7 @@ gulp.task('copy:misc', function () {
     return gulp.src([
 
         // Copy all files
-        template('<%= src %>/**/*', dirs),
+        template('<%= src %>/**/**/*', dirs),
 
         // Exclude the following files
         // (other tasks will handle the copying of these files)
