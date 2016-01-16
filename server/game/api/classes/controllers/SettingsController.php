@@ -88,8 +88,8 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT cg.coffeeGrinder_id as id, cg.name,cg.quality ,cg.translate_name, cg.price, 
-                c.name as currency_name, et.equipmentType_id as equipment_type_id
+        $result = mysql_query("SELECT cg.coffeeGrinder_id as id, cg.name,cg.quality ,cg.translate_name,cg.price,cg.gift_image,
+                c.name as currency_name, et.equipmentType_id as equipment_type_id 
             FROM coffeegrinders cg 
             JOIN currencies c ON cg.currency_id = c.currency_id
             JOIN equipmenttypes et ON et.name='coffeeGrinders'", $db);
@@ -107,6 +107,7 @@ class SettingsController extends AbstractController {
                 $empty_row['equipment_type_id'] = $row['equipment_type_id'];
                 $empty_row['currency_name']     = $row['currency_name'];
                 $empty_row['translate_name']    = $row['translate_name'];
+                $empty_row['gift_image']        = $row['gift_image'];
                 $empty_row['quality']           = $row['quality'];
                 array_push($coffeeGrinders, $empty_row);
             }else{
@@ -125,7 +126,7 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT cm.coffeeMachine_id as id,cm.quality, cm.name,cm.translate_name, cm.price, 
+        $result = mysql_query("SELECT cm.coffeeMachine_id as id,cm.quality, cm.name,cm.translate_name, cm.price, cm.gift_image,
                 c.name as currency_name, et.equipmentType_id as equipment_type_id
             FROM coffeemachines cm 
             JOIN currencies c ON cm.currency_id = c.currency_id
@@ -153,7 +154,7 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT cp.coffeePlace_id as id, cp.quality,cp.name,cp.translate_name, cp.price, 
+        $result = mysql_query("SELECT cp.coffeePlace_id as id, cp.quality,cp.name,cp.translate_name, cp.price,cp.gift_image, 
                 c.name as currency_name, tp.name as timePeriod_name, et.equipmentType_id as equipment_type_id
             FROM coffeeplaces cp 
             JOIN currencies c ON cp.currency_id = c.currency_id
@@ -186,7 +187,7 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT ce.coffeeEmployee_id as id,ce.quality, ce.name,ce.translate_name, ce.price, 
+        $result = mysql_query("SELECT ce.coffeeEmployee_id as id,ce.quality, ce.name,ce.translate_name, ce.price,ce.gift_image,  
                 c.name as currency_name, tp.name as timePeriod_name, et.equipmentType_id as equipment_type_id
             FROM coffeeemployees ce 
             JOIN currencies c ON ce.currency_id = c.currency_id
@@ -216,7 +217,7 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT ct.coffeeType_id as id,ct.quality, ct.name,ct.translate_name, ct.price, 
+        $result = mysql_query("SELECT ct.coffeeType_id as id,ct.quality, ct.name,ct.translate_name, ct.price,ct.gift_image, 
                 c.name as currency_name, wm.name as weight_name, et.equipmentType_id as equipment_type_id
             FROM coffeetypes ct 
             JOIN currencies c ON ct.currency_id = c.currency_id
@@ -246,7 +247,7 @@ class SettingsController extends AbstractController {
 
         $user_balance = $this->gameUserManager->GetUserBalance();
 
-        $result = mysql_query("SELECT cdp.coffeeDrinkPrice_id as id, cdp.price, cdp.quality, 
+        $result = mysql_query("SELECT cdp.coffeeDrinkPrice_id as id, cdp.price, cdp.quality,cdp.gift_image,
                 c.name as currency_name, dp.name as portion_name, et.equipmentType_id as equipment_type_id
             FROM coffeedrinkprices cdp 
             JOIN currencies c ON cdp.currency_id = c.currency_id

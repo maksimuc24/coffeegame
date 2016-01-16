@@ -9,7 +9,7 @@
         StartEquipmentChooseCtrl.$inject = ['$scope', '$rootScope', 'gameSettingsService', 'growl', '$filter','userService'];
 
         function StartEquipmentChooseCtrl($scope, $rootScope, gameSettingsService, growl, $filter,userService) {
-
+            
                 $scope.tabs = [{
                         name: 'Grinder',
                         active: true
@@ -39,6 +39,15 @@
                         "drink_price": null
                 };
 
+
+                $scope.equipment_gifts = {
+                    "grinder": null,
+                    "machine": null,
+                    "place": null,
+                    "employee": null,
+                    "coffe": null,
+                    "drink_price": null
+                }
 
 
                 $scope.model = {};
@@ -85,7 +94,52 @@
                 function getUserEquipment() {
                         gameSettingsService.getUserEquipment()
                                 .success(function(data) {  
-                                        $scope.selectedEquipment = data;
+                                        $scope.selectedEquipment = data; 
+                                        //grinder
+                                        angular.forEach($scope.model.coffeeGrinders,function(val,d){ 
+                                                if(val.id == $scope.selectedEquipment.grinder && val.name !=null){ 
+                                                    $scope.equipment_gifts.grinder =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+
+                                        //machine
+                                        angular.forEach($scope.model.coffeeMachines,function(val,d){ 
+                                                if(val.id == $scope.selectedEquipment.machine && val.name !=null){ 
+                                                    $scope.equipment_gifts.machine =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+                                        //place
+                                        angular.forEach($scope.model.coffeePlaces,function(val,d){ 
+                                                if(val.id == $scope.selectedEquipment.place && val.name !=null){ 
+                                                    $scope.equipment_gifts.place =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+                                        //employees
+                                        angular.forEach($scope.model.coffeeEmployees,function(val,d){ 
+                                                if(val.id == $scope.selectedEquipment.employee && val.name !=null){ 
+                                                    $scope.equipment_gifts.employee =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+                                        //coffe
+                                        angular.forEach($scope.model.coffeeTypes,function(val,d){ 
+                                                if(val.id == $scope.selectedEquipment.coffe && val.name !=null){ 
+                                                    $scope.equipment_gifts.coffe =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+                                        //drink price
+                                        angular.forEach($scope.model.coffeePrices,function(val,d){  
+                                                if(val.id == $scope.selectedEquipment.drink_price){ 
+                                                    $scope.equipment_gifts.drink_price =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+
+ 
                                 });
                 };
 
@@ -93,7 +147,7 @@
                 function getCoffeeGrinders() {
                         gameSettingsService.getCoffeeGrinders()
                                 .success(function(data) {
-                                        $scope.model.coffeeGrinders = data;
+                                        $scope.model.coffeeGrinders = data; 
                                 });
                 };
 
@@ -146,7 +200,7 @@
                                 growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: $filter('translate')('TABGRINDER')
                                 }));
-                        } else {
+                        }else {
                                 $scope.user.equipment.Add('grinder', coffeeGrinder,true);
                                 $scope.addSelectedNameToEquipment('grinder', coffeeGrinder);
                                 initializeCofeGame('all');
@@ -155,10 +209,15 @@
                                         name: $filter('translate')('TABGRINDER')
                                 }));
                                 $scope.user.update(checkEquipmentFinish); 
-                                 $rootScope.$broadcast('buyEquipment');
+                                $rootScope.$broadcast('buyEquipment'); 
+                                     
+                                $scope.equipment_gifts.grinder =  coffeeGrinder.gift_image  
+                                $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+
 
                         }
                 };
+ 
 
                 $scope.chooseCoffeeMachine = function(coffeeMachine) {
                         if ($scope.balance<coffeeMachine.price) {
@@ -175,6 +234,10 @@
                                 }));
                                 $rootScope.$broadcast('buyEquipment');
                                 $scope.user.update(checkEquipmentFinish);
+
+                                $scope.equipment_gifts.machine =  coffeeMachine.gift_image  
+                                $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts );  
+ 
                         }
                 };
 
@@ -195,6 +258,10 @@
                                 }));
                                 $rootScope.$broadcast('buyEquipment');
                                 $scope.user.update(checkEquipmentFinish);
+
+
+                                $scope.equipment_gifts.place =  coffeePlace.gift_image  
+                                $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
                         }
                 };
 
@@ -212,9 +279,12 @@
                                         name: $filter('translate')('TABEMPLOYEES')
                                 }));
                                 $rootScope.$broadcast('buyEquipment');
-                                $scope.user.update(checkEquipmentFinish);
+                                $scope.user.update(checkEquipmentFinish); 
+                                $scope.equipment_gifts.employee =  coffeeEmployee.gift_image  
+                                $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
                         }
                 };
+
 
                 $scope.chooseCoffeeType = function(coffeeType) {
                         if ($scope.balance<coffeeType.price) {
@@ -231,7 +301,9 @@
                                 }));
 
                                 $scope.user.update(checkEquipmentFinish);
-                                $rootScope.$broadcast('buyEquipment');
+                                $rootScope.$broadcast('buyEquipment'); 
+                                $scope.equipment_gifts.coffe =  coffeeType.gift_image  
+                                $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts );  
                         }
                 };
 
@@ -244,7 +316,9 @@
 
                         $scope.addSelectedNameToEquipment('drink_price', coffeePrice);
                         $scope.user.update(checkEquipmentFinish);
-                        $rootScope.$broadcast('buyEquipment');
+                        $rootScope.$broadcast('buyEquipment'); 
+                        $scope.equipment_gifts.drink_price =  coffeePrice.gift_image  
+                        $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts );  
                 };
 
                 function checkEquipmentFinish() { 

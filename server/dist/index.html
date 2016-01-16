@@ -70,18 +70,21 @@
                 <div style="position: relative; left: 0; top: 0;" ng-if="showMainImg()">
                     <img src="1employees.gif" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
                     <img src="x-1back.gif" class="img-responsive img-rounded" style="position: absolute; top: 0px; left: 0px; "> 
+                    <div ng-include src="'app/pages/game/game-process/gif-list.html'"></div>
                 </div>
                 <!--Main image end-->
                 <!--select image -->
                 <div style="position: relative; left: 0; top: 0;" ng-if="showSelect() && !showMainImg()">
                     <img src="1employees.gif" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
                     <img src="x-0people.gif" class="img-responsive img-rounded" style="position: absolute; top: 0px; left: 0px; ">
+                    <div ng-include src="'app/pages/game/game-process/gif-list.html'"></div>
                 </div>
                 <!--select image end--> 
                 <!--Bar image -->
                 <div style="position: relative; left: 0; top: 0;" ng-if="showBar()">
                     <img src="2place.png" class="img-responsive img-rounded" style="position: relative; top: 0px; left: 0px;">
                     <img src="1employees.gif" class="img-responsive img-rounded" style="position: absolute; top: 0px; left: 0px; ">
+                    <div ng-include src="'app/pages/game/game-process/gif-list.html'"></div>
                 </div>
                 <!--Bar image end-->
                 <div class="bg-success"> 

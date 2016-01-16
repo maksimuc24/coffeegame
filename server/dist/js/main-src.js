@@ -641,34 +641,6 @@
 })();
 
 (function() {
-        'use strict'
-
-
-        angular
-                .module('coffeeGame')
-                .controller('LoginCtrl', LoginCtrl);
-
-        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
-
-        function LoginCtrl($scope, authenticationService, $location) {
-                $scope.model = {
-                        cafeName: '',
-                        password: ''
-                };
-
-                $scope.login = function() {
-                        authenticationService.login({
-                                'cafeName': $scope.model.cafeName,
-                                'password': $scope.model.password,
-                                'submit': 'submit'
-                        }).success(function(result) {
-                                $location.path('/'); 
-                        });
-                }
-        };
-})();
-
-(function() {
     'use strict'
 
 
@@ -681,9 +653,20 @@
     function GameCtrl($scope, $rootScope, User, authenticationService, gameSettingsService, userService, globalService, growl, $filter) {
         $scope.game = {};
         $scope.showGame = false;
-        $scope.userBalance = 0;
+        $scope.userBalance = 0; 
 
+        $scope.equipment_gifts = {
+            "grinder": null,
+            "machine": null,
+            "place": null,
+            "employee": null,
+            "coffe": null,
+            "drink_price": null
+        }
 
+        $scope.$on('changeEquipment', function(event, data) {
+            $scope.equipment_gifts = data;
+        });
 
         $scope.userSettigs = {
             "customers_in_queue": 0,
@@ -693,33 +676,33 @@
         };
 
 
-        $scope.showMainImg = function(){ 
-             var status = false;
-             if(angular.isUndefined($scope.user)){
-                 var status = true; 
-             } 
-             return status; 
+        $scope.showMainImg = function() {
+            var status = false;
+            if (angular.isUndefined($scope.user)) {
+                var status = true;
+            }
+            return status;
         }
 
-        $scope.showSelect = function(){ 
-             return !$scope.game.equipmentChooseFinished;
+        $scope.showSelect = function() {
+            return !$scope.game.equipmentChooseFinished;
         }
 
-        $scope.showBar = function(){ 
-             return $scope.game.equipmentChooseFinished;
+        $scope.showBar = function() {
+            return $scope.game.equipmentChooseFinished;
         }
 
 
-        function sellCoffeAnimation(){ 
+        function sellCoffeAnimation() {
             $('div.plus-one-coffe').addClass("plus-coffe-progress")
-            setTimeout(function(){
+            setTimeout(function() {
                 $('div.plus-one-coffe').removeClass("plus-coffe-progress")
-            }, 400) 
+            }, 400)
         }
 
 
         $scope.sellCoffe = function() {
-             
+
             if ($scope.userSettigs.customers_in_queue <= 0) {
                 $scope.userSettigs.buy_total_coffe_kg = $scope.userSettigs.buy_total_coffe_kg - 0.014;
                 $scope.userSettigs.total_drink += 1;
@@ -735,14 +718,14 @@
             }
 
             var price = parseFloat($scope.user.coffee.price.price);
-           
-            $scope.userSettigs.customers_in_queue -= 1;  
-            $scope.userBalance = parseFloat($scope.userBalance)+price;
-            $scope.user.balance = $scope.userBalance; 
+
+            $scope.userSettigs.customers_in_queue -= 1;
+            $scope.userBalance = parseFloat($scope.userBalance) + price;
+            $scope.user.balance = $scope.userBalance;
             $scope.userSettigs.total_drink += 1;
 
 
-            $scope.userSettigs.buy_total_coffe_kg = $scope.userSettigs.buy_total_coffe_kg - 0.014; 
+            $scope.userSettigs.buy_total_coffe_kg = $scope.userSettigs.buy_total_coffe_kg - 0.014;
             sellCoffeAnimation()
 
         };
@@ -780,11 +763,11 @@
 
 
             if (data.iterationNum == 2) {
-                  $scope.customers_in_queue();
+                $scope.customers_in_queue();
             }
-            $rootScope.$broadcast('reload');   
+            $rootScope.$broadcast('reload');
             globalService.updateData(month, $scope.userSettigs.customers_in_queue, $scope.userSettigs.total_coffe_kg, $scope.userSettigs.total_drink, $scope.userBalance, $scope.userSettigs.buy_total_coffe_kg);
-              
+
         });
 
 
@@ -794,8 +777,8 @@
             var balance = parseFloat($scope.user.balance);
             if (price <= balance) {
                 $scope.userSettigs.buy_total_coffe_kg += 1;
-                $scope.userBalance = parseFloat($scope.userBalance)-price;
-                $scope.user.balance = $scope.userBalance;  
+                $scope.userBalance = parseFloat($scope.userBalance) - price;
+                $scope.user.balance = $scope.userBalance;
                 $scope.userSettigs.total_coffe_kg += 1;
                 globalService.buyKgCoffe();
             } else {
@@ -852,7 +835,7 @@
 
             angular.forEach($scope.user.equipment.items, function(val, key) {
                 place_machine_name = place_machine_name + parseFloat(val.quality);
-            }); 
+            });
             $scope.successBar = parseFloat(coffePrice) + parseFloat(coffeType) + parseFloat(employee) + parseFloat(place_machine_name);
             userBalance();
             userGetDetails();
@@ -867,32 +850,45 @@
                     $scope.userSettigs.total_coffe_kg = parseFloat(data.total_coffe_kg);
                     $scope.userSettigs.total_drink = parseInt(data.total_drink);
                     $scope.userSettigs.buy_total_coffe_kg = parseFloat(data.buy_total_coffe_kg);
-                    $rootScope.$broadcast('setopenedTime', parseFloat(data.opened_months)); 
+                    $rootScope.$broadcast('setopenedTime', parseFloat(data.opened_months));
                 });
         };
 
         function setEquipment(type, data) {
+            console.log(data)
             if (angular.isUndefined($scope.user)) {
                 return;
             }
             switch (type) {
                 case "coffeegrinders":
                     $scope.user.equipment.Add('grinder', data, false);
+                    $scope.equipment_gifts.grinder =  data.gift_image  
+                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
                     break;
                 case "coffeemachines":
                     $scope.user.equipment.Add('machine', data, false);
+                    $scope.equipment_gifts.machine =  data.gift_image  
+                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
                     break;
                 case "coffeeplaces":
                     $scope.user.equipment.Add('place', data, false);
+                    $scope.equipment_gifts.place =  data.gift_image 
+                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
                     break;
                 case "coffeetypes":
                     $scope.user.coffee.type.Set(data, false);
+                    $scope.equipment_gifts.coffe =  data.gift_image  
+                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
                     break;
                 case "coffeeemployees":
                     $scope.user.employee.Set(data, false);
+                    $scope.equipment_gifts.employee =  data.gift_image  
+                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
                     break;
                 case "coffeedrinkprices":
                     $scope.user.coffee.price.Set(data, false);
+                    $scope.equipment_gifts.drink_price =  data.gift_image  
+                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
                     break;
                 default:
                     break;
@@ -952,13 +948,13 @@
 
 
         //display modal window with language list
-        function checkCookie() { 
-            setTimeout(function() { 
+        function checkCookie() {
+            setTimeout(function() {
                 if (!$scope.showGame) {
                     $('#myModalLanguage').modal();
                 }
             }, 2000)
- 
+
         }
         checkCookie();
     };
@@ -1016,6 +1012,34 @@
         }, 360000)
 
     };
+})();
+
+(function() {
+        'use strict'
+
+
+        angular
+                .module('coffeeGame')
+                .controller('LoginCtrl', LoginCtrl);
+
+        LoginCtrl.$inject = ['$scope', 'authenticationService', '$location'];
+
+        function LoginCtrl($scope, authenticationService, $location) {
+                $scope.model = {
+                        cafeName: '',
+                        password: ''
+                };
+
+                $scope.login = function() {
+                        authenticationService.login({
+                                'cafeName': $scope.model.cafeName,
+                                'password': $scope.model.password,
+                                'submit': 'submit'
+                        }).success(function(result) {
+                                $location.path('/'); 
+                        });
+                }
+        };
 })();
 
 (function() {
@@ -1096,7 +1120,7 @@
         StartEquipmentChooseCtrl.$inject = ['$scope', '$rootScope', 'gameSettingsService', 'growl', '$filter','userService'];
 
         function StartEquipmentChooseCtrl($scope, $rootScope, gameSettingsService, growl, $filter,userService) {
-
+            
                 $scope.tabs = [{
                         name: 'Grinder',
                         active: true
@@ -1126,6 +1150,15 @@
                         "drink_price": null
                 };
 
+
+                $scope.equipment_gifts = {
+                    "grinder": null,
+                    "machine": null,
+                    "place": null,
+                    "employee": null,
+                    "coffe": null,
+                    "drink_price": null
+                }
 
 
                 $scope.model = {};
@@ -1172,7 +1205,52 @@
                 function getUserEquipment() {
                         gameSettingsService.getUserEquipment()
                                 .success(function(data) {  
-                                        $scope.selectedEquipment = data;
+                                        $scope.selectedEquipment = data; 
+                                        //grinder
+                                        angular.forEach($scope.model.coffeeGrinders,function(val,d){ 
+                                                if(val.id == $scope.selectedEquipment.grinder && val.name !=null){ 
+                                                    $scope.equipment_gifts.grinder =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+
+                                        //machine
+                                        angular.forEach($scope.model.coffeeMachines,function(val,d){ 
+                                                if(val.id == $scope.selectedEquipment.machine && val.name !=null){ 
+                                                    $scope.equipment_gifts.machine =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+                                        //place
+                                        angular.forEach($scope.model.coffeePlaces,function(val,d){ 
+                                                if(val.id == $scope.selectedEquipment.place && val.name !=null){ 
+                                                    $scope.equipment_gifts.place =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+                                        //employees
+                                        angular.forEach($scope.model.coffeeEmployees,function(val,d){ 
+                                                if(val.id == $scope.selectedEquipment.employee && val.name !=null){ 
+                                                    $scope.equipment_gifts.employee =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+                                        //coffe
+                                        angular.forEach($scope.model.coffeeTypes,function(val,d){ 
+                                                if(val.id == $scope.selectedEquipment.coffe && val.name !=null){ 
+                                                    $scope.equipment_gifts.coffe =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+                                        //drink price
+                                        angular.forEach($scope.model.coffeePrices,function(val,d){  
+                                                if(val.id == $scope.selectedEquipment.drink_price){ 
+                                                    $scope.equipment_gifts.drink_price =  val.gift_image  
+                                                    $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                                                }
+                                        });
+
+ 
                                 });
                 };
 
@@ -1180,7 +1258,7 @@
                 function getCoffeeGrinders() {
                         gameSettingsService.getCoffeeGrinders()
                                 .success(function(data) {
-                                        $scope.model.coffeeGrinders = data;
+                                        $scope.model.coffeeGrinders = data; 
                                 });
                 };
 
@@ -1233,7 +1311,7 @@
                                 growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                                         name: $filter('translate')('TABGRINDER')
                                 }));
-                        } else {
+                        }else {
                                 $scope.user.equipment.Add('grinder', coffeeGrinder,true);
                                 $scope.addSelectedNameToEquipment('grinder', coffeeGrinder);
                                 initializeCofeGame('all');
@@ -1242,10 +1320,15 @@
                                         name: $filter('translate')('TABGRINDER')
                                 }));
                                 $scope.user.update(checkEquipmentFinish); 
-                                 $rootScope.$broadcast('buyEquipment');
+                                $rootScope.$broadcast('buyEquipment'); 
+                                     
+                                $scope.equipment_gifts.grinder =  coffeeGrinder.gift_image  
+                                $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+
 
                         }
                 };
+ 
 
                 $scope.chooseCoffeeMachine = function(coffeeMachine) {
                         if ($scope.balance<coffeeMachine.price) {
@@ -1262,6 +1345,10 @@
                                 }));
                                 $rootScope.$broadcast('buyEquipment');
                                 $scope.user.update(checkEquipmentFinish);
+
+                                $scope.equipment_gifts.machine =  coffeeMachine.gift_image  
+                                $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts );  
+ 
                         }
                 };
 
@@ -1282,6 +1369,10 @@
                                 }));
                                 $rootScope.$broadcast('buyEquipment');
                                 $scope.user.update(checkEquipmentFinish);
+
+
+                                $scope.equipment_gifts.place =  coffeePlace.gift_image  
+                                $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
                         }
                 };
 
@@ -1299,9 +1390,12 @@
                                         name: $filter('translate')('TABEMPLOYEES')
                                 }));
                                 $rootScope.$broadcast('buyEquipment');
-                                $scope.user.update(checkEquipmentFinish);
+                                $scope.user.update(checkEquipmentFinish); 
+                                $scope.equipment_gifts.employee =  coffeeEmployee.gift_image  
+                                $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
                         }
                 };
+
 
                 $scope.chooseCoffeeType = function(coffeeType) {
                         if ($scope.balance<coffeeType.price) {
@@ -1318,7 +1412,9 @@
                                 }));
 
                                 $scope.user.update(checkEquipmentFinish);
-                                $rootScope.$broadcast('buyEquipment');
+                                $rootScope.$broadcast('buyEquipment'); 
+                                $scope.equipment_gifts.coffe =  coffeeType.gift_image  
+                                $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts );  
                         }
                 };
 
@@ -1331,7 +1427,9 @@
 
                         $scope.addSelectedNameToEquipment('drink_price', coffeePrice);
                         $scope.user.update(checkEquipmentFinish);
-                        $rootScope.$broadcast('buyEquipment');
+                        $rootScope.$broadcast('buyEquipment'); 
+                        $scope.equipment_gifts.drink_price =  coffeePrice.gift_image  
+                        $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts );  
                 };
 
                 function checkEquipmentFinish() { 
