@@ -86,6 +86,9 @@
             $scope.userSettigs.buy_total_coffe_kg = $scope.userSettigs.buy_total_coffe_kg - 0.014;
             sellCoffeAnimation()
 
+            $rootScope.$broadcast('drinks_served', $scope.userSettigs.total_drink);
+            $rootScope.$broadcast('earned_100_000_coins',$scope.userBalance);
+
         };
         //customers in queue 
         $scope.customers_in_queue = function() {
@@ -117,6 +120,7 @@
 
                 $scope.user.balance = parseFloat($scope.user.balance) - employee - place;
                 $scope.userBalance = $scope.user.balance;
+                $rootScope.$broadcast('earned_100_000_coins',$scope.userBalance);
             }
 
 
@@ -139,6 +143,7 @@
                 $scope.user.balance = $scope.userBalance;
                 $scope.userSettigs.total_coffe_kg += 1;
                 globalService.buyKgCoffe();
+                $rootScope.$broadcast('kgs_of_coffee_in_your_inventory',$scope.userSettigs.total_coffe_kg);
             } else {
                 growl.warning($filter('translate')('NOT_ENOUGTH_BALANCE_FOR', {
                     name: $filter('translate')('TABCOFFEE')
@@ -195,6 +200,10 @@
                 place_machine_name = place_machine_name + parseFloat(val.quality);
             });
             $scope.successBar = parseFloat(coffePrice) + parseFloat(coffeType) + parseFloat(employee) + parseFloat(place_machine_name);
+
+            $rootScope.$broadcast('more_people_learn_about_your_cafe', $scope.successBar);
+            $rootScope.$broadcast('cafe_becomes_famous_worldwide', $scope.successBar);
+
             userBalance();
             userGetDetails();
 
@@ -208,12 +217,16 @@
                     $scope.userSettigs.total_coffe_kg = parseFloat(data.total_coffe_kg);
                     $scope.userSettigs.total_drink = parseInt(data.total_drink);
                     $scope.userSettigs.buy_total_coffe_kg = parseFloat(data.buy_total_coffe_kg);
+
                     $rootScope.$broadcast('setopenedTime', parseFloat(data.opened_months));
+                    $rootScope.$broadcast('drinks_served', $scope.userSettigs.total_drink);
+                    $rootScope.$broadcast('kgs_of_coffee_in_your_inventory',$scope.userSettigs.total_coffe_kg);
+
+
                 });
         };
 
-        function setEquipment(type, data) {
-            console.log(data)
+        function setEquipment(type, data) { 
             if (angular.isUndefined($scope.user)) {
                 return;
             }
@@ -222,6 +235,9 @@
                     $scope.user.equipment.Add('grinder', data, false);
                     $scope.equipment_gifts.grinder =  data.gift_image  
                     $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                    if(data.coffeeGrinder_id == 17){
+                         $rootScope.$broadcast('now_grind_coffee_lightning_fast', data.coffeeGrinder_id);
+                    }
                     break;
                 case "coffeemachines":
                     $scope.user.equipment.Add('machine', data, false);
@@ -237,6 +253,9 @@
                     $scope.user.coffee.type.Set(data, false);
                     $scope.equipment_gifts.coffe =  data.gift_image  
                     $rootScope.$broadcast('changeEquipment',$scope.equipment_gifts ); 
+                    if (data.coffeeType_id == 5) {
+                        $rootScope.$broadcast('full_time_worker_in_your_cafe', data.coffeeType_id);
+                    }
                     break;
                 case "coffeeemployees":
                     $scope.user.employee.Set(data, false);

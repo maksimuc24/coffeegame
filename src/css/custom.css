@@ -1,133 +1,288 @@
-.plus-one-coffe{
-	float: right;
+.plus-one-coffe {
+    float: right;
     margin-right: 55px;
     font-size: 22px;
-    color: #729A46;  
+    color: #729A46;
     margin-top: 20px;
     opacity: 0;
 }
-
-
-
-
-.plus-coffe-progress { 
-    animation: go-bottom-top 1s;
-    -webkit-animation: go-bottom-top 1s; 
-    position: relative;  
+.achievements_close{
+    color: #5F5F5F;
+    opacity: 0.2;
 }
+.achievements_open{
+    color: rgb(82, 193, 127);
+}
+
+.progress-div {
+    background: white; 
+    border: 1px solid rgba(128, 128, 128, 0.35);
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+.progress-span{
+    color: #FFFFF4;
+    white-space: nowrap;
+    padding: 5px;
+}
+.progressbar-main{
+    background-color: #B9DF90;
+    padding: 3px;
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
+}
+
+.achievements-block i:hover {
+    cursor: pointer;
+}
+
+.achievements-block i {
+    margin: 10px !important;
+}
+
+.plus-coffe-progress {
+    animation: go-bottom-top 1s;
+    -webkit-animation: go-bottom-top 1s;
+    position: relative;
+}
+
 
 /* Современные браузеры, кроме Chrome, Opera, Safari */
-@keyframes go-bottom-top {   /* назовём анимацию: "go-left-right" */
+
+@keyframes go-bottom-top {
+    /* назовём анимацию: "go-left-right" */
     from {
-      opacity: 1;
-      margin-top: 20px;            /* от: left: 0px */
+        opacity: 1;
+        margin-top: 20px;
+        /* от: left: 0px */
     }
     to {
-      opacity: 0; /* до: left: 100%-50px */
-      margin-top: -20px;
+        opacity: 0;
+        /* до: left: 100%-50px */
+        margin-top: -20px;
     }
 }
+
 
 /* Префикс для Chrome, Opera, Safari */
+
 @-webkit-keyframes go-bottom-top {
     from {
-       opacity: 1;
-       margin-top: 20px; 
+        opacity: 1;
+        margin-top: 20px;
     }
     to {
-       opacity: 0;
-       margin-top: -20px; 
+        opacity: 0;
+        margin-top: -20px;
     }
 }
 
+body {
+    background-color: #f1f2f6;
+    line-height: 1.52857;
+}
 
+h3 {
+    margin-top: 0px;
+    color: #006bb0;
+}
 
+a {
+    color: #006bb0;
+    text-decoration: none;
+}
 
-body {background-color: #f1f2f6;line-height: 1.52857;}
-h3 {margin-top: 0px;color: #006bb0;}
-a {color: #006bb0; text-decoration: none;}
-a:hover {color: #ad5d28 !important; text-decoration: none;}
-.navbar {border-width: 0px !important; border-radius: 0px;}
-.navbar-default {border-radius: 0px !important; background-color: #fff; border-color: #fff !important;}
-.navbar-default .navbar-nav>li>a:hover{color:#ad5d28}
-.navbar-default .navbar-brand {color: #ad5d28 !important;}
-.navbar-default .navbar-nav > li > a {color: #006bb0; text-decoration: none !important;}
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover {background-color: #ad5d28 !important;color: #ad5d28 !important;}
+a:hover {
+    color: #ad5d28 !important;
+    text-decoration: none;
+}
 
-.navbar-default .navbar-toggle {background-color: #f1f2f6;border-color: #f1f2f6;}
-.navbar-default .navbar-toggle:focus {background-color: #f1f2f6;border-color: #f1f2f6;}
-.navbar-default .navbar-toggle:hover {background-color: #f1f2f6;border-color: #f1f2f6;}
-.navbar-default .navbar-collapse, .navbar-default .navbar-form {border-color: #f1f2f6;}
-.navbar-default .navbar-nav > li > a:hover{color:#ad5d28}
-.navbar-default .navbar-nav .open .dropdown-menu>.divider,.navbar-default .navbar-nav>li>a:focus,.navbar-default .navbar-nav>li>a:hover{background-color:#f1f2f6}
-.icon-bar {background-color: #ad5d28 !important;}
+.navbar {
+    border-width: 0px !important;
+    border-radius: 0px;
+}
 
-.navbar-brand {font-size: 20px !important;}
-.tab-content {background-color: #fff;border: 0px;border-radius: 0px 0px 4px 4px;padding: 10px;}
-.nav-tabs {background-color: #f3f3f3;margin-bottom: 0;}
-.nav-tabs > li > a {color: #006bb0;}
-.nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {color: #ad5d28;cursor: default;}
+.navbar-default {
+    border-radius: 0px !important;
+    background-color: #fff;
+    border-color: #fff !important;
+}
 
-.modal-body {padding: 0;}
-.panel-primary > .panel-heading {background-color: #006bb0;border-color: #006bb0;color: #fff;}
+.navbar-default .navbar-nav>li>a:hover {
+    color: #ad5d28
+}
 
-.dropdown-menu {background-color: #ad5d28;border: 0px solid rgba(0, 0, 0, 0.15);}
-.dropdown-menu  > li > a {color: #fff;}
+.navbar-default .navbar-brand {
+    color: #ad5d28 !important;
+}
 
-.panel-group-lists .panel-title a {color: #006bb0 !important;}
-.panel-group-lists .panel-title a:active, .panel-group-lists .panel-title a:focus, .panel-group-lists .panel-title a:hover {color: #ad5d28 !important;}
+.navbar-default .navbar-nav > li > a {
+    color: #006bb0;
+    text-decoration: none !important;
+}
 
-.btn {white-space: normal;text-align: left}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover {
+    background-color: #ad5d28 !important;
+    color: #ad5d28 !important;
+}
+
+.navbar-default .navbar-toggle {
+    background-color: #f1f2f6;
+    border-color: #f1f2f6;
+}
+
+.navbar-default .navbar-toggle:focus {
+    background-color: #f1f2f6;
+    border-color: #f1f2f6;
+}
+
+.navbar-default .navbar-toggle:hover {
+    background-color: #f1f2f6;
+    border-color: #f1f2f6;
+}
+
+.navbar-default .navbar-collapse,
+.navbar-default .navbar-form {
+    border-color: #f1f2f6;
+}
+
+.navbar-default .navbar-nav > li > a:hover {
+    color: #ad5d28
+}
+
+.navbar-default .navbar-nav .open .dropdown-menu>.divider,
+.navbar-default .navbar-nav>li>a:focus,
+.navbar-default .navbar-nav>li>a:hover {
+    background-color: #f1f2f6
+}
+
+.icon-bar {
+    background-color: #ad5d28 !important;
+}
+
+.navbar-brand {
+    font-size: 20px !important;
+}
+
+.tab-content {
+    background-color: #fff;
+    border: 0px;
+    border-radius: 0px 0px 4px 4px;
+    padding: 10px;
+}
+
+.nav-tabs {
+    background-color: #f3f3f3;
+    margin-bottom: 0;
+}
+
+.nav-tabs > li > a {
+    color: #006bb0;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+    color: #ad5d28;
+    cursor: default;
+}
+
+.modal-body {
+    padding: 0;
+}
+
+.panel-primary > .panel-heading {
+    background-color: #006bb0;
+    border-color: #006bb0;
+    color: #fff;
+}
+
+.dropdown-menu {
+    background-color: #ad5d28;
+    border: 0px solid rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-menu > li > a {
+    color: #fff;
+}
+
+.panel-group-lists .panel-title a {
+    color: #006bb0 !important;
+}
+
+.panel-group-lists .panel-title a:active,
+.panel-group-lists .panel-title a:focus,
+.panel-group-lists .panel-title a:hover {
+    color: #ad5d28 !important;
+}
+
+.btn {
+    white-space: normal;
+    text-align: left
+}
+
 
 /*! HTML5 Boilerplate v4.3.0 | MIT License | http://h5bp.com/ */
 
-body, html {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+body,
+html {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 .body {
-margin-top: 50px;
-}
-.inline-block-list{
-vertical-align: middle;
+    margin-top: 50px;
 }
 
-.inline-block-list li{
-display: inline-block;
-width: 100%;
-vertical-align: middle;
+.inline-block-list {
+    vertical-align: middle;
 }
+
+.inline-block-list li {
+    display: inline-block;
+    width: 100%;
+    vertical-align: middle;
+}
+
 .inline-block-list li a {
-	cursor: pointer;
-	color: #006bb0;
-	display: block;
-	text-decoration: none;
-	border: 0px solid transparent;
+    cursor: pointer;
+    color: #006bb0;
+    display: block;
+    text-decoration: none;
+    border: 0px solid transparent;
     border-radius: 4px;
     margin: 10px 0px 0px 0px;
     padding: 15px;
 }
+
 .inline-block-list li a:hover {
-background-color: #ccc;
+    background-color: #ccc;
 }
+
 .inline-block-list li a.choosen {
-background-color: #ccc;
+    background-color: #ccc;
 }
+
 .inline-block-list li a span {
-font-weight: bold;
+    font-weight: bold;
 }
+
 .inline-block-list li a span.price {
-font-weight: normal;
+    font-weight: normal;
 }
 
-
-.growl{
-	top: 75px;
+.growl {
+    top: 75px;
 }
+
 
 /* BOOTSTRAP */
-.nav, .pagination, .carousel, .panel-title a {
+
+.nav,
+.pagination,
+.carousel,
+.panel-title a {
     cursor: pointer;
 }
